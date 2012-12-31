@@ -1,0 +1,35 @@
+<{* $Id: $ *}>
+<{assign var="dirname" value="bmcart"}>
+<{assign var="contname" value="item"}>
+
+<h3><{$smarty.const._MD_BMCART_CART_LIST}></h3>
+<form name="cartListForm" action="<{$xoops_url}>/modules/<{$dirname}>/cartList/update" method="post">
+
+<table>
+<tr>
+	<td><{$smarty.const._MD_BMCART_ITEM_NAME}></td>
+	<td><{$smarty.const._MD_BMCART_ITEM_PRICE}></td>
+	<td><{$smarty.const._MD_BMCART_CART_QTY}></td>
+</tr>
+<{foreach item=cart from=$ListData}>
+<tr>
+	<td>
+		<a class="btn" href="<{$xoops_url}>/modules/<{$dirname}>/itemList/itemDetail/<{$cart.item_id}>">
+		<{$cart.item_name}>
+		</a>
+	</td>
+	<td>
+		<{$cart.price|number_format}><{$smarty.const._MD_BMCART_PRICE_DESC}></td>
+	<td>
+		<input type="text" name="qty_<{$cart.cart_id}>" value="<{$cart.qty}>" />
+		<a class="btn" href="<{$xoops_url}>/modules/<{$dirname}>/cartList/removeItem/<{$cart.cart_id}>">
+			<{$smarty.const._MD_BMCART_REMOVE_ITEM}>
+		</a>
+	</td>
+</tr>
+<{/foreach}>
+</table>
+<input type="submit" name="update" value="<{$smarty.const._MD_BMCART_QTY_UPDATE}>" />
+<input type="submit" name="checkout" value="<{$smarty.const._MD_BMCART_CHECKOUT}>" />
+</form>
+<div class="pagenavi" align="center"><{xoops_pagenavi pagenavi=$pageNavi}></div>

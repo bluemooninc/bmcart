@@ -1,0 +1,38 @@
+<{* $Id: $ *}>
+<{assign var="dirname" value="bmcart"}>
+<{assign var="contname" value="item"}>
+
+<h3><{$smarty.const._MD_BMCART_ITEM_DETAIL}></h3>
+<{foreach item=val from=$ListData}>
+<table>
+	<tr>
+		<td><{$smarty.const._MD_BMCART_ITEM_NAME}></td>
+		<td><{$val.item_name|xoops_escape}></td>
+	</tr>
+	<tr>
+		<td><{$smarty.const._MD_BMCART_ITEM_DESC}></td>
+		<td><{$val.item_desc|xoops_escape}></td>
+	</tr>
+	<tr>
+		<td><{$smarty.const._MD_BMCART_ITEM_PRICE}></td>
+		<td><{$val.price|number_format}><{$smarty.const._MD_BMCART_PRICE_DESC}></td>
+	</tr>
+	<tr>
+		<td><{$smarty.const._MD_BMCART_ITEM_shipping_fee}></td>
+		<td><{$val.shipping_fee|number_format}></td>
+	</tr>
+	<tr>
+		<td><{$smarty.const._MD_BMCART_ITEM_STOCK}></td>
+		<td><{$val.stock_qty|number_format}></td>
+	</tr>
+	<tr>
+		<td><{$smarty.const._MD_BMCART_UPDATE}></td>
+		<td><{$val.last_update|xoops_escape}></td>
+	</tr>
+</table>
+<a class="btn" href="<{$xoops_url}>/modules/<{$dirname}>/itemList/addtocart/<{$val.item_id|xoops_escape}>">
+	<td><{$smarty.const._MD_BMCART_ADDTOCART}></td>
+</a>
+<{/foreach}>
+
+<div class="pagenavi" align="center"><{xoops_pagenavi pagenavi=$pageNavi}></div>
