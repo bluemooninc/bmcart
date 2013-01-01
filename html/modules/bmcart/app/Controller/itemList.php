@@ -32,7 +32,7 @@ class Controller_ItemList extends AbstractAction {
 		$this->mListData = $this->mHandler->getItem($item_id);
 		$cartHandler = xoops_getModuleHandler('cart');
 		$cartHandler->addToCart($this->mListData[0]);
-		$this->template = 'cartList.html';
+		$this->executeRedirect("../../cartList", 0, 'Add to Cart');
 	}
 	public function action_category(){
 		if (isset($this->mParams[0])) $category_id = intval($this->mParams[0]);

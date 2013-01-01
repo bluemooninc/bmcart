@@ -68,6 +68,7 @@ class bmcart_ItemAdminEditForm extends XCube_ActionForm
 		$obj->set('price', intval($this->get('price')));
 		$obj->set('shipping_fee', intval($this->get('shipping_fee')));
 		$obj->set('stock_qty', intval($this->get('stock_qty')));
+		$obj->set('last_update', time());
 	}
 }
 

@@ -30,7 +30,7 @@ class bmcart_ItemListAction extends bmcart_AbstractListAction
 		$render->setAttribute("objects", $this->mObjects);
 		$render->setAttribute("pageNavi", $this->mFilter->mNavi);
 		$categoryHandler = xoops_getmodulehandler('category');
-		$render->setAttribute("categoryList", $categoryHandler->getCategory());
+		$render->setAttribute("categoryList", $categoryHandler->getCategoryOptions());
 	}
 }
 

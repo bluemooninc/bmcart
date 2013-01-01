@@ -40,6 +40,7 @@ $modversion['tables'][] = '{prefix}_{dirname}_category';
 $modversion['tables'][] = '{prefix}_{dirname}_item';
 $modversion['tables'][] = '{prefix}_{dirname}_cart';
 $modversion['tables'][] = '{prefix}_{dirname}_order';
+$modversion['tables'][] = '{prefix}_{dirname}_shipping';
 /*
  * Config
  */
