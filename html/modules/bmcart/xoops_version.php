@@ -30,6 +30,7 @@ $modversion['templates'][] = array( 'file' => "itemList.html" );
 $modversion['templates'][] = array( 'file' => "itemDetail.html" );
 $modversion['templates'][] = array( 'file' => "cartList.html" );
 $modversion['templates'][] = array( 'file' => "checkout.html" );
+$modversion['templates'][] = array( 'file' => "editAddress.html" );
 
 /*
  * Model
@@ -40,7 +41,7 @@ $modversion['tables'][] = '{prefix}_{dirname}_category';
 $modversion['tables'][] = '{prefix}_{dirname}_item';
 $modversion['tables'][] = '{prefix}_{dirname}_cart';
 $modversion['tables'][] = '{prefix}_{dirname}_order';
-$modversion['tables'][] = '{prefix}_{dirname}_shipping';
+$modversion['tables'][] = '{prefix}_{dirname}_order_items';
 /*
  * Config
  */

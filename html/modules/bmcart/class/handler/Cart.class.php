@@ -47,7 +47,6 @@ class bmcart_cartHandler extends XoopsObjectGenericHandler
 		}
 		return $objects[0];
 	}
-
 	public function addToCart(&$dataList)
 	{
 		$cartObject = $this->getByItemId($dataList['item_id']);
@@ -62,5 +61,4 @@ class bmcart_cartHandler extends XoopsObjectGenericHandler
 		$cartObject->set('last_update',time());
 		$this->myHandler->insert($cartObject,true);
 	}
-
 }

@@ -37,7 +37,14 @@ define('_MD_BMCART_ADDTOCART', 'カートに入れる');
 define('_MD_BMCART_CART_LIST', 'カートの中身');
 define('_MD_BMCART_REMOVE_ITEM', '削除');
 define('_MD_BMCART_QTY_UPDATE', '更新');
-define('_MD_BMCART_CHECKOUT', 'レジに進む');
+define('_MD_BMCART_TO_CHECKOUT', 'レジに進む');
+define('_MD_BMCART_CHECKOUT', '注文内容の確認');
+define('_MD_BMCART_SHIPPING_TITLE', 'お届け先住所：');
+define('_MD_BMCART_BILLING_TITLE', '支払い方法:');
+define('_MD_BMCART_MODIFY', '変更する');
+define('_MD_BMCART_ADDNEW', '入力する');
+define('_MD_BMCART_PHONE', '電話番号：');
+define('_MD_BMCART_LAST4CODE', '下4桁');
 
 // cart.html
 define('_MD_BMCART_CART_INDEX', 'ショッピングカート');
