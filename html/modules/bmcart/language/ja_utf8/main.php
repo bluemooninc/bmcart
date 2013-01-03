@@ -44,7 +44,7 @@ define('_MD_BMCART_BILLING_TITLE', '支払い方法:');
 define('_MD_BMCART_MODIFY', '変更する');
 define('_MD_BMCART_ADDNEW', '入力する');
 define('_MD_BMCART_PHONE', '電話番号：');
-define('_MD_BMCART_LAST4CODE', '下4桁');
+define('_MD_BMCART_LAST3CODE', '下3桁');
 
 // cart.html
 define('_MD_BMCART_CART_INDEX', 'ショッピングカート');
@@ -109,3 +109,4 @@ define('_MD_BMCART_STATE_OPTIONS', '北海道,
 鹿児島県,
 沖縄県');
 define('_MD_BMCART_REGISTER','登録する');
+define('_MD_BMCART_ORDER_FIXED','注文を確定する');

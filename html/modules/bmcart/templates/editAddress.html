@@ -6,38 +6,39 @@
 
 <h4><{$smarty.const._MD_BMCART_SHIPPING_TITLE}></h4>
 
-<form name="editAddressForm" action="<{$xoops_url}>/modules/<{$dirname}>/checkout/editAddress" method="post">
+<form name="editAddressForm" action="<{$xoops_url}>/modules/<{$dirname}>/checkout/updateAddress" method="post">
 
 <table>
 	<tr>
 		<td><{$smarty.const._MD_BMCART_SHIPPING_TO}></td>
 		<td>
 			<{$smarty.const._MD_BMCART_LASTNAME}><br />
-			<input type="text" name="last_name"  value="<{$shipping.last_name}>" /><br />
+			<input type="text" name="last_name"  value="<{$CurrentOrder->getShow('last_name')}>" /><br />
 			<{$smarty.const._MD_BMCART_FIRSTNAME}><br />
-			<input type="text" name="first_name"  value="<{$shipping.first_name}>" /><br />
+			<input type="text" name="first_name"  value="<{$CurrentOrder->getShow('first_name')}>" /><br />
 		</td>
 	</tr>
 	<tr>
 		<td><{$smarty.const._MD_BMCART_PHONE}></td>
 		<td>
-			<input type="text" name="phone"  value="<{$shipping.phone}>" />
+			<input type="text" name="phone"  value="<{$CurrentOrder->getShow('phone')}>" />
 		</td>
 	</tr>
 	<tr>
 		<td><{$smarty.const._MD_BMCART_SHIPPING_ADDRESS}></td>
 		<td>
 			<{$smarty.const._MD_BMCART_ZIP_CODE}><br />
-			<input type="text" name="zip_code"  value="<{$shipping.zip_code}>" /><br />
+			<input type="text" name="zip_code"  value="<{$CurrentOrder->getShow('zip_code')}>" /><br />
 			<{$smarty.const._MD_BMCART_STATE}><br />
-			<input type="text" name="state"  value="<{$shipping.state}>" /><br />
+			<input type="text" name="state"  value="<{$CurrentOrder->getShow('state')}>" /><br />
 			<{$smarty.const._MD_BMCART_ADDRESS}><br />
-			<input type="text" name="address"  value="<{$shipping.address}>" /><br />
+			<input type="text" name="address"  value="<{$CurrentOrder->getShow('address')}>" /><br />
 			<{$smarty.const._MD_BMCART_ADDRESS2}><br />
-			<input type="text" name="address2"  value="<{$shipping.address2}>" />
+			<input type="text" name="address2"  value="<{$CurrentOrder->getShow('address2')}>" />
 		</td>
 	</tr>
 </table>
 <{$ticket_hidden}>
+<input type="hidden" name="order_id"  value="<{$CurrentOrder->getShow('order_id')}>" /><br />
 <input type="submit" name="submit" value="<{$smarty.const._MD_BMCART_REGISTER}>" />
 </form>

@@ -8,7 +8,7 @@ class bmcart_orderObject extends XoopsSimpleObject
     public function __construct()
     {
         $this->initVar('order_id', XOBJ_DTYPE_INT, 0);
-        $this->initVar('uid', XOBJ_DTYPE_INT, 0, true);
+        $this->initVar('uid', XOBJ_DTYPE_INT, Legacy_Utils::getUid() , true);
 	    $this->initVar('zip_code', XOBJ_DTYPE_STRING, '', true, 10);
 	    $this->initVar('state', XOBJ_DTYPE_STRING, '', true, 32);
 	    $this->initVar('address', XOBJ_DTYPE_STRING, '', true, 80);

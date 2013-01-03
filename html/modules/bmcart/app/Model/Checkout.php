@@ -56,6 +56,13 @@ class Model_Checkout
 		$criteria->addSort('order_date','DESC');
 		$this->myObjects = $this->myHandler->getObjects($criteria);
 	}
+	public function getCurrentOrder(){
+		$this->_getMyOrder();
+		if (isset($this->myObjects)){
+			return $this->myObjects;
+		}
+		return nulll;
+	}
 	public function update(){
 		$this->_getMyOrder();
 		if ($this->myObjects){
