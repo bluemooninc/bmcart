@@ -13,26 +13,32 @@ require_once _MY_MODULE_PATH . 'app/View/view.php';
 
 class Controller_Checkout extends AbstractAction {
 	protected $myObjects;
+	protected $cartHandler;
 	public function __construct(){
 		parent::__construct();
-		$this->mHandler = Model_Cart::forge();
+		$this->mHandler = Model_Checkout::forge();
+		$this->cartHandler = Model_Cart::forge();
 	}
 	public function action_view(){
 		$view = new View($this->root);
 		$view->setTemplate($this->template);
 		$view->set('ListData', $this->mListData);
-		$view->set('shipping_fee', $this->mHandler->isShippingFee() );
-		$view->set('total_amount', $this->mHandler->isTotalAmount() );
+		$view->set('shipping_fee', $this->cartHandler->isShippingFee() );
+		$view->set('total_amount', $this->cartHandler->isTotalAmount() );
 		$view->set('ticket_hidden',$this->mTicketHidden);
 		if (is_object($this->mPagenavi)) {
 			$view->set('pageNavi', $this->mPagenavi->getNavi());
 		}
 	}
 	public function action_index(){
-		$this->mListData = $this->mHandler->getCartList();
+		$this->mListData = $this->cartHandler->getCartList();
 		$this->template = 'checkout.html';
 	}
 	public function action_addNewAddress(){
 		$this->template = 'editAddress.html';
+	}
+	public function action_editAddress(){
+		$this->mHandler->update();    die;
+		$this->action_index();
 	}
 }

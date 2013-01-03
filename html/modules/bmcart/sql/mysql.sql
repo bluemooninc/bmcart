@@ -45,7 +45,7 @@ CREATE TABLE {prefix}_{dirname}_cart (
 ## order_date = 注文日 / paid_date=入金日 / shipping_date=発送日
 ##
 CREATE TABLE {prefix}_{dirname}_order (
-  `shipping_id` int(8) unsigned NOT NULL auto_increment,
+  `order_id` int(8) unsigned NOT NULL auto_increment,
   `uid` int(8) unsigned NOT NULL,
   `zip_code` varchar(10) NOT NULL,
   `state` varchar(32) NOT NULL,
@@ -59,21 +59,21 @@ CREATE TABLE {prefix}_{dirname}_order (
   `paid_date` int(10) unsigned NOT NULL,
   `shipping_date` int(10) unsigned NOT NULL,
   `order_date` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`shipping_id`),
+  PRIMARY KEY  (`order_id`),
   KEY uid (`uid`)
 ) ENGINE = MYISAM;
 ##
 ## Order Items
 ##
 CREATE TABLE {prefix}_{dirname}_order_items (
-  `order_id` int(8) unsigned NOT NULL auto_increment,
-  `shipping_id` int(8) unsigned NOT NULL,
+  `orderItem_id` int(8) unsigned NOT NULL auto_increment,
+  `order_id` int(8) unsigned NOT NULL,
   `uid` int(8) unsigned NOT NULL,
   `item_id` int(8) unsigned NOT NULL,
   `price` decimal(13,2),
   `shipping_fee` decimal(13,2),
   `qty` int(1) unsigned NOT NULL,
   `last_update` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`order_id`),
+  PRIMARY KEY  (`orderItem_id`),
   KEY uid (`uid`)
 ) ENGINE = MYISAM;

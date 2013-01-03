@@ -52,3 +52,60 @@ define('_MD_BMCART_CART_ITEMID', '商品番号');
 define('_MD_BMCART_CART_CONTENT', '商品名等');
 define('_MD_BMCART_CART_PRICE', '価格');
 define('_MD_BMCART_CART_QTY', '数量');
+
+define('_MD_BMCART_SHIPPING_TO', '配送先氏名');
+define('_MD_BMCART_FIRSTNAME', '名');
+define('_MD_BMCART_LASTNAME', '姓');
+define('_MD_BMCART_SHIPPING_ADDRESS', '配送先住所');
+define('_MD_BMCART_ZIP_CODE', '郵便番号');
+define('_MD_BMCART_STATE', '都道府県');
+define('_MD_BMCART_ADDRESS', '市区町村番地');
+define('_MD_BMCART_ADDRESS2', 'マンション名等');
+define('_MD_BMCART_STATE_OPTIONS', '北海道,
+青森県,
+岩手県,
+宮城県,
+秋田県,
+山形県,
+福島県,
+茨城県,
+栃木県,
+群馬県,
+埼玉県,
+千葉県,
+東京都,
+神奈川県,
+新潟県,
+富山県,
+石川県,
+福井県,
+山梨県,
+長野県,
+岐阜県,
+静岡県,
+愛知県,
+三重県,
+滋賀県,
+京都府,
+大阪府,
+兵庫県,
+奈良県,
+和歌山県,
+鳥取県,
+島根県,
+岡山県,
+広島県,
+山口県,
+徳島県,
+香川県,
+愛媛県,
+高知県,
+福岡県,
+佐賀県,
+長崎県,
+熊本県,
+大分県,
+宮崎県,
+鹿児島県,
+沖縄県');
+define('_MD_BMCART_REGISTER','登録する');

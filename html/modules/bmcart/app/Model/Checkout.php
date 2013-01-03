@@ -18,7 +18,7 @@ class Model_Checkout
 	public function __construct()
 	{
 		$this->_module_names = $this->getModuleNames();
-		$this->myHandler =& xoops_getModuleHandler('order');
+		$this->myHandler = xoops_getModuleHandler('order');
 	}
 	/**
 	 * get Instance
@@ -49,16 +49,27 @@ class Model_Checkout
 		return $ret;
 	}
 
-	public function &getMyOrderItems( )
+	private function _getMyOrder()
 	{
 		$criteria = new CriteriaCompo();
 		$criteria->add(new Criteria('uid', Legacy_Utils::getUid()));
-		$criteria->addSort('last_update','DESC');
-		$this->myHandler = xoops_getModuleHandler('order');
+		$criteria->addSort('order_date','DESC');
 		$this->myObjects = $this->myHandler->getObjects($criteria);
-		return $this->myObjects;
 	}
-	public function update(&$object){
+	public function update(){
+		$this->_getMyOrder();
+		if ($this->myObjects){
+			$object = $this->myObjects[0];
+		}else{
+			$object = $this->myHandler->create();
+		}
+		$object->set('first_name',xoops_getrequest('first_name'));
+		$object->set('last_name',xoops_getrequest('last_name'));
+		$object->set('phone',xoops_getrequest('phone'));
+		$object->set('zip_code',xoops_getrequest('zip_code'));
+		$object->set('state',xoops_getrequest('state'));
+		$object->set('address',xoops_getrequest('address'));
+		$object->set('address2',xoops_getrequest('address2'));
 		$this->myHandler->insert($object);
 	}
 }
