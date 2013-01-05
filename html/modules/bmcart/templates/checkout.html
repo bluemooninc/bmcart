@@ -9,6 +9,7 @@
 <form name="checkout" action="<{$xoops_url}>/modules/<{$dirname}>/checkout/orderFixed" method="post">
 
 <{if $CurrentOrder}>
+	<input type="hidden" name="order_id" value="<{$CurrentOrder->getShow('order_id')}>" />
 	<{$CurrentOrder->getShow('last_name')}><{$CurrentOrder->getShow('first_name')}>
 	<{$CurrentOrder->getShow('zip_code')}>
 	<{$CurrentOrder->getShow('state')}><{$CurrentOrder->getShow('address')}>
@@ -23,19 +24,25 @@
 	</a>
 <{/if}>
 <h4><{$smarty.const._MD_BMCART_BILLING_TITLE}></h4>
-
-<{if $CardList}>
+<p>
+<input type="radio" name="payby" value="1" /><{$smarty.const._MD_BMCART_PAY_BY_WIRE}>
+</p>
+<p>
+<input type="radio" name="payby" value="1" <{if $CardList}>checked<{/if}> /><{$smarty.const._MD_BMCART_PAY_BY_CREDIT_CARD}>
+	<{if $CardList}>
+	<ul>
 	<{$smarty.const._MD_BMCART_LAST3CODE}>
 	<{foreach item=card from=$CardList}>
-		<p>
+		<li>
 		<{if $card.DefaultFlag eq 1}>
 			<input type="radio" name="CardSeq" value="<{$card.CardSeq}>" checked />
 		<{else}>
 			<input type="radio" name="CardSeq" value="<{$card.CardSeq}>" />
 		<{/if}>
 		<{$card.CardNo}>
-		</p>
+		</li>
 	<{/foreach}>
+	</ul>
 	<a class="btn" href="<{$xoops_url}>/modules/<{$dirname}>/checkout/editCardInfo">
 	<{$smarty.const._MD_BMCART_MODIFY}>
 	</a>
@@ -44,6 +51,7 @@
 	<{$smarty.const._MD_BMCART_ADDNEW}>
 </a>
 <{/if}>
+</p>
 
 <table>
 	<tr>
@@ -79,5 +87,6 @@
 	</tr>
 </table>
 <{$ticket_hidden}>
-<input type="submit" name="orderFixed" value="<{$smarty.const._MD_BMCART_ORDER_FIXED}>" />
+<input type="hidden" name="amount" value="<{$total_amount}>" />
+<input class="btn btn-primary" type="submit" name="orderFixed" value="<{$smarty.const._MD_BMCART_ORDER_FIXED}>" />
 </form>

@@ -43,6 +43,8 @@ CREATE TABLE {prefix}_{dirname}_cart (
 ##
 ## ORDER
 ## order_date = 注文日 / paid_date=入金日 / shipping_date=発送日
+## status: 0=yet fixed, 1=fixed(and waiting by wire), 2=entry transit(by card)
+## 3=paid 4=shipped
 ##
 CREATE TABLE {prefix}_{dirname}_order (
   `order_id` int(8) unsigned NOT NULL auto_increment,
@@ -59,6 +61,7 @@ CREATE TABLE {prefix}_{dirname}_order (
   `paid_date` int(10) unsigned NOT NULL,
   `shipping_date` int(10) unsigned NOT NULL,
   `order_date` int(10) unsigned NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY  (`order_id`),
   KEY uid (`uid`)
 ) ENGINE = MYISAM;

@@ -16,7 +16,7 @@ abstract class AbstractAction {
 	protected $mTokenHandler = null;
 
 	// set variable
-	protected $mUrl = 'acl';
+	protected $mUrl = 'bmcart';
 	protected $method_params = null;
 	protected $mDirname;
 	protected $mControllerName;
@@ -216,7 +216,7 @@ abstract class AbstractAction {
 	protected function getRequest( $key ) {
 		return $this->root->mContext->mRequest->getRequest( $key );
 	}
-	protected function setToken( $name='acl', $timeout=0 ) {
+	protected function setToken( $name='bmcart', $timeout=0 ) {
 		$ticket = $this->mTokenHandler->create($name,$timeout);
 		$this->mTicketHidden = $ticket->getHtml();
 		return $this->mTicketHidden;
@@ -226,7 +226,7 @@ abstract class AbstractAction {
 	 * @param string $name
 	 * @return null
 	 */
-	protected function checkToken( $name='acl') {
+	protected function checkToken( $name='bmcart') {
 		$keys = array_keys($_POST);
 		$token = preg_grep("/^XOOPS_TOKEN_(.*)/", $keys);
 		if ($token){

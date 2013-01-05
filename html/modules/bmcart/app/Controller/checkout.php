@@ -43,7 +43,6 @@ class Controller_Checkout extends AbstractAction {
 		if ($creditService != null) {
 			$client = $this->root->mServiceManager->createClient($creditService);
 			$this->cardList = $client->call('getRegisteredCardList',null);
-			adump($this->cardList);
 		}
 		$this->template = 'checkout.html';
 	}
@@ -63,13 +62,21 @@ class Controller_Checkout extends AbstractAction {
 		$this->template = 'selectPayment.html';
 	}
 	public function action_orderFixed(){
+		$order_id = intval(xoops_getrequest("order_id"));
+		$cardSeq = intval(xoops_getrequest("CardSeq"));
+		$amount  = intval(xoops_getrequest("amount"));
 
-	}
-	public function action_doPayment(){
-		/*$payURL = XOOPS_URL."/modules/gmopgx/entryTran";
-		$sform = new XoopsThemeForm(_MYSHOP_PAY_ONLINE, 'payform', $payURL, 'post');
-		$sform->addElement(new XoopsFormHidden("OrderID", $commande->getVar('cmd_id')));
-		$sform->addElement(new XoopsFormHidden("PayAmount", $commandAmountTTC));
-		*/
+ 	    // TODO : Should be set on xoopsConfig
+		$tax  = $amount - intval($amount / 1.05);
+		$params = array('order_id' => $order_id,'cardSeq'=>$cardSeq,'amount'=>$amount,'tax'=>$tax);
+		$creditService = $this->root->mServiceManager->getService('gmoPayment');
+		if ($creditService != null) {
+			$client = $this->root->mServiceManager->createClient($creditService);
+			$ret = $client->call('entryTransit',$params);
+			if($ret==true){
+				$this->executeRedirect(XOOPS_URL, 3, 'Done');
+			}
+		}
+
 	}
 }

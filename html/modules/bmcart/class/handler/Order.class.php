@@ -21,6 +21,7 @@ class bmcart_orderObject extends XoopsSimpleObject
 	    $this->initVar('paid_date', XOBJ_DTYPE_INT, 0);
 	    $this->initVar('shipping_date', XOBJ_DTYPE_INT, 0);
 	    $this->initVar('order_date', XOBJ_DTYPE_INT, 0);
+	    $this->initVar('status', XOBJ_DTYPE_INT, 0);
     }
 }
 
@@ -36,6 +37,4 @@ class bmcart_orderHandler extends XoopsObjectGenericHandler
     {
         parent::XoopsObjectGenericHandler($db);
     }
-
-
 }

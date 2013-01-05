@@ -53,6 +53,9 @@ define('_MD_BMCART_CART_CONTENT', '商品名等');
 define('_MD_BMCART_CART_PRICE', '価格');
 define('_MD_BMCART_CART_QTY', '数量');
 
+define('_MD_BMCART_PAY_BY_WIRE', '銀行振込：ABC銀行 DFG支店 普通）1234567');
+define('_MD_BMCART_PAY_BY_CREDIT_CARD', 'クレジットカード');
+
 define('_MD_BMCART_SHIPPING_TO', '配送先氏名');
 define('_MD_BMCART_FIRSTNAME', '名');
 define('_MD_BMCART_LASTNAME', '姓');
