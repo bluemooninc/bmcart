@@ -18,10 +18,11 @@ class bmcart_orderObject extends XoopsSimpleObject
 	    $this->initVar('last_name', XOBJ_DTYPE_STRING, '', true, 80);
 	    $this->initVar('price', XOBJ_DTYPE_INT, 0, true);
 	    $this->initVar('shipping_fee', XOBJ_DTYPE_INT, 0, true);
-	    $this->initVar('paid_date', XOBJ_DTYPE_INT, 0);
-	    $this->initVar('shipping_date', XOBJ_DTYPE_INT, 0);
-	    $this->initVar('order_date', XOBJ_DTYPE_INT, 0);
-	    $this->initVar('status', XOBJ_DTYPE_INT, 0);
+	    $this->initVar('payment_type', XOBJ_DTYPE_INT, 0);
+	    $this->initVar('card_order_id', XOBJ_DTYPE_STRING, null, true, 10);
+	    $this->initVar('order_date', XOBJ_DTYPE_INT, null);
+	    $this->initVar('paid_date', XOBJ_DTYPE_INT, null);
+	    $this->initVar('shipping_date', XOBJ_DTYPE_INT, null);
     }
 }
 

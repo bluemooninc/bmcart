@@ -1,5 +1,8 @@
 <?php
 /**
+ * Copyright(c): Bluemoon inc. 2013
+ * Author: Y.SAKAI
+ * Licence : GPL Ver.3
  * Created by JetBrains PhpStorm.
  * User: bluemooninc
  * Date: 2012/12/31
@@ -49,19 +52,52 @@ class Model_Checkout
 		return $ret;
 	}
 
-	private function _getMyOrder()
+	/**
+	 * @param null $order_id
+	 */
+	private function _getMyOrder($order_id=null)
+	{
+		$criteria = new CriteriaCompo();
+		if (!is_null($order_id)){
+			// get fixed order
+			$criteria->add(new Criteria('order_id', $order_id));
+		}else{
+			// get current order
+			$criteria->add(new Criteria('order_date', null));
+		}
+		$criteria->add(new Criteria('uid', Legacy_Utils::getUid()));
+		$this->myObjects = $this->myHandler->getObjects($criteria);
+	}
+	private function &_getMyLastOrder()
 	{
 		$criteria = new CriteriaCompo();
 		$criteria->add(new Criteria('uid', Legacy_Utils::getUid()));
-		$criteria->addSort('order_date','DESC');
-		$this->myObjects = $this->myHandler->getObjects($criteria);
+		$criteria->addSort('order_date', 'DESC');
+		return $this->myHandler->getObjects($criteria);
 	}
 	public function getCurrentOrder(){
-		$this->_getMyOrder();
-		if (isset($this->myObjects)){
-			return $this->myObjects;
+		if (count($this->myObjects)>0){
+			return $this->myObjects[0];
+		}else{
+			$newObject = $this->myHandler->create();
+			$objects = $this->_getMyLastOrder();
+			if (count($objects)>0){
+				$newObject->set('first_name',$objects[0]->getVar('first_name'));
+				$newObject->set('last_name',$objects[0]->getVar('last_name'));
+				$newObject->set('zip_code',$objects[0]->getVar('zip_code'));
+				$newObject->set('state',$objects[0]->getVar('state'));
+				$newObject->set('address',$objects[0]->getVar('address'));
+				$newObject->set('address2',$objects[0]->getVar('address2'));
+				$newObject->set('phone',$objects[0]->getVar('phone'));
+			}
+			$this->myHandler->insert($newObject,true);
+			return $newObject;
 		}
-		return nulll;
+		return null;
+	}
+	public function addNewAddress(){
+		$object = $this->myHandler->create();
+		$this->myHandler->insert($object,true);
 	}
 	public function update(){
 		$this->_getMyOrder();
@@ -78,5 +114,30 @@ class Model_Checkout
 		$object->set('address',xoops_getrequest('address'));
 		$object->set('address2',xoops_getrequest('address2'));
 		$this->myHandler->insert($object);
+	}
+
+	public function setOrderStatus($payment_type,$cardOrderId=null){
+		$this->_getMyOrder();
+		$ret = false;
+		if ($this->myObjects){
+			$object = $this->myObjects[0];
+			$object->set('payment_type',$payment_type);
+			$object->set('card_order_id',$cardOrderId);
+			$object->set('order_date',time());
+			$this->myHandler->insert($object);
+			$ret = true;
+		}
+		return $ret;
+	}
+	public function moveCartToOrder($ListData,$order_id){
+		$itemHandler = xoops_getModuleHandler('orderItems');
+		foreach($ListData as $itemObject){
+			$addObject = $itemHandler->create();
+			$addObject->set('order_id', $order_id);
+			$addObject->set('item_id', $itemObject['item_id']);
+			$addObject->set('price', $itemObject['price']);
+			$addObject->set('qty', $itemObject['qty']);
+			$itemHandler->insert($addObject);
+		}
 	}
 }

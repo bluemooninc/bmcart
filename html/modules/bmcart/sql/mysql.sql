@@ -43,40 +43,39 @@ CREATE TABLE {prefix}_{dirname}_cart (
 ##
 ## ORDER
 ## order_date = 注文日 / paid_date=入金日 / shipping_date=発送日
-## status: 0=yet fixed, 1=fixed(and waiting by wire), 2=entry transit(by card)
+## payment_type: 0=not set, 1=by wire(cash), 2=by credit card
 ## 3=paid 4=shipped
 ##
 CREATE TABLE {prefix}_{dirname}_order (
   `order_id` int(8) unsigned NOT NULL auto_increment,
   `uid` int(8) unsigned NOT NULL,
+  `first_name` varchar(80) NOT NULL,
+  `last_name` varchar(80) NOT NULL,
   `zip_code` varchar(10) NOT NULL,
   `state` varchar(32) NOT NULL,
   `address` varchar(80) NOT NULL,
   `address2` varchar(80) NOT NULL,
   `phone` varchar(12) NOT NULL,
-  `first_name` varchar(80) NOT NULL,
-  `last_name` varchar(80) NOT NULL,
   `price` decimal(13,2),
   `shipping_fee` decimal(13,2),
-  `paid_date` int(10) unsigned NOT NULL,
-  `shipping_date` int(10) unsigned NOT NULL,
-  `order_date` int(10) unsigned NOT NULL,
-  `status` tinyint(1) unsigned NOT NULL,
+  `payment_type` tinyint(1) unsigned NOT NULL,
+  `card_order_id` varchar(14),
+  `order_date` int(10) unsigned,
+  `paid_date` int(10) unsigned,
+  `shipping_date` int(10) unsigned,
   PRIMARY KEY  (`order_id`),
   KEY uid (`uid`)
 ) ENGINE = MYISAM;
 ##
 ## Order Items
 ##
-CREATE TABLE {prefix}_{dirname}_order_items (
+CREATE TABLE {prefix}_{dirname}_orderItems (
   `orderItem_id` int(8) unsigned NOT NULL auto_increment,
   `order_id` int(8) unsigned NOT NULL,
-  `uid` int(8) unsigned NOT NULL,
   `item_id` int(8) unsigned NOT NULL,
   `price` decimal(13,2),
   `shipping_fee` decimal(13,2),
   `qty` int(1) unsigned NOT NULL,
-  `last_update` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`orderItem_id`),
-  KEY uid (`uid`)
+  KEY order_id (`order_id`)
 ) ENGINE = MYISAM;

@@ -106,4 +106,7 @@ class Model_Cart
 			}
 		}
 	}
+	public function clearMyCart(){
+		$this->myHandler->deleteAll(new Criteria('uid', Legacy_Utils::getUid()));
+	}
 }

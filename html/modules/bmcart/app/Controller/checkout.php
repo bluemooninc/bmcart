@@ -12,7 +12,7 @@ require_once _MY_MODULE_PATH . 'app/Model/PageNavi.class.php';
 require_once _MY_MODULE_PATH . 'app/View/view.php';
 
 class Controller_Checkout extends AbstractAction {
-	protected $myObjects;
+	protected $myObject;
 	protected $cartHandler;
 	protected $cardList;
 
@@ -23,8 +23,8 @@ class Controller_Checkout extends AbstractAction {
 	}
 	public function action_view(){
 		$view = new View($this->root);
-		if(isset($this->myObjects)){
-			$view->set('CurrentOrder', $this->myObjects[0]);
+		if(isset($this->myObject)){
+			$view->set('CurrentOrder', $this->myObject);
 		}
 		$view->set('CardList', $this->cardList);
 		$view->set('ListData', $this->mListData);
@@ -38,7 +38,7 @@ class Controller_Checkout extends AbstractAction {
 	}
 	public function action_index(){
 		$this->mListData = $this->cartHandler->getCartList();
-		$this->myObjects = $this->mHandler->getCurrentOrder();
+		$this->myObject = $this->mHandler->getCurrentOrder();
 		$creditService = $this->root->mServiceManager->getService('gmoPayment');
 		if ($creditService != null) {
 			$client = $this->root->mServiceManager->createClient($creditService);
@@ -46,37 +46,54 @@ class Controller_Checkout extends AbstractAction {
 		}
 		$this->template = 'checkout.html';
 	}
-	public function action_addNewAddress(){
+	public function action_editAddress(){
+		$this->myObject = $this->mHandler->getCurrentOrder();
 		$this->template = 'editAddress.html';
 	}
-	public function action_editAddress(){
-		$this->myObjects = $this->mHandler->getCurrentOrder();
-		$this->template = 'editAddress.html';
+	public function action_addNewAddress(){
+		$this->mHandler->addNewAddress();
+		$this->action_editAddress();
 	}
 	public function action_updateAddress(){
 		$this->mHandler->update();
 		$this->action_index();
 	}
 	public function action_selectPayment(){
-		$this->myObjects = $this->mHandler->getCurrentOrder();
+		$this->myObject = $this->mHandler->getCurrentOrder();
 		$this->template = 'selectPayment.html';
 	}
-	public function action_orderFixed(){
-		$order_id = intval(xoops_getrequest("order_id"));
-		$cardSeq = intval(xoops_getrequest("CardSeq"));
-		$amount  = intval(xoops_getrequest("amount"));
-
- 	    // TODO : Should be set on xoopsConfig
-		$tax  = $amount - intval($amount / 1.05);
-		$params = array('order_id' => $order_id,'cardSeq'=>$cardSeq,'amount'=>$amount,'tax'=>$tax);
+	private function _payByCreditCard ($cardOrderId,$amount,$tax,$cardSeq){
+		$ret = false;
+		$params = array('order_id' => $cardOrderId,'cardSeq'=>$cardSeq,'amount'=>$amount,'tax'=>$tax);
 		$creditService = $this->root->mServiceManager->getService('gmoPayment');
 		if ($creditService != null) {
 			$client = $this->root->mServiceManager->createClient($creditService);
 			$ret = $client->call('entryTransit',$params);
-			if($ret==true){
-				$this->executeRedirect(XOOPS_URL, 3, 'Done');
-			}
 		}
-
+		return $ret;
+	}
+	public function action_orderFixed(){
+		$order_id = intval(xoops_getrequest("order_id"));
+		$cardOrderId = null;
+		$payBy = intval(xoops_getrequest("payBy"));
+		$cardSeq = intval(xoops_getrequest("CardSeq"));
+		$amount  = intval(xoops_getrequest("amount"));
+		$ret = false;
+		// TODO : Tax Should be set on xoopsConfig
+		$tax  = $amount - intval($amount / 1.05);
+/*		switch($payBy){
+			case 1: // Wire transfer
+			case 2: // Pay by Card
+				$cardOrderId = sprintf("%s%08d",date("ymd"),$order_id);
+				$ret = $this->_payByCreditCard($cardOrderId,$amount,$tax,$cardSeq);
+				break;
+		}
+		if($ret==true){*/
+			$this->mListData = $this->cartHandler->getCartList();
+			$this->mHandler->moveCartToOrder($this->mListData,$order_id);
+			$this->cartHandler->clearMyCart();
+			$this->mHandler->setOrderStatus($payBy,$cardOrderId);
+			$this->executeRedirect(XOOPS_URL, 3, 'Done');
+		//}
 	}
 }

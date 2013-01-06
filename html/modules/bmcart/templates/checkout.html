@@ -10,9 +10,11 @@
 
 <{if $CurrentOrder}>
 	<input type="hidden" name="order_id" value="<{$CurrentOrder->getShow('order_id')}>" />
-	<{$CurrentOrder->getShow('last_name')}><{$CurrentOrder->getShow('first_name')}>
+	<{$CurrentOrder->getShow('last_name')}>
+	<{$CurrentOrder->getShow('first_name')}>
 	<{$CurrentOrder->getShow('zip_code')}>
-	<{$CurrentOrder->getShow('state')}><{$CurrentOrder->getShow('address')}>
+	<{$CurrentOrder->getShow('state')}>
+	<{$CurrentOrder->getShow('address')}>
 	<{$CurrentOrder->getShow('address2')}>
 	<{$smarty.const._MD_BMCART_PHONE}><{$CurrentOrder->getShow('phone')}>
 	<a class="btn" href="<{$xoops_url}>/modules/<{$dirname}>/checkout/editAddress">
@@ -25,10 +27,10 @@
 <{/if}>
 <h4><{$smarty.const._MD_BMCART_BILLING_TITLE}></h4>
 <p>
-<input type="radio" name="payby" value="1" /><{$smarty.const._MD_BMCART_PAY_BY_WIRE}>
+<input type="radio" name="payBy" value="1" /><{$smarty.const._MD_BMCART_payment_type_WIRE}>
 </p>
 <p>
-<input type="radio" name="payby" value="1" <{if $CardList}>checked<{/if}> /><{$smarty.const._MD_BMCART_PAY_BY_CREDIT_CARD}>
+<input type="radio" name="payBy" value="2" <{if $CardList}>checked<{/if}> /><{$smarty.const._MD_BMCART_payment_type_CREDIT_CARD}>
 	<{if $CardList}>
 	<ul>
 	<{$smarty.const._MD_BMCART_LAST3CODE}>

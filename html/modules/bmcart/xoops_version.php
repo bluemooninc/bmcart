@@ -1,8 +1,8 @@
 <?php
 /*
-* GMO-PG - Payment Module as XOOPS Cube Module
+* B.M.Cart - Cart Module on XOOPS Cube v2.2
 * Copyright (c) Yoshi Sakai at Bluemoon inc. (http://bluemooninc.jp)
-* GPL V2 licence
+* GPL V3 licence
  */
 if (!defined('XOOPS_ROOT_PATH')) exit();
 if ( !isset($root) ) {
@@ -41,7 +41,7 @@ $modversion['tables'][] = '{prefix}_{dirname}_category';
 $modversion['tables'][] = '{prefix}_{dirname}_item';
 $modversion['tables'][] = '{prefix}_{dirname}_cart';
 $modversion['tables'][] = '{prefix}_{dirname}_order';
-$modversion['tables'][] = '{prefix}_{dirname}_order_items';
+$modversion['tables'][] = '{prefix}_{dirname}_orderItems';
 /*
  * Config
  */
