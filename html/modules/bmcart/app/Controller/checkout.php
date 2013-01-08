@@ -8,6 +8,7 @@
  */
 require_once _MY_MODULE_PATH . 'app/Model/Cart.php';
 require_once _MY_MODULE_PATH . 'app/Model/Checkout.php';
+require_once _MY_MODULE_PATH . 'app/Model/MailBuilder.php';
 require_once _MY_MODULE_PATH . 'app/Model/PageNavi.class.php';
 require_once _MY_MODULE_PATH . 'app/View/view.php';
 
@@ -75,25 +76,33 @@ class Controller_Checkout extends AbstractAction {
 	public function action_orderFixed(){
 		$order_id = intval(xoops_getrequest("order_id"));
 		$cardOrderId = null;
-		$payBy = intval(xoops_getrequest("payBy"));
+		$payment_type = intval(xoops_getrequest("payment_type"));
 		$cardSeq = intval(xoops_getrequest("CardSeq"));
-		$amount  = intval(xoops_getrequest("amount"));
-		$ret = false;
+		$this->mListData = $this->cartHandler->getCartList();
+		$shipping_fee = $this->cartHandler->isShippingFee();
+		$amount = $this->cartHandler->isTotalAmount();
+		$sub_total = $this->cartHandler->isSubTotal();
 		// TODO : Tax Should be set on xoopsConfig
-		$tax  = $amount - intval($amount / 1.05);
-/*		switch($payBy){
+		$tax  = $sub_total - intval($sub_total / 1.05);
+		$ret = false;
+/*		switch($payment_type){
 			case 1: // Wire transfer
+                $ret = true;
+				break;
 			case 2: // Pay by Card
 				$cardOrderId = sprintf("%s%08d",date("ymd"),$order_id);
 				$ret = $this->_payByCreditCard($cardOrderId,$amount,$tax,$cardSeq);
 				break;
 		}
 		if($ret==true){*/
-			$this->mListData = $this->cartHandler->getCartList();
 			$this->mHandler->moveCartToOrder($this->mListData,$order_id);
 			$this->cartHandler->clearMyCart();
-			$this->mHandler->setOrderStatus($payBy,$cardOrderId);
-			$this->executeRedirect(XOOPS_URL, 3, 'Done');
+			$this->mHandler->setOrderStatus($payment_type,$cardOrderId,$sub_total,$tax,$shipping_fee,$amount);
+			$orderObject = $this->mHandler->myObject();
+			$mail = new Model_Mail();
+			$mail->sendThankYouMail("ThankYouForOrder.tpl",$orderObject,$this->mListData);
+			//$this->executeRedirect(XOOPS_URL, 3, 'Done');
+		exit;
 		//}
 	}
 }

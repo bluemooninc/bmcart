@@ -87,6 +87,9 @@ class Model_Cart
 		$this->total_amount = $this->sub_total + $this->shipping_fee;
 		return $mListData;
 	}
+	public function &isSubTotal(){
+		return $this->sub_total;
+	}
 	public function &isTotalAmount(){
 		return $this->total_amount;
 	}
