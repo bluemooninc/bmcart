@@ -8,8 +8,7 @@
  */
 if (!defined('XOOPS_ROOT_PATH')) exit();
 
-class Model_Cart
-{
+class Model_Cart extends AbstractModel {
 	protected $myHandler;
 	protected $myObjects;
 	protected $shipping_fee=0;
@@ -37,21 +36,6 @@ class Model_Cart
 			$instance = new Model_Cart();
 		}
 		return $instance;
-	}
-
-	protected function getModuleNames($isactive = FALSE)
-	{
-		$criteria = new CriteriaCompo();
-		if ($isactive) {
-			$criteria->add(new Criteria('isactive', '1', '='));
-		}
-		$module_handler =& xoops_gethandler('module');
-		$objs = $module_handler->getObjects($criteria);
-		$ret = array();
-		foreach ($objs as $obj) {
-			$ret[$obj->getVar('mid')] = $obj->getVar('name');
-		}
-		return $ret;
 	}
 
 	private function _getMyCartItems()

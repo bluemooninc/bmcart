@@ -120,3 +120,9 @@ define('_MD_BMCART_PAYMENT_DESC_WIRE','銀行振込によるお支払いを選�
 以下の口座にお振込下さい。入金確認後に発送の手続きを行います。
 振込先口座：あいう銀行　えお支店（普通口座）1234567
 振込先名義：カキク　ケコ');
+
+define('_MD_BMCART_ORDER_LIST','ご注文一覧');
+define('_MD_BMCART_ORDER_ID','注文番号');
+define('_MD_BMCART_ORDER_DATE','注文日時');
+define('_MD_BMCART_SUB_TOTAL','商品合計(内消費税)');
+define('_MD_BMCART_QTY_DESC', '個');

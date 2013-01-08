@@ -6,8 +6,7 @@ if (!defined('XOOPS_ROOT_PATH')) exit();
 /**
  * Utility
  */
-class Model_Item
-{
+class Model_Item extends AbstractModel {
 	protected $_item_types = array();
 	protected $_item_names = array();
 	protected $myHandler;
@@ -38,7 +37,7 @@ class Model_Item
 	public function getName($id)
 	{
 		$obj = $this->myHandler->get($id);
-		$ret = isset($obj) ? $obj->getVar("name") : NULL;
+		$ret = isset($obj) ? $obj->getVar("item_name") : NULL;
 		return $ret;
 	}
 
@@ -148,19 +147,6 @@ class Model_Item
 			return $xoopsUser->isAdmin();
 		}
 		return FALSE;
-	}
-
-	public function getModuleName($modname)
-	{
-		$criteria = new CriteriaCompo();
-		$criteria->add(new Criteria('isactive', '1', '='));
-		$criteria->add(new Criteria('name', $modname, '='));
-		$module_handler =& xoops_gethandler('module');
-		$objs = $module_handler->getObjects($criteria, 1);
-		foreach ($objs as $obj) {
-			$ret = $obj->getVar('name');
-		}
-		return $ret;
 	}
 
 //-----------------

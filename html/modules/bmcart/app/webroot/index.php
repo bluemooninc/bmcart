@@ -67,6 +67,7 @@ if (preg_match('/^[0-9a-zA-Z]+$/', $controller_name)) {
 $controllerFileName = $controller_name . $ext;
 $controllerFullPath = _MY_MODULE_PATH . $controllerAppPath . $controllerFileName;
 require_once _MY_MODULE_PATH . $controllerAppPath . 'AbstractAction.class.php';
+require_once _MY_MODULE_PATH . $modelAppPath . 'AbstractModel.class.php';
 //require_once _MY_MODULE_PATH . $controllerAppPath . 'ErrorMessageHandler.php';
 
 $errorMessage[3] = "class " . $controllerClass . " extends AbstractAction {";

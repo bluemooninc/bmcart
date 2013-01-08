@@ -20,6 +20,7 @@ $modversion['adminmenu'] = "admin/menu.php";
 $modversion['sub'][] = array('name' => _MI_BMCART_CATEGORY_LIST, 'url' => 'bmcart');
 $modversion['sub'][] = array('name' => _MI_BMCART_ITEM_LIST, 'url' => 'itemList');
 $modversion['sub'][] = array('name' => _MI_BMCART_CART_LIST, 'url' => 'cartList');
+$modversion['sub'][] = array('name' => _MI_BMCART_ORDER_LIST, 'url' => 'orderList');
 
 /*
  * View
@@ -31,6 +32,8 @@ $modversion['templates'][] = array( 'file' => "itemDetail.html" );
 $modversion['templates'][] = array( 'file' => "cartList.html" );
 $modversion['templates'][] = array( 'file' => "checkout.html" );
 $modversion['templates'][] = array( 'file' => "editAddress.html" );
+$modversion['templates'][] = array( 'file' => "orderList.html" );
+$modversion['templates'][] = array( 'file' => "orderItems.html" );
 
 /*
  * Model
