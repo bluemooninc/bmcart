@@ -65,6 +65,8 @@ CREATE TABLE {prefix}_{dirname}_order (
   `order_date` int(10) unsigned,
   `paid_date` int(10) unsigned,
   `shipping_date` int(10) unsigned,
+  `Shipping_carrier` varchar(32),
+  `shipping_number` varchar(24),
   PRIMARY KEY  (`order_id`),
   KEY uid (`uid`)
 ) ENGINE = MYISAM;

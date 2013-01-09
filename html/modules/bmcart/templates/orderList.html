@@ -10,6 +10,7 @@
 		<td><{$smarty.const._MD_BMCART_SUB_TOTAL}></td>
 		<td><{$smarty.const._MD_BMCART_SHIPPING_FEE}></td>
 		<td><{$smarty.const._MD_BMCART_AMOUNT}></td>
+		<td><{$smarty.const._MD_BMCART_PAYMENT_TYPE}></td>
 	</tr>
 	<{foreach item=order from=$ListData}>
 	<tr>
@@ -30,6 +31,13 @@
 		</td>
 		<td align="right">
 			<{$order->getShow('amount')|number_format}><{$smarty.const._MD_BMCART_PRICE_DESC}>
+		</td>
+		<td align="right">
+			<{if $order->getShow('payment_type')==1}>
+				<{$smarty.const._MD_BMCART_PAYBY_WIRE}>
+			<{elseif $order->getShow('payment_type')==2}>
+				<{$smarty.const._MD_BMCART_PAYBY_CREDIT}>
+			<{/if}>
 		</td>
 	</tr>
 	<{/foreach}>

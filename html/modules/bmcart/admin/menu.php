@@ -22,9 +22,3 @@ $adminmenu[]=array(
 	'show' => true
 );
 
-$adminmenu[]=array(
-	'title' => _MI_BMCART_SALES_LIST,
-	'keywords' => _MI_BMCART_KEYWORD_SALES_LIST,
-	'link' => "admin/index.php?action=orderList",
-	'show' => true
-);
