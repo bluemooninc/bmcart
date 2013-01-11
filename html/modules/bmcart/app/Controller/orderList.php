@@ -22,19 +22,8 @@ class Controller_OrderList extends AbstractAction {
 		$this->template = 'orderList.html';
 	}
 	public function action_orderDetail(){
-		$itemHandler = Model_Item::forge();
 		if (isset($this->mParams[0])) $order_id = intval($this->mParams[0]);
-		$objects = $this->mHandler->getOrderItems($order_id);
-		foreach($objects as $object){
-			$item = array();
-			$itemId = $object->getVar('item_id');
-			foreach($object->mVars as $key=>$val){
-				$item[$key] = $val['value'];
-			}
-			$item['item_name'] = $itemHandler->getName($itemId);
-			$item['amount'] = $item['price']*$item['qty'];
-			$this->mListData[$itemId] = $item;
-		}
+		$this->mListData = $this->mHandler->getOrderItems($order_id);
 		$this->template = 'orderItems.html';
 	}
 	public function action_view(){

@@ -65,7 +65,7 @@ define('_AD_BMCART_EXEC_TRANSIT', 'クレジット決済の実行');
 define('_AD_BMCART_TIPS_TRANSIT', 'クレジット決済代行サービスのAPIより決済を実行します。');
 define('_AD_BMCART_EXCEC_TRANSIT_DO', '決済実行');
 define('_AD_BMCART_CARD_ORDER_ID', 'クレジット決済用オーダーID');
-define('_AD_BMCART_SHIPPING_MAIL', '発送完了のお知らせ');
+define('_AD_BMCART_SHIPPING_MAIL', '商品発送のお知らせ');
 define('_AD_BMCART_TIPS_SHIPPING', '商品の発送をお客様にメール送信します。');
 define('_AD_BMCART_USER_NAME', '発注ユーザー情報');
 define('_AD_BMCART_SHIPPING_TO_NAME', '受取人氏名');

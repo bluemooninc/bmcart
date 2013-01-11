@@ -12,6 +12,8 @@ if (!defined('XOOPS_ROOT_PATH')) exit();
 require_once XOOPS_MODULE_PATH . "/bmcart/class/AbstractEditAction.class.php";
 require_once XOOPS_MODULE_PATH . "/bmcart/admin/forms/OrderAdminTransitForm.class.php";
 require_once XOOPS_MODULE_PATH . "/bmcart/app/Model/MailBuilder.php";
+require_once XOOPS_MODULE_PATH . "/bmcart/app/Model/Order.php";
+
 
 class bmcart_SendMailAction extends bmcart_AbstractEditAction
 {
@@ -33,11 +35,17 @@ class bmcart_SendMailAction extends bmcart_AbstractEditAction
 	function _doExecute()
 	{
 		$handler =& xoops_getmodulehandler('order');
-		$orderObject =& $handler->get($this->mObject->get('order_id'));
+		$order_id = $this->mObject->get('order_id');
+		$orderObject =& $handler->get($order_id);
+		$uid = $orderObject->getVar('uid');
+		$OrderItems = Model_Order::forge();
+		$mListData = $OrderItems->getOrderItems($order_id);
 		// TODO: Paypal and other needs make options in the future
 		if ($orderObject != null) {
+			$userHandler = xoops_gethandler('user');
+			$userObject = $userHandler->get($uid);
 			$mail = new Model_Mail();
-			$mail->sendMail("ShippingNow.tpl",$orderObject,$this->mListData);
+			$mail->sendMail("ShippingNow.tpl",$orderObject,$mListData,_AD_BMCART_SHIPPING_MAIL,$userObject);
 		}
 
 		if (!$result) {

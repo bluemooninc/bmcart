@@ -7,6 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 if (!defined('XOOPS_ROOT_PATH')) exit();
+require_once XOOPS_ROOT_PATH . '/modules/bmcart/app/Model/AbstractModel.class.php';
 
 class Model_Order extends AbstractModel {
 	protected $myHandler;
@@ -38,14 +39,29 @@ class Model_Order extends AbstractModel {
 		return $instance;
 	}
 
-
 	public function &getOrderItems($order_id)
 	{
 		$criteria = new CriteriaCompo();
 		$criteria->add(new Criteria('order_id', $order_id));
 		$this->myHandler = xoops_getModuleHandler('orderItems');
 		$this->myObjects = $this->myHandler->getObjects($criteria);
-		return $this->myObjects;
+		$itemHandler = xoops_getModuleHandler('item');
+
+		$mListData = array();
+		foreach($this->myObjects as $object){
+			$item = array();
+			$itemId = $object->getVar('item_id');
+			foreach($object->mVars as $key=>$val){
+				$item[$key] = $val['value'];
+			}
+			$itemObject = $itemHandler->get($itemId);
+			if ($itemObject){
+				$item['item_name'] = $itemObject->getVar('item_name');
+			}
+			$item['amount'] = $item['price']*$item['qty'];
+			$mListData[$itemId] = $item;
+		}
+		return $mListData;
 	}
 
 	public function &getOrderList()

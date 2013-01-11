@@ -27,4 +27,10 @@ class bmcart_orderItemsHandler extends XoopsObjectGenericHandler
     {
         parent::XoopsObjectGenericHandler($db);
     }
+	public function getByOrderId($orderId){
+		$criteria = new CriteriaCompo();
+		$criteria->add(new Criteria('orderId', $orderId));
+		$this->myObjects = parent::getObjects($criteria);
+		return $this->myObjects;
+	}
 }

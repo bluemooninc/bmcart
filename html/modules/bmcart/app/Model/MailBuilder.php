@@ -54,11 +54,15 @@ class Model_Mail
 	 * @param $paymentInfo
 	 * @param $listData
 	 */
-	public function sendMail($tpl_name,$orderObject,$listData){
+	public function sendMail($tpl_name,$orderObject,$listData,$subject,$userObject=null){
 		$this->mMailer->setFromEmail($this->mXoopsConfig['adminmail']);
 		$this->mMailer->setFromName($this->mXoopsConfig['sitename']);
-		$this->mMailer->setToUsers($this->mXoopsUser);
-		$this->mMailer->setSubject(_MD_BMCART_ORDER_MAIL);
+		if (is_null($userObject)){
+			$this->mMailer->setToUsers($this->mXoopsUser);
+		}else{
+			$this->mMailer->setToUsers($userObject);
+		}
+		$this->mMailer->setSubject($subject);
 		$this->mMailer->setTemplate($tpl_name);
 		$this->_setBody($orderObject,$listData);
 		if ($this->mMailer->send()) {
