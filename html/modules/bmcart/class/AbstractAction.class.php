@@ -38,11 +38,11 @@ class Gmopg_AbstractAction
 	}
 
 	function getDefaultView(){
-		return bmcart_FRAME_VIEW_NONE;
+		return BMCART_FRAME_VIEW_NONE;
 	}
 
 	function execute(){
-		return bmcart_FRAME_VIEW_NONE;
+		return BMCART_FRAME_VIEW_NONE;
 	}
 
 	function executeViewSuccess(&$controller,&$render){

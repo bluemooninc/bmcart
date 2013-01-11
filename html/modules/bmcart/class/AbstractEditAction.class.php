@@ -77,22 +77,22 @@ class bmcart_AbstractEditAction extends bmcart_Action
 	function getDefaultView(&$controller, &$xoopsUser)
 	{
 		if ($this->mObject == null) {
-			return bmcart_FRAME_VIEW_ERROR;
+			return BMCART_FRAME_VIEW_ERROR;
 		}
 	
 		$this->mActionForm->load($this->mObject);
 		
-		return bmcart_FRAME_VIEW_INPUT;
+		return BMCART_FRAME_VIEW_INPUT;
 	}
 
 	function execute(&$controller, &$xoopsUser)
 	{
 		if ($this->mObject == null) {
-			return bmcart_FRAME_VIEW_ERROR;
+			return BMCART_FRAME_VIEW_ERROR;
 		}
 	
 		if (xoops_getrequest('_form_control_cancel') != null) {
-			return bmcart_FRAME_VIEW_CANCEL;
+			return BMCART_FRAME_VIEW_CANCEL;
 		}
 
 		$this->mActionForm->load($this->mObject);
@@ -101,13 +101,13 @@ class bmcart_AbstractEditAction extends bmcart_Action
 		$this->mActionForm->validate();
 	
 		if($this->mActionForm->hasError()) {
-			return bmcart_FRAME_VIEW_INPUT;
+			return BMCART_FRAME_VIEW_INPUT;
 		}
 	
 		$this->mActionForm->update($this->mObject);
 		
-		return $this->_doExecute($this->mObject) ? bmcart_FRAME_VIEW_SUCCESS
-		                                         : bmcart_FRAME_VIEW_ERROR;
+		return $this->_doExecute($this->mObject) ? BMCART_FRAME_VIEW_SUCCESS
+		                                         : BMCART_FRAME_VIEW_ERROR;
 	}
 
 	/**

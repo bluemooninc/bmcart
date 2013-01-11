@@ -63,6 +63,17 @@ class Controller_Checkout extends AbstractAction {
 		$this->myObject = $this->mHandler->getCurrentOrder();
 		$this->template = 'selectPayment.html';
 	}
+
+	/**
+	 * Credit Card API
+	 *
+	 * TODO: Paypal and other transit in the future
+	 * @param $cardOrderId
+	 * @param $amount
+	 * @param $tax
+	 * @param $cardSeq
+	 * @return bool
+	 */
 	private function _payByCreditCard ($cardOrderId,$amount,$tax,$cardSeq){
 		$ret = false;
 		$params = array('order_id' => $cardOrderId,'cardSeq'=>$cardSeq,'amount'=>$amount,'tax'=>$tax);
@@ -73,6 +84,10 @@ class Controller_Checkout extends AbstractAction {
 		}
 		return $ret;
 	}
+
+	/**
+	 * Check out method
+	 */
 	public function action_orderFixed(){
 		$order_id = intval(xoops_getrequest("order_id"));
 		$cardOrderId = null;
@@ -85,7 +100,7 @@ class Controller_Checkout extends AbstractAction {
 		// TODO : Tax Should be set on xoopsConfig
 		$tax  = $sub_total - intval($sub_total / 1.05);
 		$ret = false;
-/*		switch($payment_type){
+		switch($payment_type){
 			case 1: // Wire transfer
                 $ret = true;
 				break;
@@ -94,15 +109,14 @@ class Controller_Checkout extends AbstractAction {
 				$ret = $this->_payByCreditCard($cardOrderId,$amount,$tax,$cardSeq);
 				break;
 		}
-		if($ret==true){*/
+		if( $ret==true ){
 			$this->mHandler->moveCartToOrder($this->mListData,$order_id);
 			$this->cartHandler->clearMyCart();
-			$this->mHandler->setOrderStatus($payment_type,$cardOrderId,$sub_total,$tax,$shipping_fee,$amount);
+			$this->mHandler->setOrderStatus($order_id,$payment_type,$cardOrderId,$sub_total,$tax,$shipping_fee,$amount);
 			$orderObject = $this->mHandler->myObject();
 			$mail = new Model_Mail();
-			$mail->sendThankYouMail("ThankYouForOrder.tpl",$orderObject,$this->mListData);
-			//$this->executeRedirect(XOOPS_URL, 3, 'Done');
-		exit;
-		//}
+			$mail->sendMail("ThankYouForOrder.tpl",$orderObject,$this->mListData);
+			$this->executeRedirect(XOOPS_URL, 3, 'Done');
+		}
 	}
 }

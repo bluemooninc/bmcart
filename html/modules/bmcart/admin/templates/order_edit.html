@@ -64,36 +64,46 @@
 		</tr>
 		<tr>
 			<td class="head"><{$smarty.const._AD_BMCART_ORDER_DATE}></td>
-			<td class="<{cycle values="odd,even"}>"><{xoops_input type=text name=order_date value=$actionForm->get('order_date')}></td>
+			<td class="<{cycle values="odd,even"}>"><{$actionForm->get('order_date')}></td>
 		</tr>
 		<tr>
 			<td class="head"><{$smarty.const._AD_BMCART_PAID_DATE}></td>
-			<td class="<{cycle values="odd,even"}>"><{xoops_input type=text name=paid_date value=$actionForm->get('paid_date')}></td>
+			<td class="<{cycle values="odd,even"}>"><{$actionForm->get('paid_date')}></td>
 		</tr>
 		<tr>
 			<td class="head"><{$smarty.const._AD_BMCART_SHIPPING_DATE}></td>
-			<td class="<{cycle values="odd,even"}>"><{xoops_input type=text name=shipping_date value=$actionForm->get('shipping_date')}></td>
+			<td class="<{cycle values="odd,even"}>"><{xoops_input type=text name=shipping_date value=$actionForm->get('shipping_date') class='datepicker'}></td>
 		</tr>
 		<tr>
 			<td class="head"><{$smarty.const._AD_BMCART_SHIPPING_CARRIER}></td>
 			<td class="<{cycle values="odd,even"}>"><{xoops_input type=text name=shipping_carrier value=$actionForm->get('shipping_carrier')}></td>
 		</tr>
 		<tr>
+			<td class="head"><{$smarty.const._AD_BMCART_SHIPPING_NUMBER}></td>
+			<td class="<{cycle values="odd,even"}>"><{xoops_input type=text name=shipping_number value=$actionForm->get('shipping_number')}></td>
+		</tr>
+		<tr>
 			<td class="head"><{$smarty.const._AD_BMCART_SUB_TOTAL}></td>
 			<td class="<{cycle values=" odd,even"}>">
-			<{$actionForm->get('sub_total')}>
+			<{$actionForm->get('sub_total')|number_format}>
 			</td>
 		</tr>
 		<tr>
 			<td class="head"><{$smarty.const._AD_BMCART_TAX}></td>
 			<td class="<{cycle values=" odd,even"}>">
-			<{$actionForm->get('tax')}>
+			<{$actionForm->get('tax')|number_format}>
 			</td>
 		</tr>
 		<tr>
 			<td class="head"><{$smarty.const._AD_BMCART_SHIPPING_FEE}></td>
 			<td class="<{cycle values=" odd,even"}>">
-			<{$actionForm->get('shipping_fee')}>
+			<{$actionForm->get('shipping_fee')|number_format}>
+			</td>
+		</tr>
+		<tr>
+			<td class="head"><{$smarty.const._AD_BMCART_AMOUNT}></td>
+			<td class="<{cycle values=" odd,even"}>">
+			<{$actionForm->get('amount')|number_format}>
 			</td>
 		</tr>
 		<tr>

@@ -44,6 +44,9 @@ class Model_Mail
 				$this->mMailer->assign("PAYMENT_DESC", _MD_BMCART_PAYMENT_DESC_CARD);
 				break;
 		}
+		$this->mMailer->assign('SHIPPING_DATE',$orderObject->getVar('shipping_date'));
+		$this->mMailer->assign('SHIPPING_CARRIER',$orderObject->getVar('shipping_carrier'));
+		$this->mMailer->assign('SHIPPING_NUMBER',$orderObject->getVar('shipping_number'));
 	}
 
 	/**
@@ -51,7 +54,7 @@ class Model_Mail
 	 * @param $paymentInfo
 	 * @param $listData
 	 */
-	public function sendThankYouMail($tpl_name,$orderObject,$listData){
+	public function sendMail($tpl_name,$orderObject,$listData){
 		$this->mMailer->setFromEmail($this->mXoopsConfig['adminmail']);
 		$this->mMailer->setFromName($this->mXoopsConfig['sitename']);
 		$this->mMailer->setToUsers($this->mXoopsUser);

@@ -46,7 +46,7 @@ class bmcart_AbstractListAction extends bmcart_Action
 		$handler =& $this->_getHandler();
 		$this->mObjects =& $handler->getObjects($this->mFilter->getCriteria());
 
-		return bmcart_FRAME_VIEW_INDEX;
+		return BMCART_FRAME_VIEW_INDEX;
 	}
 }
 

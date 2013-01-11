@@ -81,6 +81,7 @@ class Model_Checkout
 
 	public function getCurrentOrder()
 	{
+		$this->_getMyOrder();
 		if (count($this->myObjects) > 0) {
 			return $this->myObjects[0];
 		} else {
@@ -116,22 +117,20 @@ class Model_Checkout
 		$this->_getMyOrder();
 		if ($this->myObjects) {
 			$object = $this->myObjects[0];
-		} else {
-			$object = $this->myHandler->create();
+			$object->set('first_name', xoops_getrequest('first_name'));
+			$object->set('last_name', xoops_getrequest('last_name'));
+			$object->set('phone', xoops_getrequest('phone'));
+			$object->set('zip_code', xoops_getrequest('zip_code'));
+			$object->set('state', xoops_getrequest('state'));
+			$object->set('address', xoops_getrequest('address'));
+			$object->set('address2', xoops_getrequest('address2'));
+			$this->myHandler->insert($object);
 		}
-		$object->set('first_name', xoops_getrequest('first_name'));
-		$object->set('last_name', xoops_getrequest('last_name'));
-		$object->set('phone', xoops_getrequest('phone'));
-		$object->set('zip_code', xoops_getrequest('zip_code'));
-		$object->set('state', xoops_getrequest('state'));
-		$object->set('address', xoops_getrequest('address'));
-		$object->set('address2', xoops_getrequest('address2'));
-		$this->myHandler->insert($object);
 	}
 
-	public function setOrderStatus($payment_type, $cardOrderId = null,$subTotal,$tax,$shipping_fee,$amount)
+	public function setOrderStatus($order_id,$payment_type, $cardOrderId = null,$subTotal,$tax,$shipping_fee,$amount)
 	{
-		$this->_getMyOrder();
+		$this->_getMyOrder($order_id);
 		$ret = false;
 		if ($this->myObjects) {
 			$object = $this->myObjects[0];

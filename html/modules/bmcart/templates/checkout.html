@@ -27,10 +27,10 @@
 <{/if}>
 <h4><{$smarty.const._MD_BMCART_BILLING_TITLE}></h4>
 <p>
-<input type="radio" name="payment_type" value="1" /><{$smarty.const._MD_BMCART_payment_type_WIRE}>
+<input type="radio" name="payment_type" value="1" /><{$smarty.const._MD_BMCART_PAYMENT_TYPE_WIRE}>
 </p>
 <p>
-<input type="radio" name="payment_type" value="2" <{if $CardList}>checked<{/if}> /><{$smarty.const._MD_BMCART_payment_type_CREDIT_CARD}>
+<input type="radio" name="payment_type" value="2" <{if $CardList}>checked<{/if}> /><{$smarty.const._MD_BMCART_PAYMENT_TYPE_CREDIT_CARD}>
 	<{if $CardList}>
 	<ul>
 	<{$smarty.const._MD_BMCART_LAST3CODE}>

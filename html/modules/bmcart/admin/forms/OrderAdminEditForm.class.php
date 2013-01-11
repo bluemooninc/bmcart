@@ -38,6 +38,11 @@ class bmcart_OrderAdminEditForm extends XCube_ActionForm
 		$this->mFormProperties['tax'] =new XCube_IntProperty('tax');
 		$this->mFormProperties['shipping_fee'] =new XCube_IntProperty('shipping_fee');
 		$this->mFormProperties['amount'] =new XCube_IntProperty('amount');
+		$this->mFormProperties['order_date'] =new XCube_StringProperty('order_date');
+		$this->mFormProperties['paid_date'] =new XCube_StringProperty('paid_date');
+		$this->mFormProperties['shipping_date'] =new XCube_StringProperty('shipping_date');
+		$this->mFormProperties['shipping_carrier'] =new XCube_StringProperty('shipping_carrier');
+		$this->mFormProperties['shipping_number'] =new XCube_StringProperty('shipping_number');
 
 		//
 		// Set field properties
@@ -66,9 +71,16 @@ class bmcart_OrderAdminEditForm extends XCube_ActionForm
 		$this->set('address', $obj->get('address'));
 		$this->set('address2', $obj->get('address2'));
 		$this->set('payment_type', $obj->get('payment_type'));
-		$this->set('order_date', $obj->get('order_date'));
-		$this->set('paid_date', $obj->get('paid_date'));
-		$this->set('shipping_date', $obj->get('shipping_date'));
+		$this->set('order_date', $obj->get('order_date') ? date("Y-m-d g:i",$obj->get('order_date')) : null );
+		$this->set('paid_date', $obj->get('paid_date') ? date("Y-m-d g:i",$obj->get('paid_date')) : null );
+		$this->set('shipping_date', $obj->get('shipping_date') ? date("Y-m-d g:i",$obj->get('shipping_date')) : null );
+		$this->set('shipping_carrier', $obj->get('shipping_carrier'));
+		$this->set('shipping_number', $obj->get('shipping_number'));
+		$this->set('sub_total', $obj->get('sub_total'));
+		$this->set('tax', $obj->get('tax'));
+		$this->set('shipping_fee', $obj->get('shipping_fee'));
+		$this->set('amount', $obj->get('amount'));
+
 	}
 
 	function update(&$obj)
@@ -81,10 +93,8 @@ class bmcart_OrderAdminEditForm extends XCube_ActionForm
 		$obj->set('address', $this->get('address'));
 		$obj->set('address2', $this->get('address2'));
 		$obj->set('payment_type', $this->get('payment_type'));
-		$obj->set('order_date', $this->get('order_date'));
-		$obj->set('paid_date', $this->get('paid_date'));
-		$obj->set('shipping_date', $this->get('shipping_date'));
+		$obj->set('shipping_date', strtotime($this->get('shipping_date')));
+		$obj->set('shipping_carrier', $this->get('shipping_carrier'));
+		$obj->set('shipping_number', $this->get('shipping_number'));
 	}
 }
-
-?>

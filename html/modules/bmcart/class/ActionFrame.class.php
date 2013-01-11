@@ -2,17 +2,17 @@
 
 if (!defined('XOOPS_ROOT_PATH')) exit();
 
-define ("bmcart_FRAME_PERFORM_SUCCESS", 1);
-define ("bmcart_FRAME_PERFORM_FAIL", 2);
-define ("bmcart_FRAME_INIT_SUCCESS", 3);
+define ("BMCART_FRAME_PERFORM_SUCCESS", 1);
+define ("BMCART_FRAME_PERFORM_FAIL", 2);
+define ("BMCART_FRAME_INIT_SUCCESS", 3);
 
-define ("bmcart_FRAME_VIEW_NONE", 1);
-define ("bmcart_FRAME_VIEW_SUCCESS", 2);
-define ("bmcart_FRAME_VIEW_ERROR", 3);
-define ("bmcart_FRAME_VIEW_INDEX", 4);
-define ("bmcart_FRAME_VIEW_INPUT", 5);
-define ("bmcart_FRAME_VIEW_PREVIEW", 6);
-define ("bmcart_FRAME_VIEW_CANCEL", 7);
+define ("BMCART_FRAME_VIEW_NONE", 1);
+define ("BMCART_FRAME_VIEW_SUCCESS", 2);
+define ("BMCART_FRAME_VIEW_ERROR", 3);
+define ("BMCART_FRAME_VIEW_INDEX", 4);
+define ("BMCART_FRAME_VIEW_INPUT", 5);
+define ("BMCART_FRAME_VIEW_PREVIEW", 6);
+define ("BMCART_FRAME_VIEW_CANCEL", 7);
 
 class bmcart_ActionFrame
 {
@@ -116,27 +116,27 @@ class bmcart_ActionFrame
 		$render = $controller->mRoot->mContext->mModule->getRenderTarget();
 		$render->setAttribute('xoops_pagetitle', $this->mAction->getPagetitle());
 		switch($viewStatus) {
-			case bmcart_FRAME_VIEW_SUCCESS:
+			case BMCART_FRAME_VIEW_SUCCESS:
 				$this->mAction->executeViewSuccess($controller,$render);
 				break;
 
-			case bmcart_FRAME_VIEW_ERROR:
+			case BMCART_FRAME_VIEW_ERROR:
 				$this->mAction->executeViewError($controller, $render);
 				break;
 
-			case bmcart_FRAME_VIEW_INDEX:
+			case BMCART_FRAME_VIEW_INDEX:
 				$this->mAction->executeViewIndex($controller, $render);
 				break;
 
-			case bmcart_FRAME_VIEW_INPUT:
+			case BMCART_FRAME_VIEW_INPUT:
 				$this->mAction->executeViewInput($controller, $render);
 				break;
 
-			case bmcart_FRAME_VIEW_PREVIEW:
+			case BMCART_FRAME_VIEW_PREVIEW:
 				$this->mAction->executeViewPreview($controller, $render);
 				break;
 
-			case bmcart_FRAME_VIEW_CANCEL:
+			case BMCART_FRAME_VIEW_CANCEL:
 				$this->mAction->executeViewCancel($controller, $render);
 				break;
 		}
@@ -194,12 +194,12 @@ class bmcart_Action
 
 	function getDefaultView(&$controller, &$xoopsUser)
 	{
-		return bmcart_FRAME_VIEW_NONE;
+		return BMCART_FRAME_VIEW_NONE;
 	}
 
 	function execute(&$controller, &$xoopsUser)
 	{
-		return bmcart_FRAME_VIEW_NONE;
+		return BMCART_FRAME_VIEW_NONE;
 	}
 
 	function executeViewSuccess(&$controller,&$render)

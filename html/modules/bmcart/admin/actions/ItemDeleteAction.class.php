@@ -34,10 +34,10 @@ class bmcart_ItemDeleteAction extends bmcart_AbstractDeleteAction
 		$item =& $handler->get($this->mObject->get('item_id'));
 				
 		if (!$handler->delete($item)) {
-			return bmcart_FRAME_VIEW_ERROR;
+			return BMCART_FRAME_VIEW_ERROR;
 		}
 		
-		return bmcart_FRAME_VIEW_SUCCESS;
+		return BMCART_FRAME_VIEW_SUCCESS;
 	}
 
 	function executeViewInput(&$controller, &$render)

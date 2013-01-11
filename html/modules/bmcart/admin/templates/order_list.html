@@ -64,7 +64,7 @@
 		<td class="order_list_title"><{$order->getShow('order_date')|date_format:"%Y-%m-%d %H:%M"}></td>
 		<td class="order_list_title"><{$order->getShow('paid_date')|date_format:"%Y-%m-%d %H:%M"}></td>
 		<td class="order_list_title">
-			<{$order->getShow('shipping_date|date_format:"%Y-%m-%d %H:%M"')}>
+			<{$order->getShow('shipping_date')|date_format:"%Y-%m-%d %H:%M"}>
 			<br />
 			<{$smarty.const._AD_BMCART_SHIPPING_CARRIER}> : <{$order->getShow('shipping_carrier')}>
 			<br />
@@ -73,6 +73,14 @@
 		<td class="order_list_control">
 			<a href="index.php?action=OrderEdit&amp;order_id=<{$order->getShow('order_id')}>">
 				<img src="<{"icons/edit.png"|theme}>" alt="<{$smarty.const._EDIT}>" title="<{$smarty.const._EDIT}>" />
+			</a>
+			<{if $order->getShow('payment_type')==2 && !$order->getShow('paid_date')}>
+			<a href="index.php?action=transit&amp;order_id=<{$order->getShow('order_id')}>">
+				<img src="<{"icons/permission.png"|theme}>" alt="<{$smarty.const._AD_BMCART_EXEC_TRANSIT}>" title="<{$smarty.const._AD_BMCART_EXEC_TRANSIT}>" />
+			</a>
+			<{/if}>
+			<a href="index.php?action=SendMail&amp;order_id=<{$order->getShow('order_id')}>">
+				<img src="<{"icons/send.png"|theme}>" alt="<{$smarty.const._AD_BMCART_SEND_MAIL}>" title="<{$smarty.const._AD_BMCART_EXEC_SEND_MAIL}>" />
 			</a>
 		</td>
 	</tr>
