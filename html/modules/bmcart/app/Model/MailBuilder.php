@@ -31,7 +31,7 @@ class Model_Mail
 		}
 		$desc = "";
 		foreach($listData as $item){
-			$desc .= sprintf("%s %0,3d %d¥r¥n",$item['item_name'],$item['price'],$item['qty']);
+			$desc .= sprintf("%s %10s %10s¥n",$item['item_name'],number_format($item['price']),number_format($item['qty']));
 		}
 		$this->mMailer->assign("LIST_DATA", $desc);
 		$this->mMailer->assign("SITEURL", XOOPS_URL . "/");
@@ -55,18 +55,19 @@ class Model_Mail
 	 * @param $listData
 	 */
 	public function sendMail($tpl_name,$orderObject,$listData,$subject,$userObject=null){
-		$this->mMailer->setFromEmail($this->mXoopsConfig['adminmail']);
-		$this->mMailer->setFromName($this->mXoopsConfig['sitename']);
+		$this->mMailer->setTemplate($tpl_name);
 		if (is_null($userObject)){
 			$this->mMailer->setToUsers($this->mXoopsUser);
 		}else{
 			$this->mMailer->setToUsers($userObject);
 		}
+		$this->mMailer->setFromEmail($this->mXoopsConfig['adminmail']);
+		$this->mMailer->setFromName($this->mXoopsConfig['sitename']);
 		$this->mMailer->setSubject($subject);
-		$this->mMailer->setTemplate($tpl_name);
 		$this->_setBody($orderObject,$listData);
 		if ($this->mMailer->send()) {
 			echo $this->mMailer->getSuccess();
+			return true;
 		} else {
 			echo 'Message could not be sent.';
 			echo 'Mailer Error: ' . $this->mMailer->getErrors();

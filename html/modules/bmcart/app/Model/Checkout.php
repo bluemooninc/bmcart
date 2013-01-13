@@ -150,16 +150,46 @@ class Model_Checkout
 		return $this->myObjects[0];
 	}
 
-	public function moveCartToOrder($ListData, $order_id)
-	{
+	/**
+	 * @param $ListData
+	 * @return bool
+	 */
+	public function checkStock($ListData){
 		$itemHandler = xoops_getModuleHandler('orderItems');
-		foreach ($ListData as $itemObject) {
-			$addObject = $itemHandler->create();
-			$addObject->set('order_id', $order_id);
-			$addObject->set('item_id', $itemObject['item_id']);
-			$addObject->set('price', $itemObject['price']);
-			$addObject->set('qty', $itemObject['qty']);
-			$itemHandler->insert($addObject);
+		foreach ($ListData as $orderObject) {
+			$itemObject = $itemHandler->get($orderObject['item_id']);
+			$stock = $itemObject->getVar('stock_qty');
+			if ( $stock==0 && $stock < $orderObject['qty'] ){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * @param $ListData
+	 * @param $order_id
+	 */
+	public function moveCartToOrder($ListData, $order_id){
+		$itemHandler = xoops_getModuleHandler('orderItems');
+		$orderItemHandler = xoops_getModuleHandler('orderItems');
+		foreach ($ListData as $orderObject) {
+			$itemObject = $itemHandler->get($orderObject['item_id']);
+			// Check Stock 1st
+			$stock = $itemObject->getVar('stock_qty');
+			if ( $stock>0 && $stock >= $orderObject['qty'] ){
+				$itemHandler->insert($itemObject);
+				$addObject = $orderItemHandler->create();
+				$addObject->set('order_id', $order_id);
+				$addObject->set('item_id', $orderObject['item_id']);
+				$addObject->set('price', $orderObject['price']);
+				$addObject->set('qty', $orderObject['qty']);
+				$result = $orderItemHandler->insert($addObject);
+				if ($result){
+					$itemObject->set('stock_qty',$stock-1);
+					$itemHandler->insert($itemObject);
+				}
+			}
 		}
 	}
 

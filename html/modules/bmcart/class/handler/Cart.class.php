@@ -47,12 +47,12 @@ class bmcart_cartHandler extends XoopsObjectGenericHandler
 		}
 		return $objects[0];
 	}
-	public function addToCart(&$dataList)
+	public function addToCart($item_id)
 	{
-		$cartObject = $this->getByItemId($dataList['item_id']);
+		$cartObject = $this->getByItemId($item_id);
 		if(is_null($cartObject)){
 			$cartObject = $this->myHandler->create();
-			$cartObject->set('item_id',$dataList['item_id']);
+			$cartObject->set('item_id',$item_id);
 			$cartObject->set('uid',Legacy_Utils::getUid());
 			$cartObject->set('qty',1);
 		}else{

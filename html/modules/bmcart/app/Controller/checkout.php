@@ -16,6 +16,7 @@ class Controller_Checkout extends AbstractAction {
 	protected $myObject;
 	protected $cartHandler;
 	protected $cardList;
+	protected $message;
 
 	public function __construct(){
 		parent::__construct();
@@ -27,6 +28,7 @@ class Controller_Checkout extends AbstractAction {
 		if(isset($this->myObject)){
 			$view->set('CurrentOrder', $this->myObject);
 		}
+		$view->set('Message', $this->message);
 		$view->set('CardList', $this->cardList);
 		$view->set('ListData', $this->mListData);
 		$view->set('shipping_fee', $this->cartHandler->isShippingFee() );
@@ -39,6 +41,9 @@ class Controller_Checkout extends AbstractAction {
 	}
 	public function action_index(){
 		$this->mListData = $this->cartHandler->getCartList();
+		if (!$this->mHandler->checkStock($this->mListData)){
+			$this->message = _MD_BMCART_NO_STOCK;
+		}
 		$this->myObject = $this->mHandler->getCurrentOrder();
 		$creditService = $this->root->mServiceManager->getService('gmoPayment');
 		if ($creditService != null) {
@@ -100,6 +105,9 @@ class Controller_Checkout extends AbstractAction {
 		// TODO : Tax Should be set on xoopsConfig
 		$tax  = $sub_total - intval($sub_total / 1.05);
 		$ret = false;
+		if (!$this->mHandler->checkStock($this->mListData)){
+			redirect_header(XOOPS_URL . "/modules/bmcart/cartList",3,_MD_BMCART_NO_STOCK);
+		}
 		switch($payment_type){
 			case 1: // Wire transfer
                 $ret = true;

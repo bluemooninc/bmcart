@@ -1,8 +1,9 @@
 <?php
 /*
-* B.M.Cart - Cart Module on XOOPS Cube v2.2
-* Copyright (c) Yoshi Sakai at Bluemoon inc. (http://bluemooninc.jp)
-* GPL V3 licence
+ * B.M.Cart - Cart Module on XOOPS Cube v2.2
+ * Copyright (c) Bluemoon inc. All rights reserved.
+ * Author : Yoshi Sakai (http://bluemooninc.jp)
+ * Licence : GPL V3 licence
  */
 if (!defined('XOOPS_ROOT_PATH')) exit();
 if ( !isset($root) ) {

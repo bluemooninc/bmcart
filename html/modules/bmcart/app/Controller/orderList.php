@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 require_once _MY_MODULE_PATH . 'app/Model/Order.php';
-require_once _MY_MODULE_PATH . 'app/Model/item.php';
+require_once _MY_MODULE_PATH . 'app/Model/Item.php';
 require_once _MY_MODULE_PATH . 'app/Model/PageNavi.class.php';
 require_once _MY_MODULE_PATH . 'app/View/view.php';
 class Controller_OrderList extends AbstractAction {

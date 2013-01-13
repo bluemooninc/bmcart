@@ -19,24 +19,24 @@ class Controller_ItemList extends AbstractAction {
 		$this->mHandler = Model_Item::forge();
 	}
 	public function action_index(){
-		$this->mListData = $this->mHandler->getItem();
+		$this->mListData = $this->mHandler->getItems();
 		$this->template = 'itemList.html';
 	}
 	public function action_itemDetail(){
 		if (isset($this->mParams[0])) $item_id = intval($this->mParams[0]);
-		$this->mListData = $this->mHandler->getItem($item_id);
+		$this->mListData = $this->mHandler->getItemDetail($item_id);
 		$this->template = 'itemDetail.html';
 	}
 	public function action_addtocart(){
 		if (isset($this->mParams[0])) $item_id = intval($this->mParams[0]);
-		$this->mListData = $this->mHandler->getItem($item_id);
+		$this->mListData = $this->mHandler->getItemDetail($item_id);
 		$cartHandler = xoops_getModuleHandler('cart');
-		$cartHandler->addToCart($this->mListData[0]);
+		$cartHandler->addToCart($item_id);
 		$this->executeRedirect("../../cartList", 0, 'Add to Cart');
 	}
 	public function action_category(){
 		if (isset($this->mParams[0])) $category_id = intval($this->mParams[0]);
-		$this->mListData = $this->mHandler->getItem("category_id=".$category_id);
+		$this->mListData = $this->mHandler->getItems(0,0,"category_id=".$category_id);
 		$this->template = 'itemList.html';
 	}
 	public function action_view(){

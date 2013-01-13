@@ -4,6 +4,13 @@
 
 <h3><{$smarty.const._MD_BMCART_CHECKOUT}></h3>
 
+<{if $Message}>
+<div class="alert">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<strong><{$Message}></strong>
+</div>
+<{/if}>
+
 <h4><{$smarty.const._MD_BMCART_SHIPPING_TITLE}></h4>
 
 <form name="checkout" action="<{$xoops_url}>/modules/<{$dirname}>/checkout/orderFixed" method="post">

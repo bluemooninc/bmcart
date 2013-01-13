@@ -114,6 +114,7 @@ define('_MD_BMCART_STATE_OPTIONS', '北海道,
 define('_MD_BMCART_REGISTER','登録する');
 define('_MD_BMCART_ORDER_FIXED','注文を確定する');
 define('_MD_BMCART_ORDER_MAIL','ご注文の確認');
+define('_MD_BMCART_NO_STOCK','ご注文内容に在庫の無い商品があります。カートから取り除いて下さい。');
 define('_MD_BMCART_PAYMENT_DESC_CARD','クレジットカードによるお支払いを選択されました。
 クレジットカードの決済予約を行いました。実際の決済は商品発送時に行われます。');
 define('_MD_BMCART_PAYMENT_DESC_WIRE','銀行振込によるお支払いを選択されました。

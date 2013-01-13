@@ -79,9 +79,11 @@
 				<img src="<{"icons/permission.png"|theme}>" alt="<{$smarty.const._AD_BMCART_EXEC_TRANSIT}>" title="<{$smarty.const._AD_BMCART_EXEC_TRANSIT}>" />
 			</a>
 			<{/if}>
+			<{if !$order->getShow('notify_date')}>
 			<a href="index.php?action=SendMail&amp;order_id=<{$order->getShow('order_id')}>">
 				<img src="<{"icons/send.png"|theme}>" alt="<{$smarty.const._AD_BMCART_SEND_MAIL}>" title="<{$smarty.const._AD_BMCART_EXEC_SEND_MAIL}>" />
 			</a>
+			<{/if}>
 		</td>
 	</tr>
 	<{/foreach}>

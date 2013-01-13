@@ -22,7 +22,7 @@ class Model_Order extends AbstractModel {
 	public function __construct()
 	{
 		$this->_module_names = $this->getModuleNames();
-		$this->myHandler =& xoops_getModuleHandler('order');
+		$this->myHandler = xoops_getModuleHandler('order');
 	}
 
 	/**
@@ -38,7 +38,12 @@ class Model_Order extends AbstractModel {
 		}
 		return $instance;
 	}
-
+	public function &get($id){
+		return $this->myHandler->get($id);
+	}
+	public function &insert($object){
+		return $this->myHandler->insert($object);
+	}
 	public function &getOrderItems($order_id)
 	{
 		$criteria = new CriteriaCompo();

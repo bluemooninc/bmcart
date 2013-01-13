@@ -6,7 +6,7 @@
  * Time: 16:09
  * To change this template use File | Settings | File Templates.
  */
-require_once _MY_MODULE_PATH . 'app/Model/category.php';
+require_once _MY_MODULE_PATH . 'app/Model/Category.php';
 require_once _MY_MODULE_PATH . 'app/Model/PageNavi.class.php';
 require_once _MY_MODULE_PATH . 'app/View/view.php';
 

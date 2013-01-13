@@ -41,7 +41,7 @@ class Model_Item extends AbstractModel {
 		return $ret;
 	}
 
-	public function getItem($limit=0, $offset=0, $whereArray=null)
+	public function getItems($limit=0, $offset=0, $whereArray=null)
 	{
 		$this->myHandler =& xoops_getModuleHandler('item');
 		$this->_item_names = $this->myHandler->getItem($limit, $offset, $whereArray,
@@ -51,13 +51,15 @@ class Model_Item extends AbstractModel {
 		);
 		return $this->_item_names;
 	}
-	public function getItemDetail($item_id)
+	public function &getItemDetail($item_id)
 	{
-		$criteria = new CriteriaCompo();
-		$criteria->add(new Criteria('item_id', $item_id));
 		$this->myHandler =& xoops_getModuleHandler('item');
-		$objects = $this->myHandler->getObjects($criteria);
-		return $objects[0];
+		$object = $this->myHandler->get($item_id);
+		$ret=array();
+		foreach($object->mVars as $key=>$val){
+			$ret[$key]=$object->getVar($key);
+		}
+		return $ret;
 	}
 
 	public function getFindInSet($limit, $offset, $whereArray, $orderArray)

@@ -43,6 +43,7 @@ class bmcart_OrderAdminEditForm extends XCube_ActionForm
 		$this->mFormProperties['shipping_date'] =new XCube_StringProperty('shipping_date');
 		$this->mFormProperties['shipping_carrier'] =new XCube_StringProperty('shipping_carrier');
 		$this->mFormProperties['shipping_number'] =new XCube_StringProperty('shipping_number');
+		$this->mFormProperties['notify_date'] =new XCube_StringProperty('notify_date');
 
 		//
 		// Set field properties
@@ -76,6 +77,7 @@ class bmcart_OrderAdminEditForm extends XCube_ActionForm
 		$this->set('shipping_date', $obj->get('shipping_date') ? date("Y-m-d g:i",$obj->get('shipping_date')) : null );
 		$this->set('shipping_carrier', $obj->get('shipping_carrier'));
 		$this->set('shipping_number', $obj->get('shipping_number'));
+		$this->set('notify_date', $obj->get('notify_date') ? date("Y-m-d g:i",$obj->get('notify_date')) : null );
 		$this->set('sub_total', $obj->get('sub_total'));
 		$this->set('tax', $obj->get('tax'));
 		$this->set('shipping_fee', $obj->get('shipping_fee'));

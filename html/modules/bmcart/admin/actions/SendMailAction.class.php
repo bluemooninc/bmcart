@@ -34,26 +34,27 @@ class bmcart_SendMailAction extends bmcart_AbstractEditAction
 
 	function _doExecute()
 	{
-		$handler =& xoops_getmodulehandler('order');
+		$modelOrder = Model_Order::forge();
 		$order_id = $this->mObject->get('order_id');
-		$orderObject =& $handler->get($order_id);
+		$orderObject = $modelOrder->get($order_id);
 		$uid = $orderObject->getVar('uid');
-		$OrderItems = Model_Order::forge();
-		$mListData = $OrderItems->getOrderItems($order_id);
+		$mListData = $modelOrder->getOrderItems($order_id);
 		// TODO: Paypal and other needs make options in the future
 		if ($orderObject != null) {
 			$userHandler = xoops_gethandler('user');
 			$userObject = $userHandler->get($uid);
 			$mail = new Model_Mail();
-			$mail->sendMail("ShippingNow.tpl",$orderObject,$mListData,_AD_BMCART_SHIPPING_MAIL,$userObject);
+			$result = $mail->sendMail("ShippingNow.tpl",$orderObject,$mListData,_AD_BMCART_SHIPPING_MAIL,$userObject);
+		}else{
+			$result = false;
 		}
-
 		if (!$result) {
 			return BMCART_FRAME_VIEW_ERROR;
+		}else{
+			$orderObject->set('notify_date',time());
+			$modelOrder->insert($orderObject);
+			return BMCART_FRAME_VIEW_SUCCESS;
 		}
-		$order->set('paid_date',time());
-		$handler->insert($order);
-		return BMCART_FRAME_VIEW_SUCCESS;
 	}
 
 	function executeViewInput(&$controller, &$render)

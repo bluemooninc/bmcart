@@ -16,7 +16,7 @@ class bmcart_OrderListAction extends bmcart_AbstractListAction
 {
 	function &_getHandler()
 	{
-		$handler =& xoops_getmodulehandler('order');
+		$handler =& xoops_getModuleHandler('order');
 		return $handler;
 	}
 
