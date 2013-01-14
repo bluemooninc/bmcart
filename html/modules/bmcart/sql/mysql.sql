@@ -27,6 +27,15 @@ CREATE TABLE {prefix}_{dirname}_item (
   KEY uid (`uid`)
 ) ENGINE = MYISAM;
 ##
+## Stock
+##
+CREATE TABLE {prefix}_{dirname}_itemImages (
+  `image_id` int(8) unsigned NOT NULL auto_increment,
+  `item_id` int(8) unsigned NOT NULL,
+  `image_file` varchar(255),
+  PRIMARY KEY  (`image_id`)
+) ENGINE = MYISAM;
+##
 ## Cart
 ## item_status :
 ##
