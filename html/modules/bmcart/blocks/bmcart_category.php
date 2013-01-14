@@ -19,6 +19,7 @@ function b_bmcart_category_show()
 				"category_name" => $object->getVar("category_name")
 			);
 		}else{
+			$mListData[$object->getVar("category_id")][0]['hasChild']=true;
 			$mListData[$object->getVar("parent_id")][$object->getVar("category_id")] = array(
 				"parent_id" => $object->getVar("parent_id"),
 				"category_id" => $object->getVar("category_id"),

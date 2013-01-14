@@ -1,17 +1,17 @@
-<ul id="mainmenu">
+<ul>
 	<{foreach item=categoryList from=$block.categoryList}>
 		<{foreach item=category from=$categoryList}>
-		<li>
 		<{if $category.parent_id==0}>
-		<a class="menuMain" href="<{$xoops_url}>/modules/bmcart/itemList/category/<{$category.category_id}>">
-			<{$category.category_name}>
-		</a>
+		<li>
+			<a class="menuMain" href="<{$xoops_url}>/modules/bmcart/itemList/category/<{$category.category_id}>">
+				<{$category.category_name}>
+			</a>
+		</li>
 		<{else}>
 			<a class="menuSub" href="<{$xoops_url}>/modules/bmcart/itemList/category/<{$category.category_id}>">
 				<{$category.category_name}>
 			</a>
 		<{/if}>
-		</li>
-	<{/foreach}>
+		<{/foreach}>
 	<{/foreach}>
 </ul>
