@@ -36,15 +36,23 @@
 			</td>
 		</tr>
 		<tr>
+			<td class="head"><{$smarty.const._AD_BMCART_SMALL_IMAGE}></td>
+			<td class="<{cycle values=" odd,even"}>">
+			<img src="<{$xoops_url}>/uploads/s_<{$actionForm->get('image_filename')}>" />
+		</tr>
+		<tr>
+			<td class="head"><{$smarty.const._AD_BMCART_MIDIUM_IMAGE}></td>
+			<td class="<{cycle values=" odd,even"}>">
+			<img src="<{$xoops_url}>/uploads/m_<{$actionForm->get('image_filename')}>" />
+		</tr>
+		<tr>
+			<td class="head"><{$smarty.const._AD_BMCART_ORIGINAL_IMAGE}></td>
+			<td class="<{cycle values=" odd,even"}>">
+			<img src="<{$xoops_url}>/uploads/<{$actionForm->get('image_filename')}>" />
+		</tr>
+		<tr>
 			<td class="head"><{$smarty.const._AD_BMCART_IMAGE_FILENAME}></td>
 			<td class="<{cycle values=" odd,even"}>">
-			<h4>30px</h4>
-			<img src="<{$xoops_url}>/uploads/s_<{$actionForm->get('image_filename')}>" />
-			<h4>300px</h4>
-			<img src="<{$xoops_url}>/uploads/m_<{$actionForm->get('image_filename')}>" />
-			<h4>Original</h4>
-			<img src="<{$xoops_url}>/uploads/<{$actionForm->get('image_filename')}>" />
-
 			<{xoops_input type=text name=image_filename value=$actionForm->get('image_filename')}>
 			<br />
 			<input type="file" name="upload_filename" size="50">

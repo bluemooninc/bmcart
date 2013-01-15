@@ -31,6 +31,7 @@ class bmcart_itemImagesHandler extends XoopsObjectGenericHandler
 	public function &getImages($item_id){
 		$criteria = new CriteriaCompo();
 		$criteria->add(new Criteria('item_id', $item_id));
+		$criteria->addsort('weight','asc');
 		return $this->getObjects($criteria);
 	}
 }

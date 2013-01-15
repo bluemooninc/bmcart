@@ -30,6 +30,9 @@ define('_AD_BMCART_IMAGE_FILENAME', '画像ファイル名');
 define('_MD_BMCART_ERROR_IMAGE_EXTENSION', '画像ファイルの拡張子が違います。');
 define('_MD_BMCART_ERROR_IMAGE_MAXFILESIZE', '画像ファイルのサイズが大きすぎます。');
 define('_AD_BMCART_IMAGE_WEIGHT','表示ウエイト');
+define('_AD_BMCART_SMALL_IMAGE','アイコン・サイズ画像');
+define('_AD_BMCART_MIDIUM_IMAGE','サムネール・サイズ画像');
+define('_AD_BMCART_ORIGINAL_IMAGE','オリジナル・サイズ画像');
 
 define('_AD_BMCART_CATEGORY', 'カテゴリ設定');
 define('_AD_BMCART_CATEGORY_NEW', 'カテゴリの追加');

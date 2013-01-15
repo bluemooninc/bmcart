@@ -12,6 +12,7 @@ require_once _MY_MODULE_PATH . 'app/View/view.php';
 
 class Controller_ItemList extends AbstractAction {
 	protected $imageObjects;
+	protected $image_id;
 	/**
 	 * constructor
 	 */
@@ -25,9 +26,13 @@ class Controller_ItemList extends AbstractAction {
 	}
 	public function action_itemDetail(){
 		if (isset($this->mParams[0])) $item_id = intval($this->mParams[0]);
+		if (isset($this->mParams[1])) $this->image_id = intval($this->mParams[1]);
 		$this->mListData = $this->mHandler->getItemDetail($item_id);
 		$imageHandler = xoops_getmodulehandler('itemImages');
 		$this->imageObjects = $imageHandler->getImages($item_id);
+		if (!$this->image_id){
+			$this->image_id = $this->imageObjects[0]->getVar('image_id');
+		}
 		$this->template = 'itemDetail.html';
 	}
 	public function action_addtocart(){
@@ -47,6 +52,7 @@ class Controller_ItemList extends AbstractAction {
 		$view->setTemplate($this->template);
 		$view->set('ListData', $this->mListData);
 		$view->set('imageObjects', $this->imageObjects);
+		$view->set('current_image', $this->image_id);
 		$view->set('ticket_hidden',$this->mTicketHidden);
 		if (is_object($this->mPagenavi)) {
 			$view->set('pageNavi', $this->mPagenavi->getNavi());
