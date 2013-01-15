@@ -3,6 +3,9 @@
 <{assign var="contname" value="item"}>
 
 <h3><{$smarty.const._MD_BMCART_ITEM_DETAIL}></h3>
+<{foreach item=img from=$imageObjects}>
+	<img src="<{$xoops_url}>/uploads/s_<{$img->getShow('image_filename')}>" />
+<{/foreach}>
 <table class="table">
 	<tr>
 		<td><{$smarty.const._MD_BMCART_ITEM_NAME}></td>

@@ -54,6 +54,7 @@ class bmcart_CategoryAdminEditForm extends XCube_ActionForm
 		$obj->set('category_name', $this->get('category_name'));
 		$obj->set('parent_id', $this->get('parent_id'));
 	}
+
 }
 
 ?>

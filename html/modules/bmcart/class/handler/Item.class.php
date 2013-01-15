@@ -33,11 +33,24 @@ class bmcart_itemHandler extends XoopsObjectGenericHandler
         parent::XoopsObjectGenericHandler($db);
     }
 	public function &getItem(){
-		$sql = "select * from " . $this->mTable . " ORDER BY item_name";
-		$result = $this->db->query($sql);
+		$criteria = new CriteriaCompo();
+		$criteria->addsort('item_name', 'asc');
+		$objects = $this->getObjects($criteria);
 		$ret = array();
-		while( $myrow = $this->db->fetchArray($result) ){
-			$ret[] = $myrow;
+		foreach( $objects as $object ){
+			$myRow = array();
+			foreach($object->mVars as $key=>$val){
+				$myRow[$key] = $val['value'];
+			}
+			$ret[] = $myRow;
+		}
+		return $ret;
+	}
+	public function &getItemOptions(){
+		$itemList = $this->getItem();
+		$ret = array(0=>null);
+		foreach($itemList as $item){
+			$ret[$item['item_id']] = $item['item_name'];
 		}
 		return $ret;
 	}

@@ -1,18 +1,18 @@
 <div class="adminnavi">
 	<a href="./index.php"><{$smarty.const._MI_BMCART_NAME}></a>
-	&raquo;&raquo; <a href="./index.php?action=ItemList"><{$smarty.const._AD_BMCART_ITEM_LIST}></a>
+	&raquo;&raquo; <a href="./index.php?action=ImageList"><{$smarty.const._AD_BMCART_IMAGE_LIST}></a>
 	&raquo;&raquo;
 	<{if $actionForm->get('item_id') }>
-	<span class="adminnaviTitle"><{$smarty.const._AD_BMCART_ITEM_EDIT}></span>
+	<span class="adminnaviTitle"><{$smarty.const._AD_BMCART_IMAGE_EDIT}></span>
 	<{else}>
-	<span class="adminnaviTitle"><{$smarty.const._AD_BMCART_ITEM_NEW}></span>
+	<span class="adminnaviTitle"><{$smarty.const._AD_BMCART_IMAGE_NEW}></span>
 	<{/if}>
 </div>
 
-<{if $actionForm->get('item_id') }>
-<h3 class="admintitle"><{$smarty.const._AD_BMCART_ITEM_EDIT}> (<{$actionForm->get('item_name')}>)</h3>
+<{if $actionForm->get('image_id') }>
+<h3 class="admintitle"><{$smarty.const._AD_BMCART_IMAGE_EDIT}> (<{$actionForm->get('image_filename')}>)</h3>
 <{else}>
-<h3 class="admintitle"><{$smarty.const._AD_BMCART_ITEM_NEW}></h3>
+<h3 class="admintitle"><{$smarty.const._AD_BMCART_IMAGE_NEW}></h3>
 <{/if}>
 
 <{if $actionForm->hasError()}>
@@ -25,53 +25,35 @@
 </div>
 <{/if}>
 
-<form action="?action=ItemEdit" method="post">
+<form action="?action=ImageEdit" method="post" enctype="multipart/form-data">
 	<{xoops_token form=$actionForm}>
-	<{xoops_input type=hidden name=item_id value=$actionForm->get('item_id')}>
+	<{xoops_input type=hidden name=item_id value=$actionForm->get('image_id')}>
 	<table class="outer">
 		<tr>
-			<th colspan="2">
-				<{if $actionForm->get('item_id') }>
-				<{$smarty.const._AD_BMCART_ITEM_EDIT}> (<{$actionForm->get('item_name')}>)
-				<{else}>
-				<{$smarty.const._AD_BMCART_ITEM_NEW}>
-				<{/if}>
-			</th>
-		</tr>
-		<tr>
-			<td class="head"><{$smarty.const._AD_BMCART_ITEM_CATEGORY}></td>
+			<td class="head"><{$smarty.const._AD_BMCART_ITEM_ID}></td>
 			<td class="<{cycle values=" odd,even"}>">
-			<{html_options name=category_id options=$categoryOptions selected=$actionForm->get('category_id')}>
+			<{html_options name=item_id options=$itemOptions selected=$actionForm->get('item_id')}>
 			</td>
 		</tr>
 		<tr>
-			<td class="head"><{$smarty.const._AD_BMCART_ITEM_NAME}></td>
+			<td class="head"><{$smarty.const._AD_BMCART_IMAGE_FILENAME}></td>
 			<td class="<{cycle values=" odd,even"}>">
-			<{xoops_input type=text name=item_name value=$actionForm->get('item_name')}>
+			<h4>30px</h4>
+			<img src="<{$xoops_url}>/uploads/s_<{$actionForm->get('image_filename')}>" />
+			<h4>300px</h4>
+			<img src="<{$xoops_url}>/uploads/m_<{$actionForm->get('image_filename')}>" />
+			<h4>Original</h4>
+			<img src="<{$xoops_url}>/uploads/<{$actionForm->get('image_filename')}>" />
+
+			<{xoops_input type=text name=image_filename value=$actionForm->get('image_filename')}>
+			<br />
+			<input type="file" name="upload_filename" size="50">
 			</td>
 		</tr>
 		<tr>
-			<td class="head"><{$smarty.const._AD_BMCART_ITEM_DESC}></td>
+			<td class="head"><{$smarty.const._AD_BMCART_IMAGE_WEIGHT}></td>
 			<td class="<{cycle values=" odd,even"}>">
-			<{xoops_dhtmltarea name=item_desc value=$actionForm->get('item_desc')}>
-			</td>
-		</tr>
-		<tr>
-			<td class="head"><{$smarty.const._AD_BMCART_ITEM_PRICE}></td>
-			<td class="<{cycle values=" odd,even"}>">
-			<{xoops_input type=text name=price value=$actionForm->get('price')}>
-			</td>
-		</tr>
-		<tr>
-			<td class="head"><{$smarty.const._AD_BMCART_ITEM_SHIPPING_FEE}></td>
-			<td class="<{cycle values=" odd,even"}>">
-			<{xoops_input type=text name=shipping_fee value=$actionForm->get('shipping_fee')}>
-			</td>
-		</tr>
-		<tr>
-			<td class="head"><{$smarty.const._AD_BMCART_ITEM_STOCK}></td>
-			<td class="<{cycle values=" odd,even"}>">
-			<{xoops_input type=text name=stock_qty value=$actionForm->get('stock_qty')}>
+			<{xoops_input type=text name=weight value=$actionForm->get('weight')}>
 			</td>
 		</tr>
 		<tr>

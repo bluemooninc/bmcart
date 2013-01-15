@@ -23,9 +23,13 @@ define('_AD_BMCART_ITEM_DESC', '商品概要');
 
 define('_AD_BMCART_IMAGE_LIST', '商品画像一覧表');
 define('_AD_BMCART_TIPS_IMAGE_EDIT', '商品の画像を登録します。１商品に何枚でも画像を設定出来ます。');
+define('_AD_BMCART_IMAGE_EDIT', '画像の設定');
 define('_AD_BMCART_IMAGE_NEW', '画像の追加');
 define('_AD_BMCART_IMAGE_ID', '画像ID');
 define('_AD_BMCART_IMAGE_FILENAME', '画像ファイル名');
+define('_MD_BMCART_ERROR_IMAGE_EXTENSION', '画像ファイルの拡張子が違います。');
+define('_MD_BMCART_ERROR_IMAGE_MAXFILESIZE', '画像ファイルのサイズが大きすぎます。');
+define('_AD_BMCART_IMAGE_WEIGHT','表示ウエイト');
 
 define('_AD_BMCART_CATEGORY', 'カテゴリ設定');
 define('_AD_BMCART_CATEGORY_NEW', 'カテゴリの追加');
