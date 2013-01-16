@@ -38,7 +38,7 @@ class bmcart_ImageEditAction extends bmcart_AbstractEditAction
 
 	function executeViewSuccess(&$controller, &$render)
 	{
-		$controller->executeForward("index.php?action=ImageList");
+		$controller->executeForward("index.php?action=ImageList&item_id=".xoops_getrequest('item_id'));
 	}
 
 	function executeViewError(&$controller, &$render)

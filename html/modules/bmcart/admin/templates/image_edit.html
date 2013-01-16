@@ -27,7 +27,7 @@
 
 <form action="?action=ImageEdit" method="post" enctype="multipart/form-data">
 	<{xoops_token form=$actionForm}>
-	<{xoops_input type=hidden name=item_id value=$actionForm->get('image_id')}>
+	<{xoops_input type=hidden name=image_id value=$actionForm->get('image_id')}>
 	<table class="outer">
 		<tr>
 			<td class="head"><{$smarty.const._AD_BMCART_ITEM_ID}></td>

@@ -7,7 +7,9 @@
 <div class="tips"><{$smarty.const._AD_BMCART_TIPS_IMAGE_EDIT}></div>
 
 <ul class="toptab">
-	<li class="add"><a href="index.php?action=ImageEdit"><{$smarty.const._AD_BMCART_IMAGE_NEW}></a></li>
+	<li class="add"><a href="index.php?action=ImageEdit<{if $item_id}>&amp;item_id=<{$item_id}><{/if}>">
+		<{$smarty.const._AD_BMCART_IMAGE_NEW}>
+	</a></li>
 </ul>
 
 <table class="outer">
@@ -32,7 +34,9 @@
 		<td class="item_list_number"><{$item->getShow('item_id')}></td>
 		<td class="item_list_string">
 			<img src="<{$xoops_url}>/uploads/s_<{$item->getShow('image_filename')}>" />
+			<a href="<{$xoops_url}>/uploads/m_<{$item->getShow('image_filename')}>">
 			<{$item->getShow('image_filename')}>
+			</a>
 		</td>
 		<td class="item_list_control">
 			<a href="index.php?action=ImageEdit&amp;image_id=<{$item->getShow('image_id')}>">

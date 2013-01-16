@@ -53,8 +53,12 @@ class bmcart_ImageAdminEditForm extends XCube_ActionForm
 
 	function load(&$obj)
 	{
+		if (xoops_getrequest('item_id') && !$obj->get('item_id')){
+			$this->set('item_id', xoops_getrequest('item_id'));
+		}else{
+			$this->set('item_id', $obj->get('item_id'));
+		}
 		$this->set('image_id', $obj->get('image_id'));
-		$this->set('item_id', $obj->get('item_id'));
 		$this->set('image_filename', $obj->get('image_filename'));
 		$this->set('weight', $obj->get('weight'));
 	}
@@ -78,18 +82,44 @@ class bmcart_ImageAdminEditForm extends XCube_ActionForm
 		if (!function_exists('imagecreatefromjpeg') || !function_exists('imagecreatefrompng') || !function_exists('imagecreatefromgif')) return;
 		$filePath = $this->mUploadDir . '/' . $filename;
 		list($width, $height, $type, $attr) = getimagesize($filePath);
+		if ($width > $height) {
+			$percent = $size / $width;
+			$width_size = $size;
+			$height_size = intval($height * $percent);
+			$position_x = 0;
+			$position_y = intval($size - $height_size)/2;
+		} else {
+			$percent = $size / $height;
+			$width_size = intval($height * $percent);
+			$height_size = $size;
+			$position_x = intval($size - $width_size)/2;
+			$position_y = 0;
+		}
 		switch ($type) {
-			case 2: $source = imagecreatefromjpeg($filePath); break;
-			case 1: $source = imagecreatefromgif($filePath); break;
-			case 3: $source = imagecreatefrompng($filePath); break;
+			case 2:
+				$source = imagecreatefromjpeg($filePath);
+				break;
+			case 1:
+				$source = imagecreatefromgif($filePath);
+				break;
+			case 3:
+				$source = imagecreatefrompng($filePath);
+				break;
 		}
 		$destination = function_exists(ImageCreateTrueColor) ? ImageCreateTrueColor($size, $size) : ImageCreate($size, $size);
-		ImageCopyResampled($destination, $source, 0, 0, 0, 0, $size, $size, $width, $height);
+		imagefill($destination, 0, 0, 0xE0E0E0);
+		ImageCopyResampled($destination, $source, $position_x, $position_y, 0, 0, $width_size, $height_size, $width, $height);
 		$filePath = $this->mUploadDir . '/' . $prefix . $filename;
 		switch ($type) {
-			case 2: imagejpeg($destination, $filePath); break;
-			case 1: imagegif($destination, $filePath); break;
-			case 3: imagepng($destination, $filePath); break;
+			case 2:
+				imagejpeg($destination, $filePath);
+				break;
+			case 1:
+				imagegif($destination, $filePath);
+				break;
+			case 3:
+				imagepng($destination, $filePath);
+				break;
 		}
 	}
 
