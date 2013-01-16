@@ -5,7 +5,6 @@ define('_MD_BMCART_ITEMID', '商品番号');
 define('_MD_BMCART_ERROR_MAXLENGTH', "{0}は半角{1}文字以内で入力して下さい");
 define('_MD_BMCART_ERROR_MINLENGTH', "{0}は半角{1}文字以上にして下さい");
 
-
 define('_MD_BMCART_MODULE_TITLE', 'ショッピング');
 define('_MD_BMCART_TABLE_STATUS', '備考');
 define('_MD_BMCART_TABLE_STATUS_0', 'カートの中身');
@@ -41,10 +40,11 @@ define('_MD_BMCART_TO_CHECKOUT', 'レジに進む');
 define('_MD_BMCART_CHECKOUT', '注文内容の確認');
 define('_MD_BMCART_SHIPPING_TITLE', 'お届け先住所：');
 define('_MD_BMCART_BILLING_TITLE', '支払い方法:');
-define('_MD_BMCART_MODIFY', '変更する');
+define('_MD_BMCART_MODIFY', '配送先の入力');
 define('_MD_BMCART_ADDNEW', '入力する');
 define('_MD_BMCART_PHONE', '電話番号：');
 define('_MD_BMCART_LAST3CODE', '下3桁');
+define('_MD_BMCART_CHECK_YOUR_ADDRESS', ' 欄の入力項目をご確認下さい。');
 
 // cart.html
 define('_MD_BMCART_CART_INDEX', 'ショッピングカート');
@@ -53,7 +53,7 @@ define('_MD_BMCART_CART_CONTENT', '商品名等');
 define('_MD_BMCART_CART_PRICE', '価格');
 define('_MD_BMCART_CART_QTY', '数量');
 
-define('_MD_BMCART_PAYMENT_TYPE_WIRE', '銀行振込：ABC銀行 DFG支店 普通）1234567');
+define('_MD_BMCART_PAYMENT_TYPE_WIRE', '銀行振込 : ABC銀行 <br />&nbsp;&nbsp;&nbsp;DFG支店 普通）1234567');
 define('_MD_BMCART_PAYMENT_TYPE_CREDIT_CARD', 'クレジットカード');
 
 define('_MD_BMCART_SHIPPING_TO', '配送先氏名');
@@ -63,58 +63,19 @@ define('_MD_BMCART_SHIPPING_ADDRESS', '配送先住所');
 define('_MD_BMCART_ZIP_CODE', '郵便番号');
 define('_MD_BMCART_STATE', '都道府県');
 define('_MD_BMCART_ADDRESS', '市区町村番地');
+define('_MD_BMCART_ZIP2ADDRESS', '郵便番号から住所を自動入力');
 define('_MD_BMCART_ADDRESS2', 'マンション名等');
-define('_MD_BMCART_STATE_OPTIONS', '北海道,
-青森県,
-岩手県,
-宮城県,
-秋田県,
-山形県,
-福島県,
-茨城県,
-栃木県,
-群馬県,
-埼玉県,
-千葉県,
-東京都,
-神奈川県,
-新潟県,
-富山県,
-石川県,
-福井県,
-山梨県,
-長野県,
-岐阜県,
-静岡県,
-愛知県,
-三重県,
-滋賀県,
-京都府,
-大阪府,
-兵庫県,
-奈良県,
-和歌山県,
-鳥取県,
-島根県,
-岡山県,
-広島県,
-山口県,
-徳島県,
-香川県,
-愛媛県,
-高知県,
-福岡県,
-佐賀県,
-長崎県,
-熊本県,
-大分県,
-宮崎県,
-鹿児島県,
-沖縄県');
+define('_MD_BMCART_STATE_OPTIONS',
+'北海道,青森県,岩手県,宮城県,秋田県,山形県,福島県,'.
+'茨城県,栃木県,群馬県,埼玉県,千葉県,東京都,神奈川県,'.
+'新潟県,富山県,石川県,福井県,山梨県,長野県,岐阜県,静岡県,愛知県,'.
+'三重県,滋賀県,京都府,大阪府,兵庫県,奈良県,和歌山県,'.
+'鳥取県,島根県,岡山県,広島県,山口県,徳島県,香川県,愛媛県,高知県,'.
+'福岡県,佐賀県,長崎県,熊本県,大分県,宮崎県,鹿児島県,沖縄県');
 define('_MD_BMCART_REGISTER','登録する');
 define('_MD_BMCART_ORDER_FIXED','注文を確定する');
 define('_MD_BMCART_ORDER_MAIL','ご注文の確認');
-define('_MD_BMCART_NO_STOCK','ご注文内容に在庫の無い商品があります。カートから取り除いて下さい。');
+define('_MD_BMCART_NO_STOCK',' は只今在庫不足の為ご注文頂く事ができません。カートから取り除いて下さい。');
 define('_MD_BMCART_PAYMENT_DESC_CARD','クレジットカードによるお支払いを選択されました。
 クレジットカードの決済予約を行いました。実際の決済は商品発送時に行われます。');
 define('_MD_BMCART_PAYMENT_DESC_WIRE','銀行振込によるお支払いを選択されました。
@@ -130,3 +91,4 @@ define('_MD_BMCART_QTY_DESC', '個');
 define('_MD_BMCART_PAYMENT_TYPE', 'お支払い方法');
 define('_MD_BMCART_PAYBY_WIRE', '銀行振込');
 define('_MD_BMCART_PAYBY_CREDIT', 'クレジットカード');
+define('_MD_BMCART_ADD_CREDIT', 'クレジットカード追加');

@@ -17,6 +17,7 @@ class Controller_Checkout extends AbstractAction {
 	protected $cartHandler;
 	protected $cardList;
 	protected $message;
+	protected $stateOptions;
 
 	public function __construct(){
 		parent::__construct();
@@ -28,6 +29,7 @@ class Controller_Checkout extends AbstractAction {
 		if(isset($this->myObject)){
 			$view->set('CurrentOrder', $this->myObject);
 		}
+		$view->set('stateOptions',$this->stateOptions);
 		$view->set('Message', $this->message);
 		$view->set('CardList', $this->cardList);
 		$view->set('ListData', $this->mListData);
@@ -42,7 +44,7 @@ class Controller_Checkout extends AbstractAction {
 	public function action_index(){
 		$this->mListData = $this->cartHandler->getCartList();
 		if (!$this->mHandler->checkStock($this->mListData)){
-			$this->message = _MD_BMCART_NO_STOCK;
+			$this->message = $this->mHandler->getMessage() . _MD_BMCART_NO_STOCK;
 		}
 		$this->myObject = $this->mHandler->getCurrentOrder();
 		$creditService = $this->root->mServiceManager->getService('gmoPayment');
@@ -55,6 +57,7 @@ class Controller_Checkout extends AbstractAction {
 	public function action_editAddress(){
 		$this->myObject = $this->mHandler->getCurrentOrder();
 		$this->template = 'editAddress.html';
+		$this->stateOptions = $this->mHandler->getStateOptions();
 	}
 	public function action_addNewAddress(){
 		$this->mHandler->addNewAddress();
@@ -94,6 +97,10 @@ class Controller_Checkout extends AbstractAction {
 	 * Check out method
 	 */
 	public function action_orderFixed(){
+		$this->myObject = $this->mHandler->getCurrentOrder();
+		if (!$this->mHandler->checkCurrentOrder($this->myObject)){
+			redirect_header( "index", 3, $this->mHandler->getMessage());
+		}
 		$order_id = intval(xoops_getrequest("order_id"));
 		$cardOrderId = null;
 		$payment_type = intval(xoops_getrequest("payment_type"));
@@ -106,7 +113,7 @@ class Controller_Checkout extends AbstractAction {
 		$tax  = $sub_total - intval($sub_total / 1.05);
 		$ret = false;
 		if (!$this->mHandler->checkStock($this->mListData)){
-			redirect_header(XOOPS_URL . "/modules/bmcart/cartList",3,_MD_BMCART_NO_STOCK);
+			redirect_header( XOOPS_URL."/modules/bmcart/cartList", 3, $this->mHandler->getMessage()._MD_BMCART_NO_STOCK);
 		}
 		switch($payment_type){
 			case 1: // Wire transfer

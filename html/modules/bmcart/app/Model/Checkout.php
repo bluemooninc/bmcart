@@ -15,6 +15,7 @@ class Model_Checkout
 {
 	protected $myHandler;
 	protected $myObjects;
+	protected $message;
 
 	/**
 	 * constructor
@@ -79,6 +80,37 @@ class Model_Checkout
 		return $this->myHandler->getObjects($criteria);
 	}
 
+	public function checkCurrentOrder($orderObject){
+		$checkArray = array(
+			'first_name'=>_MD_BMCART_FIRSTNAME,
+			'last_name'=>_MD_BMCART_LASTNAME,
+			'zip_code'=>_MD_BMCART_ZIP_CODE,
+			'state'=>_MD_BMCART_STATE,
+			'address'=>_MD_BMCART_ADDRESS,
+			'phone'=>_MD_BMCART_PHONE
+		);
+		foreach($checkArray as $key=>$val){
+			if (!$orderObject->getVar($key)){
+				$this->message = $val . _MD_BMCART_CHECK_YOUR_ADDRESS."(1)" ;
+				return false;
+			}else{
+				if ($key=="zip_code"){
+					if (!preg_match("/^\d{3}-\d{4}$/",$orderObject->getVar($key))){
+						$this->message = $val . _MD_BMCART_CHECK_YOUR_ADDRESS."(2)" ;
+						return false;
+					}
+				}elseif($key=="phone"){
+					if (!preg_match("/^0\d{1,4}-\d{1,4}-\d{4}$/", $orderObject->getVar($key))){
+						$this->message = $val . _MD_BMCART_CHECK_YOUR_ADDRESS."(3)" ;
+						return false;
+					}
+				}
+
+			}
+		}
+		return true;
+	}
+
 	public function getCurrentOrder()
 	{
 		$this->_getMyOrder();
@@ -121,7 +153,7 @@ class Model_Checkout
 			$object->set('last_name', xoops_getrequest('last_name'));
 			$object->set('phone', xoops_getrequest('phone'));
 			$object->set('zip_code', xoops_getrequest('zip_code'));
-			$object->set('state', xoops_getrequest('state'));
+			$object->set('state', trim(xoops_getrequest('state')));
 			$object->set('address', xoops_getrequest('address'));
 			$object->set('address2', xoops_getrequest('address2'));
 			$this->myHandler->insert($object);
@@ -149,17 +181,25 @@ class Model_Checkout
 	public function &myObject(){
 		return $this->myObjects[0];
 	}
-
+	public function getMessage(){
+		return $this->message;
+	}
 	/**
+	 * Check Stock before accept order
 	 * @param $ListData
 	 * @return bool
 	 */
 	public function checkStock($ListData){
-		$itemHandler = xoops_getModuleHandler('orderItems');
-		foreach ($ListData as $orderObject) {
-			$itemObject = $itemHandler->get($orderObject['item_id']);
-			$stock = $itemObject->getVar('stock_qty');
-			if ( $stock==0 && $stock < $orderObject['qty'] ){
+		$itemHandler = xoops_getModuleHandler('item');
+		foreach ($ListData as $myRow) {
+			$itemObject = $itemHandler->get($myRow['item_id']);
+			if ($itemObject){
+				$stock = $itemObject->getVar('stock_qty');
+			}else{
+				$stock = 0;
+			}
+			if ( $stock==0 || $stock < $myRow['qty'] ){
+				$this->message = $itemObject->getVar('item_name');
 				return false;
 			}
 		}
@@ -171,7 +211,7 @@ class Model_Checkout
 	 * @param $order_id
 	 */
 	public function moveCartToOrder($ListData, $order_id){
-		$itemHandler = xoops_getModuleHandler('orderItems');
+		$itemHandler = xoops_getModuleHandler('item');
 		$orderItemHandler = xoops_getModuleHandler('orderItems');
 		foreach ($ListData as $orderObject) {
 			$itemObject = $itemHandler->get($orderObject['item_id']);
@@ -193,4 +233,12 @@ class Model_Checkout
 		}
 	}
 
+	public function &getStateOptions(){
+		$stateArray = explode(",",_MD_BMCART_STATE_OPTIONS);
+		$ret=array();
+		foreach($stateArray as $state){
+			$ret[$state]=$state;
+		}
+		return $ret;
+	}
 }
