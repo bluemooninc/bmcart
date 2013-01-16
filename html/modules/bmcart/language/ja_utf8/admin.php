@@ -24,6 +24,8 @@ define('_AD_BMCART_ITEM_DESC', '商品概要');
 define('_AD_BMCART_IMAGE_LIST', '商品画像一覧表');
 define('_AD_BMCART_TIPS_IMAGE_EDIT', '商品の画像を登録します。１商品に何枚でも画像を設定出来ます。');
 define('_AD_BMCART_IMAGE_EDIT', '画像の設定');
+define('_AD_BMCART_IMAGE_DELETE', '画像の削除');
+define('_AD_BMCART_IMAGE_DELETE_ADVICE', 'サーバにある画像ファイルと共に画像登録を削除します。');
 define('_AD_BMCART_IMAGE_NEW', '画像の追加');
 define('_AD_BMCART_IMAGE_ID', '画像ID');
 define('_AD_BMCART_IMAGE_FILENAME', '画像ファイル名');
