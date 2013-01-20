@@ -21,5 +21,13 @@ abstract class AbstractModel {
 		}
 		return $ret;
 	}
+	function array_flatten($array){
+		$result = array();
 
+		array_walk_recursive($array, function($v) use (&$result){
+			$result[] = $v;
+		});
+
+		return $result;
+	}
 }

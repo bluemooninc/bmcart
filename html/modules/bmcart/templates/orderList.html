@@ -3,7 +3,7 @@
 <{assign var="contname" value="order"}>
 
 <h3><{$smarty.const._MD_BMCART_ORDER_LIST}></h3>
-<table>
+<table class="table">
 	<tr>
 		<td><{$smarty.const._MD_BMCART_ORDER_ID}></td>
 		<td><{$smarty.const._MD_BMCART_ORDER_DATE}></td>
@@ -15,7 +15,7 @@
 	<{foreach item=order from=$ListData}>
 	<tr>
 		<td>
-			<a class="btn" href="<{$xoops_url}>/modules/<{$dirname}>/orderList/orderDetail/<{$order->getShow('order_id')}>">
+			<a href="<{$xoops_url}>/modules/<{$dirname}>/orderList/orderDetail/<{$order->getShow('order_id')}>">
 				<{$order->getShow('order_id')}>
 			</a>
 		</td>

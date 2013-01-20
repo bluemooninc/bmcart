@@ -21,16 +21,18 @@ class Controller_ItemList extends AbstractAction {
 		$this->mHandler = Model_Item::forge();
 	}
 	public function action_index(){
-		$this->mListData = $this->mHandler->getItems();
+		$category_id = $_SESSION['bmcart']['category_id'] ? $_SESSION['bmcart']['category_id'] : NULL;
+		$this->mListData = $this->mHandler->getItems($category_id);
 		$this->template = 'itemList.html';
 	}
 	public function action_itemDetail(){
 		if (isset($this->mParams[0])) $item_id = intval($this->mParams[0]);
 		if (isset($this->mParams[1])) $this->image_id = intval($this->mParams[1]);
 		$this->mListData = $this->mHandler->getItemDetail($item_id);
+		$_SESSION['bmcart']['category_id'] = $this->mListData['category_id'];
 		$imageHandler = xoops_getmodulehandler('itemImages');
 		$this->imageObjects = $imageHandler->getImages($item_id);
-		if (!$this->image_id){
+		if (!$this->image_id && $this->imageObjects){
 			$this->image_id = $this->imageObjects[0]->getVar('image_id');
 		}
 		$this->template = 'itemDetail.html';
@@ -44,7 +46,8 @@ class Controller_ItemList extends AbstractAction {
 	}
 	public function action_category(){
 		if (isset($this->mParams[0])) $category_id = intval($this->mParams[0]);
-		$this->mListData = $this->mHandler->getItems(0,0,"category_id=".$category_id);
+		$this->mListData = $this->mHandler->getItems($category_id);
+		$_SESSION['bmcart']['category_id'] = $category_id;
 		$this->template = 'itemList.html';
 	}
 	public function action_view(){

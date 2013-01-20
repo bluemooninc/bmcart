@@ -41,14 +41,14 @@ class Model_Item extends AbstractModel {
 		return $ret;
 	}
 
-	public function getItems($limit=0, $offset=0, $whereArray=null)
+	public function getItems($category_id)
 	{
+		$catHandler =& xoops_getModuleHandler('category');
+		$catArray = $catHandler->getAllChildren($category_id);
+		$catArray[] = $category_id;
+		$cArray = $this->array_flatten($catArray);
 		$this->myHandler =& xoops_getModuleHandler('item');
-		$this->_item_names = $this->myHandler->getItem($limit, $offset, $whereArray,
-			array(
-				array("name" => "name", "sort" => "ASC")
-			)
-		);
+		$this->_item_names = $this->myHandler->getItemByCategory($cArray);
 		return $this->_item_names;
 	}
 	public function &getItemDetail($item_id)

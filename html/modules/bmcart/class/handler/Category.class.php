@@ -18,6 +18,7 @@ class bmcart_categoryHandler extends XoopsObjectGenericHandler
     public $mTable = 'bmcart_category';
     public $mPrimary = 'category_id';
     public $mClass = 'bmcart_categoryObject';
+	private $catArray;
     public $id;
 
     public function __construct(&$db)
@@ -52,5 +53,28 @@ class bmcart_categoryHandler extends XoopsObjectGenericHandler
 			}
 		}
 		return $ret;
+	}
+	private function getCategoryChild($category_id){
+		$criteria = new CriteriaCompo();
+		$criteria->add(new Criteria('parent_id', $category_id));
+		$objects = $this->getObjects($criteria);
+		$ret=array();
+		foreach($objects as $object){
+			$ret[] = $object->getVar('category_id');
+		}
+		return $ret;
+	}
+
+	/**
+	 * @param $category_id
+	 * @return array
+	 */
+	public function getAllChildren($category_id){
+		$ret = $this->getCategoryChild($category_id);
+		$this->catArray[]=$ret;
+		foreach($ret as $catId){
+			$this->getAllChildren($catId);
+		}
+		return $this->catArray;
 	}
 }

@@ -6,7 +6,7 @@
 <{foreach item=val from=$ListData}>
 <ul>
 	<li>
-		<a class="btn" href="<{$xoops_url}>/modules/<{$dirname}>/itemList/itemDetail/<{$val.item_id|xoops_escape}>">
+		<a href="<{$xoops_url}>/modules/<{$dirname}>/itemList/itemDetail/<{$val.item_id|xoops_escape}>">
 			<{*<{$val.item_id|xoops_escape}>*}>
 			<{$val.item_name|xoops_escape}>
 		</a>

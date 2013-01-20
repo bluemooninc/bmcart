@@ -7,10 +7,10 @@
 	<ul>
 	<{if $val.sub_category}>
 		<li><{$val.category_name|xoops_escape}></li>
-		<ul>
+		<ul class="unstyled">
 		<{foreach item=subCategory from=$val.sub_category}>
 		<li>&nbsp;&nbsp;
-			<a class="btn" href="<{$xoops_url}>/modules/<{$dirname}>/itemList/category/<{$subCategory.category_id|xoops_escape}>">
+			<a href="<{$xoops_url}>/modules/<{$dirname}>/itemList/category/<{$subCategory.category_id|xoops_escape}>">
 			<{*<{$subCategory.category_id|xoops_escape}>*}>
 			<{$subCategory.category_name|xoops_escape}>
 			</a>
@@ -19,7 +19,7 @@
 		</ul>
 	<{else}>
 		<li>
-		<a class="btn" href="<{$xoops_url}>/modules/<{$dirname}>/itemList/category/<{$val.category_id|xoops_escape}>">
+		<a href="<{$xoops_url}>/modules/<{$dirname}>/itemList/category/<{$val.category_id|xoops_escape}>">
 		<{*<{$val.category_id|xoops_escape}>*}>
 		<{$val.category_name|xoops_escape}>
 		</a>

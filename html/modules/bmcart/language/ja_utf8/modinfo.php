@@ -11,3 +11,5 @@ define('_MI_BMCART_CART_LIST', 'カートの中身を見る');
 
 define('_MI_BMCART_BLOCK_CATEGORY', 'カテゴリ一');
 define('_MI_BMCART_BLOCK_CATEGORY_DESC', '商品のカテゴリ一を一覧表示します。');
+define('_MI_BMCART_BLOCK_NEWITEM', '最近更新された商品');
+define('_MI_BMCART_BLOCK_NEWITEM_DESC', '最近更新商品を一覧アイコン表示します。');

@@ -8,24 +8,25 @@
 
 function b_bmcart_category_show()
 {
+	$category_id = $_SESSION['bmcart']['category_id'] ? $_SESSION['bmcart']['category_id'] : 0;
 	$handler = xoops_getmodulehandler("category","bmcart");
-	$objects = $handler->getObjects();
-	$mListData = null;
-	foreach($objects as $object){
-		if ($object->getVar("parent_id")==0){
-			$mListData[$object->getVar("category_id")][0] = array(
-				"parent_id" => $object->getVar("parent_id"),
-				"category_id" => $object->getVar("category_id"),
-				"category_name" => $object->getVar("category_name")
-			);
-		}else{
-			$mListData[$object->getVar("category_id")][0]['hasChild']=true;
-			$mListData[$object->getVar("parent_id")][$object->getVar("category_id")] = array(
+	$myObject = $handler->get($category_id);
+	if ($myObject){
+		$mListData = array(
+			"parent_id" => $myObject->getVar("parent_id"),
+			"category_id" => $myObject->getVar("category_id"),
+			"category_name" => $myObject->getVar("category_name")
+		);
+		$criteria = new Criteria('parent_id',$category_id);
+		$objects = $handler->getObjects($criteria);
+		foreach($objects as $object){
+			$mListData['child'][] = array(
 				"parent_id" => $object->getVar("parent_id"),
 				"category_id" => $object->getVar("category_id"),
 				"category_name" => $object->getVar("category_name")
 			);
 		}
+
 	}
 	$block = array();
 	$block['categoryList'] = $mListData;

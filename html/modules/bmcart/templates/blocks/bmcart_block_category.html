@@ -1,17 +1,18 @@
+<p>
+<{if $block.categoryList.parent_id==0}>
+	<{$block.categoryList.category_name}>
+<{else}>
+<a class="menuMain" href="<{$xoops_url}>/modules/bmcart/itemList/category/<{$block.categoryList.parent_id}>">
+	<{$block.categoryList.category_name}>
+</a>
+<{/if}>
+</p>
 <ul>
-	<{foreach item=categoryList from=$block.categoryList}>
-		<{foreach item=category from=$categoryList}>
-		<{if $category.parent_id==0}>
-		<li>
-			<a class="menuMain" href="<{$xoops_url}>/modules/bmcart/itemList/category/<{$category.category_id}>">
-				<{$category.category_name}>
-			</a>
-		</li>
-		<{else}>
-			<a class="menuSub" href="<{$xoops_url}>/modules/bmcart/itemList/category/<{$category.category_id}>">
-				<{$category.category_name}>
-			</a>
-		<{/if}>
-		<{/foreach}>
-	<{/foreach}>
+<{foreach item=category from=$block.categoryList.child}>
+	<li>
+		<a class="menuMain" href="<{$xoops_url}>/modules/bmcart/itemList/category/<{$category.category_id}>">
+			<{$category.category_name}>
+		</a>
+	</li>
+<{/foreach}>
 </ul>

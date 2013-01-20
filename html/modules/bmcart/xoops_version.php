@@ -1,7 +1,7 @@
 <?php
 /*
  * B.M.Cart - Cart Module on XOOPS Cube v2.2
- * Copyright (c) Bluemoon inc. All rights reserved.
+ * Copyright (c) Bluemoon inc. 2013 All rights reserved.
  * Author : Yoshi Sakai (http://bluemooninc.jp)
  * Licence : GPL V3 licence
  */
@@ -9,7 +9,7 @@ if (!defined('XOOPS_ROOT_PATH')) exit();
 if (!isset($root)) {
 	$root = XCube_Root::getSingleton();
 }
-//$mydirpath = basename( dirname( dirname( __FILE__ ) ) ) ;
+$mydirpath = basename( dirname( dirname( __FILE__ ) ) ) ;
 $modversion["name"] = _MI_BMCART_TITLE;
 $modversion["dirname"] = basename(dirname(__FILE__));
 $modversion['hasMain'] = 1;
@@ -18,10 +18,10 @@ $modversion['image'] = 'images/bmcart.png';
 $modversion['hasAdmin'] = 1;
 $modversion['adminindex'] = "admin/index.php";
 $modversion['adminmenu'] = "admin/menu.php";
-$modversion['sub'][] = array('name' => _MI_BMCART_CATEGORY_LIST, 'url' => 'bmcart');
-$modversion['sub'][] = array('name' => _MI_BMCART_ITEM_LIST, 'url' => 'itemList');
-$modversion['sub'][] = array('name' => _MI_BMCART_CART_LIST, 'url' => 'cartList');
-$modversion['sub'][] = array('name' => _MI_BMCART_ORDER_LIST, 'url' => 'orderList');
+$modversion['sub'][] = array('name' => _MI_BMCART_CATEGORY_LIST, 'url' => 'index.php');
+$modversion['sub'][] = array('name' => _MI_BMCART_ITEM_LIST, 'url' => 'itemList/index');
+$modversion['sub'][] = array('name' => _MI_BMCART_CART_LIST, 'url' => 'cartList/index');
+$modversion['sub'][] = array('name' => _MI_BMCART_ORDER_LIST, 'url' => 'orderList/index');
 
 /*
  * View
@@ -59,6 +59,15 @@ $modversion['blocks'][1] = array(
 	'description' => _MI_BMCART_BLOCK_CATEGORY_DESC,
 	'show_func' => "b_bmcart_category_show",
 	'template' => 'bmcart_block_category.html',
+	'visible_any' => true,
+	'show_all_module' => false
+);
+$modversion['blocks'][2] = array(
+	'file' => "bmcart_newitem.php",
+	'name' => _MI_BMCART_BLOCK_NEWITEM,
+	'description' => _MI_BMCART_BLOCK__NEWITEM_DESC,
+	'show_func' => "b_bmcart_newitem_show",
+	'template' => 'bmcart_block_newitem.html',
 	'visible_any' => true,
 	'show_all_module' => false
 );
