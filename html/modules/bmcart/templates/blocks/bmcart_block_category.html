@@ -1,11 +1,7 @@
 <p>
-<{if $block.categoryList.parent_id==0}>
-	<{$block.categoryList.category_name}>
-<{else}>
 <a class="menuMain" href="<{$xoops_url}>/modules/bmcart/itemList/category/<{$block.categoryList.parent_id}>">
 	<{$block.categoryList.category_name}>
 </a>
-<{/if}>
 </p>
 <ul>
 <{foreach item=category from=$block.categoryList.child}>

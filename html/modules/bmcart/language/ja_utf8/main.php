@@ -75,7 +75,8 @@ define('_MD_BMCART_STATE_OPTIONS',
 define('_MD_BMCART_REGISTER','登録する');
 define('_MD_BMCART_ORDER_FIXED','注文を確定する');
 define('_MD_BMCART_ORDER_MAIL','ご注文の確認');
-define('_MD_BMCART_NO_STOCK',' は只今在庫不足の為ご注文頂く事ができません。カートから取り除いて下さい。');
+define('_MD_BMCART_MESSAGE_LESS_STOCK',' %s は只今の在庫数が %d です。ご注文頂くにはこの数量以下にして下さい。');
+define('_MD_BMCART_NO_STOCK','  %s は只今の在庫がありません。この商品をカートから取り除いて下さい。');
 define('_MD_BMCART_PAYMENT_DESC_CARD','クレジットカードによるお支払いを選択されました。
 クレジットカードの決済予約を行いました。実際の決済は商品発送時に行われます。');
 define('_MD_BMCART_PAYMENT_DESC_WIRE','銀行振込によるお支払いを選択されました。

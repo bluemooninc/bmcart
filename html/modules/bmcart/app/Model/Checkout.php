@@ -184,27 +184,6 @@ class Model_Checkout
 	public function getMessage(){
 		return $this->message;
 	}
-	/**
-	 * Check Stock before accept order
-	 * @param $ListData
-	 * @return bool
-	 */
-	public function checkStock($ListData){
-		$itemHandler = xoops_getModuleHandler('item');
-		foreach ($ListData as $myRow) {
-			$itemObject = $itemHandler->get($myRow['item_id']);
-			if ($itemObject){
-				$stock = $itemObject->getVar('stock_qty');
-			}else{
-				$stock = 0;
-			}
-			if ( $stock==0 || $stock < $myRow['qty'] ){
-				$this->message = $itemObject->getVar('item_name');
-				return false;
-			}
-		}
-		return true;
-	}
 
 	/**
 	 * @param $ListData

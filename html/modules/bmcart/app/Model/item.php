@@ -10,6 +10,7 @@ class Model_Item extends AbstractModel {
 	protected $_item_types = array();
 	protected $_item_names = array();
 	protected $myHandler;
+	protected $message;
 
 	/**
 	 * constructor
@@ -40,17 +41,36 @@ class Model_Item extends AbstractModel {
 		$ret = isset($obj) ? $obj->getVar("item_name") : NULL;
 		return $ret;
 	}
-
-	public function getItems($category_id)
-	{
-		$catHandler =& xoops_getModuleHandler('category');
-		$catArray = $catHandler->getAllChildren($category_id);
-		$catArray[] = $category_id;
-		$cArray = $this->array_flatten($catArray);
-		$this->myHandler =& xoops_getModuleHandler('item');
-		$this->_item_names = $this->myHandler->getItemByCategory($cArray);
-		return $this->_item_names;
+	private function _getTopImage($item_id){
+		$criteria = new CriteriaCompo();
+		$criteria->add(new Criteria('item_id',$item_id));
+		$criteria->addsort('weight','ASC');
+		$item_handler = xoops_getmodulehandler('itemImages');
+		$objects = $item_handler->getObjects($criteria,0,1);
+		if ($objects){
+			return $objects[0]->getVar('image_filename');
+		}
+		return null;
 	}
+	public function &getItemList($category_id,$sortName,$sortOrder)
+	{
+		$cArray = array();
+		if ($category_id>0){
+			$catHandler =& xoops_getModuleHandler('category');
+			$catArray = $catHandler->getAllChildren($category_id);
+			$catArray[] = $category_id;
+			$cArray = $this->array_flatten($catArray);
+		}
+		$this->myHandler =& xoops_getModuleHandler('item');
+		$items = $this->myHandler->getItemByCategory($cArray,$sortName,$sortOrder);
+		$i=0;
+		foreach($items as $item){
+			$items[$i]['image_filename'] = $this->_getTopImage($item['item_id']);
+			$i++;
+		}
+		return $items;
+	}
+
 	public function &getItemDetail($item_id)
 	{
 		$this->myHandler =& xoops_getModuleHandler('item');
@@ -81,6 +101,35 @@ class Model_Item extends AbstractModel {
 
 		return count($objs);
 	}
+
+	public function getMessage(){
+		return $this->message;
+	}
+	/**
+	 * Check Stock before accept order
+	 * @param $ListData
+	 * @return bool
+	 */
+	public function checkStock($ListData){
+		$itemHandler = xoops_getModuleHandler('item');
+		foreach ($ListData as $myRow) {
+			$itemObject = $itemHandler->get($myRow['item_id']);
+			if ($itemObject){
+				$stock = $itemObject->getVar('stock_qty');
+			}else{
+				$stock = 0;
+			}
+			if ( $stock==0 ){
+				$this->message = sprintf(_MD_BMCART_MESSAGE_NO_STOCK,$itemObject->getVar('item_name'));
+				return false;
+			}elseif ($stock < $myRow['qty'] ){
+				$this->message = sprintf(_MD_BMCART_MESSAGE_LESS_STOCK,$itemObject->getVar('item_name'),$stock);
+				return false;
+			}
+		}
+		return true;
+	}
+
 
 	public function update($field_name, $value, $whereArray = NULL)
 	{

@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by JetBrains PhpStorm.
- * User: bluemooninc
+ * Copyright(c): bluemooninc
  * Date: 2013/01/08
  * Time: 15:55
  * To change this template use File | Settings | File Templates.
@@ -21,13 +21,16 @@ abstract class AbstractModel {
 		}
 		return $ret;
 	}
+
+	/**
+	 * @param $array
+	 * @return array
+	 */
 	function array_flatten($array){
 		$result = array();
-
 		array_walk_recursive($array, function($v) use (&$result){
 			$result[] = $v;
 		});
-
 		return $result;
 	}
 }

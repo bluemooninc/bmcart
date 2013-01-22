@@ -107,7 +107,7 @@ class bmcart_ImageAdminEditForm extends XCube_ActionForm
 				break;
 		}
 		$destination = function_exists(ImageCreateTrueColor) ? ImageCreateTrueColor($size, $size) : ImageCreate($size, $size);
-		imagefill($destination, 0, 0, 0xE0E0E0);
+		imagefill($destination, 0, 0, 0xffffff);
 		ImageCopyResampled($destination, $source, $position_x, $position_y, 0, 0, $width_size, $height_size, $width, $height);
 		$filePath = $this->mUploadDir . '/' . $prefix . $filename;
 		switch ($type) {

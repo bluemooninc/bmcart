@@ -55,7 +55,7 @@ $controller_name = isset($params[0][1]) ? $params[0][1] : $mydirname;
 $method = isset($params[0][2]) ? $params[0][2] : "index";
 if (isset($params) && count($params[0]) > 3) {
 	for ($i = 3; $i < count($params[0]); $i++) {
-		$parameters[] = isset($params[0][$i]) ? htmlspecialchars($params[0][$i], ENT_QUOTES) : "";
+		$parameters[] = isset($params[0][$i]) ? addslashes(htmlspecialchars($params[0][$i], ENT_QUOTES)) : "";
 	}
 }
 $method_name = "action_" . $method;

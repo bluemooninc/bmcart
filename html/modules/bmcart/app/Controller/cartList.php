@@ -6,6 +6,7 @@
  * Time: 10:29
  * To change this template use File | Settings | File Templates.
  */
+require_once _MY_MODULE_PATH . 'app/Model/Item.php';
 require_once _MY_MODULE_PATH . 'app/Model/Cart.php';
 require_once _MY_MODULE_PATH . 'app/Model/PageNavi.class.php';
 require_once _MY_MODULE_PATH . 'app/View/view.php';
@@ -17,6 +18,10 @@ class Controller_CartList extends AbstractAction {
 	}
 	public function action_index(){
 		$this->mListData = $this->mHandler->getCartList();
+		$itemHandler = Model_Item::forge();
+		if (!$itemHandler->checkStock($this->mListData)){
+			$this->message = $itemHandler->getMessage();
+		}
 		$this->template = 'cartList.html';
 	}
 	public function action_removeItem(){
@@ -39,6 +44,7 @@ class Controller_CartList extends AbstractAction {
 	public function action_view(){
 		$view = new View($this->root);
 		$view->setTemplate($this->template);
+		$view->set('Message', $this->message);
 		$view->set('ticket_hidden',$this->mTicketHidden);
 		$view->set('ListData', $this->mListData);
 		$view->set('shipping_fee', $this->mHandler->isShippingFee() );

@@ -77,4 +77,17 @@ class bmcart_categoryHandler extends XoopsObjectGenericHandler
 		}
 		return $this->catArray;
 	}
+
+	public function &makeBreadcrumbs($category_id){
+		$ret = array($category_id);
+		while($category_id!=0){
+			$myObject = $this->get($category_id);
+			$ret[] = array(
+				'category_id'=>$myObject->getVar('category_id'),
+				'category_name'=>$myObject->getVar('category_name')
+			);
+			$category_id = $myObject->getVar('parent_id');
+		}
+		return array_reverse($ret);
+	}
 }

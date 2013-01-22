@@ -32,9 +32,9 @@ class bmcart_itemHandler extends XoopsObjectGenericHandler
     {
         parent::XoopsObjectGenericHandler($db);
     }
-	public function &getItemByCategory($catArray=null){
+	public function &getItemByCategory($catArray=null,$sortName='item_name',$sortOrder='ASC'){
 		$criteria = new CriteriaCompo();
-		$criteria->addsort('item_name', 'asc');
+		$criteria->addsort($sortName, $sortOrder);
 		if ($catArray){
 			$criteria->add(new Criteria('category_id', implode(",",$catArray),"IN"));
 		}
@@ -50,7 +50,7 @@ class bmcart_itemHandler extends XoopsObjectGenericHandler
 		return $ret;
 	}
 	public function &getItemOptions(){
-		$itemList = $this->getItem();
+		$itemList = $this->getItemByCategory();
 		$ret = array(0=>null);
 		foreach($itemList as $item){
 			$ret[$item['item_id']] = $item['item_name'];

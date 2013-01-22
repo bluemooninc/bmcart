@@ -6,6 +6,7 @@
  * Time: 22:24
  * To change this template use File | Settings | File Templates.
  */
+require_once _MY_MODULE_PATH . 'app/Model/Item.php';
 require_once _MY_MODULE_PATH . 'app/Model/Cart.php';
 require_once _MY_MODULE_PATH . 'app/Model/Checkout.php';
 require_once _MY_MODULE_PATH . 'app/Model/MailBuilder.php';
@@ -43,8 +44,9 @@ class Controller_Checkout extends AbstractAction {
 	}
 	public function action_index(){
 		$this->mListData = $this->cartHandler->getCartList();
-		if (!$this->mHandler->checkStock($this->mListData)){
-			$this->message = $this->mHandler->getMessage() . _MD_BMCART_NO_STOCK;
+		$itemHandler = Model_Item::forge();
+		if (!$itemHandler->checkStock($this->mListData)){
+			$this->message = $itemHandler->getMessage() . _MD_BMCART_NO_STOCK;
 		}
 		$this->myObject = $this->mHandler->getCurrentOrder();
 		$creditService = $this->root->mServiceManager->getService('gmoPayment');
