@@ -52,7 +52,8 @@ class Model_Item extends AbstractModel {
 		}
 		return null;
 	}
-	public function &getItemList($category_id,$sortName,$sortOrder)
+
+	public function &getCategoryArray($category_id)
 	{
 		$cArray = array();
 		if ($category_id>0){
@@ -61,8 +62,13 @@ class Model_Item extends AbstractModel {
 			$catArray[] = $category_id;
 			$cArray = $this->array_flatten($catArray);
 		}
+		return $cArray;
+	}
+	public function &getItemList(&$criteria,$sortName,$sortOrder)
+	{
+
 		$this->myHandler =& xoops_getModuleHandler('item');
-		$items = $this->myHandler->getItemByCategory($cArray,$sortName,$sortOrder);
+		$items = $this->myHandler->getItemByCategory($criteria,$sortName,$sortOrder);
 		$i=0;
 		foreach($items as $item){
 			$items[$i]['image_filename'] = $this->_getTopImage($item['item_id']);
@@ -90,15 +96,13 @@ class Model_Item extends AbstractModel {
 	}
 
 	/**
-	 * get XoopsItem Count
+	 * get Item Count
 	 * @param none
 	 * @return int Count
 	 */
-	public function getXoopsItemCount()
+	public function getCount(&$criteria)
 	{
-		$item_handler =& xoops_gethandler('item');
-		$objs = $item_handler->getObjects();
-
+		$objs = $this->myHandler->getObjects($criteria);
 		return count($objs);
 	}
 
@@ -129,7 +133,6 @@ class Model_Item extends AbstractModel {
 		}
 		return true;
 	}
-
 
 	public function update($field_name, $value, $whereArray = NULL)
 	{

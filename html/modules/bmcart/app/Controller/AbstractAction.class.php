@@ -156,7 +156,6 @@ abstract class AbstractAction {
 	 */
 	protected function indexDefault($primaryKey='id') {
 		$this->setPageNavi($primaryKey, 'ASC');
-		$this->getModObj();
 	}
 	/**
 	 * edit
@@ -169,7 +168,6 @@ abstract class AbstractAction {
 		if ( $this->id > 0 ){
 			$this->setPageNavi($primaryKey, 'ASC');
 			$this->mPagenavi->addCriteria(new Criteria($primaryKey, $this->id));
-			$this->getModObj($this->id);
 		}
 	}
 	/**

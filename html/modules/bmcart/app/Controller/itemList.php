@@ -12,6 +12,7 @@ require_once _MY_MODULE_PATH . 'app/Model/PageNavi.class.php';
 require_once _MY_MODULE_PATH . 'app/View/view.php';
 
 class Controller_ItemList extends AbstractAction {
+	protected $mPrimaryKey = 'item_id';
 	protected $imageObjects;
 	protected $image_id;
 	protected $category_id = 0;
@@ -28,10 +29,25 @@ class Controller_ItemList extends AbstractAction {
 		$this->categoryHandler = xoops_getModuleHandler('category');
 	}
 	public function action_index(){
+		$this->indexDefault($this->mPrimaryKey);
 		$this->category_id = $_SESSION['bmcart']['category_id'] ? $_SESSION['bmcart']['category_id'] : NULL;
-		$this->mListData = $this->mHandler->getItemList($this->category_id,$this->sortName,$this->sortOrder);
+		$categoryArray = $this->mHandler->getCategoryArray($this->category_id);
+		if($categoryArray){
+			$categories = new Criteria('category_id', implode(",",$categoryArray), "IN");
+			$this->mPagenavi->addCriteria($categories);
+		}
+		$this->mPagenavi->addSort($this->sortName,$this->sortOrder);
+		$this->mListData = $this->mHandler->getItemList( $this->mPagenavi->getCriteria() );
 		$this->breadcrumbs = $this->categoryHandler->makeBreadcrumbs($this->category_id);
 		$this->template = 'itemList.html';
+	}
+	public function action_category(){
+		$this->indexDefault($this->mPrimaryKey);
+		if (isset($this->mParams[0])){
+			$_SESSION['bmcart']['category_id'] = intval($this->mParams[0]);
+		}
+		$this->breadcrumbs = $this->categoryHandler->makeBreadcrumbs($this->category_id);
+		$this->action_index();
 	}
 	public function action_sortBy(){
 		$_SESSION['bmcart']['category_id']=$this->mParams[0];
@@ -63,13 +79,6 @@ class Controller_ItemList extends AbstractAction {
 		$cartHandler->addToCart($item_id);
 		$this->executeRedirect("../../cartList", 0, 'Add to Cart');
 	}
-	public function action_category(){
-		if (isset($this->mParams[0])) $this->category_id = intval($this->mParams[0]);
-		$this->mListData = $this->mHandler->getItemList($this->category_id,$this->sortName,$this->sortOrder);
-		$_SESSION['bmcart']['category_id'] = $this->category_id;
-		$this->breadcrumbs = $this->categoryHandler->makeBreadcrumbs($this->category_id);
-		$this->template = 'itemList.html';
-	}
 	public function action_view(){
 		$view = new View($this->root);
 		$view->setTemplate($this->template);
@@ -82,5 +91,12 @@ class Controller_ItemList extends AbstractAction {
 		if (is_object($this->mPagenavi)) {
 			$view->set('pageNavi', $this->mPagenavi->getNavi());
 		}
+	}
+//-----------------
+// protected
+//-----------------
+	protected function setPageNavi($sortName, $sortIndex)
+	{
+		$this->setPageNaviDefault($sortName, $sortIndex);
 	}
 }

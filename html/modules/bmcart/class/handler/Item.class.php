@@ -32,12 +32,7 @@ class bmcart_itemHandler extends XoopsObjectGenericHandler
     {
         parent::XoopsObjectGenericHandler($db);
     }
-	public function &getItemByCategory($catArray=null,$sortName='item_name',$sortOrder='ASC'){
-		$criteria = new CriteriaCompo();
-		$criteria->addsort($sortName, $sortOrder);
-		if ($catArray){
-			$criteria->add(new Criteria('category_id', implode(",",$catArray),"IN"));
-		}
+	public function &getItemByCategory(&$criteria){
 		$objects = $this->getObjects($criteria);
 		$ret = array();
 		foreach( $objects as $object ){

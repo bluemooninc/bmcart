@@ -75,5 +75,16 @@
 	</tr>
 <{/foreach}>
 </table>
-
-<div class="pagenavi" align="center"><{xoops_pagenavi pagenavi=$pageNavi}></div>
+<div class="pagenavi" align="center">
+	<nobr>
+		<div class="pagination pagination-centered">
+			<ul>
+				<li class="active">
+				<li>
+				<{xoops_pagenavi2 pagenavi=$pageNavi}>
+				</li>
+				<li>
+			</ul>
+		</div>
+	</nobr>
+</div>

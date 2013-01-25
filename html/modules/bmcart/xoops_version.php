@@ -23,6 +23,11 @@ $modversion['sub'][] = array('name' => _MI_BMCART_ITEM_LIST, 'url' => 'itemList/
 $modversion['sub'][] = array('name' => _MI_BMCART_CART_LIST, 'url' => 'cartList/index');
 $modversion['sub'][] = array('name' => _MI_BMCART_ORDER_LIST, 'url' => 'orderList/index');
 
+// Search
+$modversion['hasSearch'] = 1 ;
+$modversion['search']['file'] = 'search.php' ;
+$modversion['search']['func'] = 'bmcart_global_search' ;
+
 /*
  * View
  */

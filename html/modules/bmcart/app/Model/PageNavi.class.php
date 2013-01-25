@@ -7,7 +7,7 @@ require_once XOOPS_ROOT_PATH.'/core/XCube_PageNavigator.class.php';
 /**
  * PageNavi
  */
-class Acl_PageNavi{
+class Bmcart_PageNavi{
 	// object
 	protected $mCriteria = null;
 	protected $mHandler = null;
@@ -15,7 +15,7 @@ class Acl_PageNavi{
 	
 	// set variable
 	protected $mPagenum = 10;
-	protected $mUrl = 'acl.php';
+	protected $mUrl = 'bmcart.php';
 	protected $mTotal = 0;
 
 	/**
@@ -23,14 +23,10 @@ class Acl_PageNavi{
 	 */  
 	public function __construct( $handler=null, $criteria=null ) {
 		$this->mUrl = _MY_MODULE_URL . 'index.php';
-		//$this->_mUrl = XOOPS_URL.'/modules/acl/acl/';
 
 		$this->mHandler = $handler;
-		if ( is_object($criteria) ) {
-			$this->mCriteria = $criteria;
-		} else {
-			$this->mCriteria = new CriteriaCompo();
-		}
+
+		$this->mCriteria = new CriteriaCompo();
 	}
 
 	/**
@@ -80,8 +76,8 @@ class Acl_PageNavi{
 	 * @param object $criteria
 	 * @return none
 	 */	 
-	public function addCriteria($criteria) {
-		$this->mCriteria->add($criteria);
+	public function addCriteria(&$criteria,$operator="=") {
+		$this->mCriteria->add($criteria,$operator);
 	}
 
 	/**

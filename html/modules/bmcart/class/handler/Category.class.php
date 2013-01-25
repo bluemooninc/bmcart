@@ -88,6 +88,7 @@ class bmcart_categoryHandler extends XoopsObjectGenericHandler
 			);
 			$category_id = $myObject->getVar('parent_id');
 		}
-		return array_reverse($ret);
+		$ret = array_reverse($ret);
+		return $ret;
 	}
 }
