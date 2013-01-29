@@ -35,7 +35,9 @@ function b_bmcart_newitem_show()
 	$criteria->addsort('last_update', 'desc');
 	$objects = $handler->getObjects($criteria, 0, 10);
 	$mListData = array();
+	$i=0;
 	foreach ($objects as $object) {
+		if ($i>4) break;
 		$imageCriteria = new Criteria('item_id', $object->getVar('item_id'));
 		$imageObjects = $imageHandler->getObjects($imageCriteria);
 		$images = array();
@@ -48,6 +50,7 @@ function b_bmcart_newitem_show()
 			"images" => $images
 		);
 		$mListData[] = $myRow;
+		$i++;
 	}
 	$block = array();
 	$block['newitemList'] = $mListData;
