@@ -94,3 +94,14 @@ CREATE TABLE {prefix}_{dirname}_orderItems (
   PRIMARY KEY  (`orderItem_id`),
   KEY order_id (`order_id`)
 ) ENGINE = MYISAM;
+
+##
+## Check history
+##
+CREATE TABLE {prefix}_{dirname}_checked_items (
+  `uid` int(8) unsigned NOT NULL,
+  `item_id` int(8) unsigned NOT NULL,
+  `category_id` int(8) unsigned NOT NULL,
+  `last_update` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`uid`,`item_id`)
+) ENGINE = MYISAM;

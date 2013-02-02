@@ -43,7 +43,12 @@ class Controller_Checkout extends AbstractAction {
 		$view->setTemplate($this->template);
 	}
 	public function action_index(){
+		$root = XCube_Root::getSingleton();
+		if(!$root->mContext->mXoopsUser){
+			redirect_header(XOOPS_URL."/user.php",3,_MD_BMCART_NEED_LOGIN);
+		}
 		$this->mListData = $this->cartHandler->getCartList();
+
 		$itemHandler = Model_Item::forge();
 		if (!$itemHandler->checkStock($this->mListData)){
 			$this->message = $itemHandler->getMessage() . _MD_BMCART_NO_STOCK;
@@ -99,6 +104,7 @@ class Controller_Checkout extends AbstractAction {
 	 * Check out method
 	 */
 	public function action_orderFixed(){
+		global $xoopsModuleConfig;
 		$this->myObject = $this->mHandler->getCurrentOrder();
 		if (!$this->mHandler->checkCurrentOrder($this->myObject)){
 			redirect_header( "index", 3, $this->mHandler->getMessage());
@@ -111,10 +117,11 @@ class Controller_Checkout extends AbstractAction {
 		$shipping_fee = $this->cartHandler->isShippingFee();
 		$amount = $this->cartHandler->isTotalAmount();
 		$sub_total = $this->cartHandler->isSubTotal();
-		// TODO : Tax Should be set on xoopsConfig
-		$tax  = $sub_total - intval($sub_total / 1.05);
+		$tax  = intval($sub_total * ($xoopsModuleConfig['sales_tax']/100));
+
 		$ret = false;
-		if (!$this->mHandler->checkStock($this->mListData)){
+		$itemHandler = Model_Item::forge();
+		if (!$itemHandler->checkStock($this->mListData)){
 			redirect_header( XOOPS_URL."/modules/bmcart/cartList", 3, $this->mHandler->getMessage()._MD_BMCART_NO_STOCK);
 		}
 		switch($payment_type){

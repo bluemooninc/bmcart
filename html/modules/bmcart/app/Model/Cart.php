@@ -37,14 +37,29 @@ class Model_Cart extends AbstractModel {
 		}
 		return $instance;
 	}
-
+	private function &_getFromSession(){
+		if(isset($_SESSION['cartObjects'])){
+			$objects = $_SESSION['cartObjects'];
+			$myObjects = array();
+			foreach($objects as $object){
+				$myObjects[] = unserialize($object);
+			}
+			return $myObjects;
+		}
+	}
 	private function _getMyCartItems()
 	{
-		$criteria = new CriteriaCompo();
-		$criteria->add(new Criteria('uid', Legacy_Utils::getUid()));
-		$criteria->addSort('last_update', 'DESC');
-		$this->myHandler = xoops_getModuleHandler('cart');
-		$this->myObjects = $this->myHandler->getObjects($criteria);
+		$root = XCube_Root::getSingleton();
+		if($root->mContext->mXoopsUser){
+			$criteria = new CriteriaCompo();
+			$criteria->add(new Criteria('uid', Legacy_Utils::getUid()));
+			$criteria->addSort('last_update', 'DESC');
+			$this->myHandler = xoops_getModuleHandler('cart');
+			$this->myObjects = array_merge($this->myHandler->getObjects($criteria),$this->_getFromSession());
+			$_SESSION['cartObjects'] = array();
+		}else{
+			$this->myObjects = $this->_getFromSession();
+		}
 	}
 
 	public function &getCartList()
@@ -83,13 +98,19 @@ class Model_Cart extends AbstractModel {
 	public function update()
 	{
 		$this->_getMyCartItems();
+		$root = XCube_Root::getSingleton();
+		if (!$root->mContext->mXoopsUser) $_SESSION['cartObjects']=array();
 		foreach ($this->myObjects as $object){
 			$cart_id = $object->getVar('cart_id');
 			if (isset($_POST['qty_'.$cart_id])){
 				$qty = intval(xoops_getrequest('qty_'.$cart_id));
 				$object->set('qty',$qty);
 				$object->set('last_update',time());
-				$this->myHandler->insert($object);
+				if($root->mContext->mXoopsUser){
+					$this->myHandler->insert($object);
+				} else{
+					$_SESSION['cartObjects'][]=serialize($object);
+				}
 			}
 		}
 	}

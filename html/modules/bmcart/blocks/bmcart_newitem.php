@@ -37,7 +37,7 @@ function b_bmcart_newitem_show()
 	$mListData = array();
 	$i=0;
 	foreach ($objects as $object) {
-		if ($i>7) break;
+		if ($i>5) break;
 		$imageCriteria = new Criteria('item_id', $object->getVar('item_id'));
 		$imageObjects = $imageHandler->getObjects($imageCriteria);
 		$images = array();

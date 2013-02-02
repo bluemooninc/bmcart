@@ -59,6 +59,11 @@ class bmcart_cartHandler extends XoopsObjectGenericHandler
 			$cartObject->set('qty',$cartObject->getVar('qty')+1);
 		}
 		$cartObject->set('last_update',time());
-		$this->myHandler->insert($cartObject,true);
+		$root = XCube_Root::getSingleton();
+		if($root->mContext->mXoopsUser){
+			$this->myHandler->insert($cartObject,true);
+		}else{
+			$_SESSION[cartObjects][]=serialize($cartObject);
+		}
 	}
 }

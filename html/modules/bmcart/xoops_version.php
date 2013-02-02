@@ -76,3 +76,22 @@ $modversion['blocks'][2] = array(
 	'visible_any' => true,
 	'show_all_module' => false
 );
+$modversion['blocks'][3] = array(
+	'file' => "bmcart_checked_items.php",
+	'name' => _MI_BMCART_BLOCK_CHECKED_ITEMS,
+	'description' => _MI_BMCART_BLOCK_CHECKED_ITEMS_DESC,
+	'show_func' => "b_bmcart_checked_items_show",
+	'template' => 'bmcart_block_checked_items.html',
+	'visible_any' => true,
+	'show_all_module' => false
+);
+// Config
+$modversion['hasconfig'] = 1;
+$modversion['config'][]=array(
+	'name' => 'sales_tax',
+	'title' => '_MI_BMCART_SALES_TAX',
+	'description' => '_MI_BMCART_SALES_TAX_DESC',
+	'formtype' => 'text',
+	'valuetype' => 'float',
+	'default' => 5
+);

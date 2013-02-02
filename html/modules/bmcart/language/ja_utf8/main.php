@@ -5,6 +5,8 @@ define('_MD_BMCART_ITEMID', '商品番号');
 define('_MD_BMCART_ERROR_MAXLENGTH', "{0}は半角{1}文字以内で入力して下さい");
 define('_MD_BMCART_ERROR_MINLENGTH', "{0}は半角{1}文字以上にして下さい");
 
+define('_MD_BMCART_NEED_LOGIN', 'チェックアウトするにはログインする必要があります。');
+
 define('_MD_BMCART_MODULE_TITLE', 'ショッピング');
 define('_MD_BMCART_TABLE_STATUS', '備考');
 define('_MD_BMCART_TABLE_STATUS_0', 'カートの中身');
