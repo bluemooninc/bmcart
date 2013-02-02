@@ -2,6 +2,7 @@
 /* $Id: $ */
 
 if (!defined('XOOPS_ROOT_PATH')) exit();
+include_once dirname(dirname(dirname(__FILE__)))."/class/bmcart_session.php";
 
 /**
  * Utility
@@ -81,6 +82,23 @@ class Model_Item extends AbstractModel {
 	{
 		$this->myHandler =& xoops_getModuleHandler('item');
 		$object = $this->myHandler->get($item_id);
+		$checkedHandler =& xoops_getModuleHandler('checked_items');
+		$uid = Legacy_Utils::getUid();
+		$checkedObject = $checkedHandler->get(array($uid,$item_id));
+		if (!$checkedObject){
+			$checkedObject = $checkedHandler->create();
+			$checkedObject->set('uid',$uid);
+			$checkedObject->set('item_id',$object->getVar('item_id'));
+			$checkedObject->set('category_id',$object->getVar('category_id'));
+		}
+		$checkedObject->set('last_update',time());
+		if($uid){
+			$checkedHandler->insert($checkedObject,true);
+		} else {
+			$bmcart_session = new bmcart_session();
+			$bmcart_session->insert('checkedItems','item_id',$checkedObject);
+		}
+
 		$ret=array();
 		foreach($object->mVars as $key=>$val){
 			$ret[$key]=$object->getVar($key);

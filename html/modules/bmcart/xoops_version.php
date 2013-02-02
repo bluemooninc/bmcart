@@ -51,6 +51,8 @@ $modversion['tables'][] = '{prefix}_{dirname}_item';
 $modversion['tables'][] = '{prefix}_{dirname}_cart';
 $modversion['tables'][] = '{prefix}_{dirname}_order';
 $modversion['tables'][] = '{prefix}_{dirname}_orderItems';
+$modversion['tables'][] = '{prefix}_{dirname}_itemImages';
+$modversion['tables'][] = '{prefix}_{dirname}_checkedItems';
 /*
  * Config
  */

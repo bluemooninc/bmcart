@@ -5,7 +5,7 @@
  * Author : Yoshi Sakai (http://bluemooninc.jp)
  * Licence : GPL V3 licence
  */
-include dirname(dirname(__FILE__))."/class/bmcart_session.php";
+include_once dirname(dirname(__FILE__))."/class/bmcart_session.php";
 
 function b_bmcart_checked_items_show()
 {
@@ -31,20 +31,22 @@ function b_bmcart_checked_items_show()
 	foreach ($objects as $object) {
 		$item_id = $object->getVar('item_id');
 		$itemObject = $itemHandler->get($item_id);
-		$imageCriteria = new Criteria('item_id', $item_id);
-		$imageObjects = $imageHandler->getObjects($imageCriteria);
-		$images = array();
-		foreach ($imageObjects as $imageObject) {
-			$images[] = $imageObject->getVar("image_filename");
+		if ($itemObject){
+			$imageCriteria = new Criteria('item_id', $item_id);
+			$imageObjects = $imageHandler->getObjects($imageCriteria);
+			$images = array();
+			foreach ($imageObjects as $imageObject) {
+				$images[] = $imageObject->getVar("image_filename");
+			}
+			$myRow = array(
+				"item_id" => $object->getVar("item_id"),
+				"item_name" => $itemObject->getVar("item_name"),
+				"images" => $images
+			);
+			$blockNumber = 'block' . intval($i/4);
+			$mListData[$blockNumber][] = $myRow;
+			$i++;
 		}
-		$myRow = array(
-			"item_id" => $object->getVar("item_id"),
-			"item_name" => $itemObject->getVar("item_name"),
-			"images" => $images
-		);
-		$blockNumber = 'block' . intval($i/4);
-		$mListData[$blockNumber][] = $myRow;
-		$i++;
 	}
 	//adump($mListData);die;
 	$block = array();
