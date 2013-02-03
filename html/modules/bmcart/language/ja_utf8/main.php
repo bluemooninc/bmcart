@@ -95,3 +95,5 @@ define('_MD_BMCART_PAYMENT_TYPE', 'お支払い方法');
 define('_MD_BMCART_PAYBY_WIRE', '銀行振込');
 define('_MD_BMCART_PAYBY_CREDIT', 'クレジットカード');
 define('_MD_BMCART_ADD_CREDIT', 'クレジットカード追加');
+define('_MD_BMCART_EDIT', '編集する');
+define('_MD_BMCART_ADD_IMAGE', '画像追加');
