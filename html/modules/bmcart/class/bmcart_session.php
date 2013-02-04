@@ -30,27 +30,31 @@ class bmcart_session{
 		}
 		$_SESSION[$name] = $serialized;
 	}
+
+	/**
+	 * @param $name
+	 * @param $key
+	 * @param $newObject
+	 */
 	public function insert($name,$key,$newObject){
 		$myObjects = $this->getObjects($name);
-		$replaced = false;
-		$i=0;
+		$i = 0;
 		if($myObjects){
 			foreach($myObjects as $object){
 				if ($object->getVar($key) == $newObject->getVar($key)){
-					$myObjects[$i] = $newObject;
-					$replaced = true;
+					unset($myObjects[$i]);
 					break;
 				}
 				$i++;
 			}
 		}
-		if (!$replaced){
-			$this->setObjects($name,$myObjects,$newObject);
-		}else{
-			$this->setObjects($name,$myObjects);
-		}
+		$this->setObjects($name,$myObjects,$newObject);
 	}
 
+	/**
+	 * @param $checkedItems
+	 * @param $uid
+	 */
 	public function setCheckedItems($checkedItems,$uid){
 		$checkedHandler =& xoops_getModuleHandler('checked_items','bmcart');
 		foreach($checkedItems as $object){
