@@ -16,7 +16,7 @@ $mydirname = basename(dirname(__FILE__));
 $modversion["name"] = _MI_BMCART_TITLE;
 $modversion["dirname"] = $mydirname;
 $modversion['hasMain'] = 1;
-$modversion['version'] = 0.13;
+$modversion['version'] = 0.14;
 $modversion['image'] = 'images/bmcart.png';
 $modversion['hasAdmin'] = 1;
 $modversion['adminindex'] = "admin/index.php";
@@ -99,6 +99,15 @@ $modversion['blocks'][3] = array(
 	'visible_any' => TRUE,
 	'show_all_module' => FALSE
 );
+$modversion['blocks'][4] = array(
+	'file' => "bmcart_bookmarkItems.php",
+	'name' => _MI_BMCART_BLOCK_BOOKMARKITEMS,
+	'description' => _MI_BMCART_BLOCK_BOOKMARKITEMS_DESC,
+	'show_func' => "b_bmcart_bookmarkItems_show",
+	'template' => 'bmcart_block_bookmarkItems.html',
+	'visible_any' => TRUE,
+	'show_all_module' => FALSE
+);
 
 // Module Config
 $modversion['hasconfig'] = 1;
@@ -148,7 +157,8 @@ $modversion['notification'] = array(
 			'description' => constant($constpref.'_ITEM_NOTIFYDSC'),
 			'subscribe_from' => 'index.php' ,
 			'item_name' => 'item_id' ,
-		) ,
+			'allow_bookmark' => 1
+		)
 	) ,
 	'event' => array(
 		array(
