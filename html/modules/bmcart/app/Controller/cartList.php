@@ -49,6 +49,7 @@ class Controller_CartList extends AbstractAction {
 		$view->set('ListData', $this->mListData);
 		$view->set('shipping_fee', $this->mHandler->isShippingFee() );
 		$view->set('total_amount', $this->mHandler->isTotalAmount() );
+		$view->set('currency', $this->root->mContext->mModuleConfig['currency']);
 		if (is_object($this->mPagenavi)) {
 			$view->set('pageNavi', $this->mPagenavi->getNavi());
 		}

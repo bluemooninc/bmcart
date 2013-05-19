@@ -57,7 +57,7 @@ define('_AD_BMCART_ITEM_STATUS', '状態');
 define('_AD_BMCART_ITEM_TAG', 'タグ');
 define('_AD_BMCART_ITEM_PERMISSION', 'アクセス制限');
 define('_AD_BMCART_ITEM_STOCK', '在庫数量');
-define('_AD_BMCART_ITEM_PRICE', '販売価格(税込)');
+define('_AD_BMCART_ITEM_PRICE', '税込販売価格');
 define('_AD_BMCART_ITEM_SHIPPING_FEE', '個口配送料');
 define('_AD_BMCART_CONTROL', '操作');
 define('_AD_BMCART_UPDATE', '更新日付');

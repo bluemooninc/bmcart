@@ -184,6 +184,7 @@ class Controller_ItemList extends AbstractAction {
 		$view->set('current_image', $this->image_id);
 		$view->set('ticket_hidden',$this->mTicketHidden);
 		$view->set('free_shipping', $free_shipping);
+		$view->set('currency', $this->root->mContext->mModuleConfig['currency']);
 		if ($this->comment_flag){
 			$this->_comment_view();
 		}

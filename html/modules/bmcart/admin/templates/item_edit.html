@@ -63,7 +63,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="head"><{$smarty.const._AD_BMCART_ITEM_PRICE}></td>
+			<td class="head"><{$smarty.const._AD_BMCART_ITEM_PRICE}>(<{$actionForm->get('currency')}>)</td>
 			<td class="<{cycle values=" odd,even"}>">
 			<{xoops_input type=text name=price value=$actionForm->get('price')}>
 			</td>

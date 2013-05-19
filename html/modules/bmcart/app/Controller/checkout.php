@@ -20,11 +20,13 @@ class Controller_Checkout extends AbstractAction {
 	protected $message;
 	protected $stateOptions;
 	protected $cashOnDeliveryFee;
+	protected $myConfig;
 
 	public function __construct(){
 		parent::__construct();
 		$this->mHandler = Model_Checkout::forge();
 		$this->cartHandler = Model_Cart::forge();
+		$this->myConfig = $this->root->mContext->mModuleConfig;
 	}
 	private function _getCashOnDeliveryFee($total){
 		$cods = explode(",",$this->root->mContext->mModuleConfig['cash_on_delivery']);
@@ -34,28 +36,12 @@ class Controller_Checkout extends AbstractAction {
 		}
 		return null;
 	}
-	public function action_view(){
-		$view = new View($this->root);
-		if(isset($this->myObject)){
-			$view->set('CurrentOrder', $this->myObject);
-		}
-		$view->set('stateOptions',$this->stateOptions);
-		$view->set('Message', $this->message);
-		$view->set('CardList', $this->cardList);
-		$view->set('ListData', $this->mListData);
-		$view->set('shipping_fee', $this->cartHandler->isShippingFee() );
-		$view->set('total_amount', $this->cartHandler->isTotalAmount() );
-		$view->set('cashOnDeliveryFee', $this->cashOnDeliveryFee);
-		$view->set('ticket_hidden',$this->mTicketHidden);
-		if (is_object($this->mPagenavi)) {
-			$view->set('pageNavi', $this->mPagenavi->getNavi());
-		}
-		$view->setTemplate($this->template);
+	private function fromPayPal(){
+		return true;
 	}
 
 	public function action_index(){
-		$root = XCube_Root::getSingleton();
-		if(!$root->mContext->mXoopsUser){
+		if(!$this->root->mContext->mXoopsUser){
 			redirect_header(XOOPS_URL."/user.php",3,_MD_BMCART_NEED_LOGIN);
 		}
 		$this->mListData = $this->cartHandler->getCartList();
@@ -116,6 +102,14 @@ class Controller_Checkout extends AbstractAction {
 		$notification_handler =& xoops_gethandler('notification');
 		$notification_handler->triggerEvent('global', 0, 'order_submit', $tags );
 	}
+	private function getRatefromGoogle($to,$from){
+		$exchangeEndpoint = sprintf("http://rate-exchange.appspot.com/currency?from=%s&to=%s",$from,$to);
+		$json = file_get_contents($exchangeEndpoint);
+		$data = json_decode($json, TRUE);
+		if($data){
+			return $data['rate'];
+		}
+	}
 	/**
 	 * Check out method
 	 */
@@ -154,6 +148,9 @@ class Controller_Checkout extends AbstractAction {
 				$amount += $codFee;
 				$ret = true;
 				break;
+			case 4: // From PayPal
+				$ret = true;
+				break;
 		}
 		if( $ret==true ){
 			$this->mHandler->moveCartToOrder($this->mListData,$order_id);
@@ -163,7 +160,43 @@ class Controller_Checkout extends AbstractAction {
 			//$mail = new Model_Mail();
 			//$mail->sendMail("ThankYouForOrder.tpl",$orderObject,$this->mListData,_MD_BMCART_ORDER_MAIL);
 			$this->_order_notifications($order_id);
-			$this->executeRedirect(XOOPS_URL."/modules/bmcart/orderList/index", 5, 'Done');
+			if($payment_type==4){
+				// Move to PayPal module
+				// Cuurntly USD only on PayPal REST api
+				$currency = $this->root->mContext->mModuleConfig['currency'];
+				if ($currency!="USD"){
+					$rate = $this->getRatefromGoogle($currency,"USD");
+					$amount_usd = round($amount / $rate, 2);
+				}else{
+					$amount_usd = $amount;
+				}
+				$param = sprintf("order_id=%d&amount=%f&currency=%s",$order_id,$amount_usd,"USD");
+				$this->executeRedirect(XOOPS_URL."/modules/bmpaypal/bmpaypal/index?".$param, 1, 'To Paypal');
+			}else{
+				$this->executeRedirect(XOOPS_URL."/modules/bmcart/orderList/index", 5, 'Done');
+			}
 		}
 	}
+	public function action_view(){
+		$view = new View($this->root);
+		if(isset($this->myObject)){
+			$view->set('CurrentOrder', $this->myObject);
+		}
+		$view->set('stateOptions',$this->stateOptions);
+		$view->set('Message', $this->message);
+		$view->set('CardList', $this->cardList);
+		$view->set('ListData', $this->mListData);
+		$view->set('shipping_fee', $this->cartHandler->isShippingFee() );
+		$view->set('total_amount', $this->cartHandler->isTotalAmount() );
+		$view->set('cashOnDeliveryFee', $this->cashOnDeliveryFee);
+		$view->set('fromPayPal', $this->fromPayPal());
+		$view->set('ticket_hidden',$this->mTicketHidden);
+		$view->set('currency',$this->myConfig['currency']);
+
+		if (is_object($this->mPagenavi)) {
+			$view->set('pageNavi', $this->mPagenavi->getNavi());
+		}
+		$view->setTemplate($this->template);
+	}
+
 }

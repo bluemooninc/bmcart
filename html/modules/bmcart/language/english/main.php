@@ -54,63 +54,58 @@ define('_MD_BMCART_LAST3CODE', 'Last 3 words');
 define('_MD_BMCART_CHECK_YOUR_ADDRESS', ' Check your address - ');
 
 // cart.html
-define('_MD_BMCART_CART_INDEX', 'ショッピングカート');
-define('_MD_BMCART_CART_ITEMID', '商品番号');
-define('_MD_BMCART_CART_CONTENT', '商品名等');
-define('_MD_BMCART_CART_PRICE', '価格');
-define('_MD_BMCART_CART_QTY', '数量');
+define('_MD_BMCART_CART_INDEX', 'Shopping cart');
+define('_MD_BMCART_CART_ITEMID', 'Item ID');
+define('_MD_BMCART_CART_CONTENT', 'Content');
+define('_MD_BMCART_CART_PRICE', 'Price');
+define('_MD_BMCART_CART_QTY', 'Qty');
 
-define('_MD_BMCART_PAYMENT_TYPE_WIRE', '銀行振込 : ABC銀行 <br />&nbsp;&nbsp;&nbsp;DFG支店 普通）1234567');
-define('_MD_BMCART_PAYMENT_TYPE_CREDIT_CARD', 'クレジットカード');
+define('_MD_BMCART_PAYMENT_TYPE_WIRE', 'Pay by Wire : ABC Bank <br />&nbsp;&nbsp;&nbsp;Saving Acc.1234567');
+define('_MD_BMCART_PAYMENT_TYPE_CREDIT_CARD', 'Credit Card');
+define('_MD_BMCART_FROM_BMCART ', 'from PayPal');
 
-define('_MD_BMCART_SHIPPING_TO', '配送先氏名');
-define('_MD_BMCART_FIRSTNAME', '名');
-define('_MD_BMCART_LASTNAME', '姓');
-define('_MD_BMCART_SHIPPING_ADDRESS', '配送先住所');
-define('_MD_BMCART_ZIP_CODE', '郵便番号');
-define('_MD_BMCART_STATE', '都道府県');
-define('_MD_BMCART_ADDRESS', '市区町村等');
-define('_MD_BMCART_ZIP2ADDRESS', '郵便番号から住所を自動入力');
-define('_MD_BMCART_ADDRESS_ETC', 'その他');
-define('_MD_BMCART_ADDRESS2', 'マンション名等');
-define('_MD_BMCART_STATE_OPTIONS',
-	'北海道,青森県,岩手県,宮城県,秋田県,山形県,福島県,'.
-	'茨城県,栃木県,群馬県,埼玉県,千葉県,東京都,神奈川県,'.
-	'新潟県,富山県,石川県,福井県,山梨県,長野県,岐阜県,静岡県,愛知県,'.
-	'三重県,滋賀県,京都府,大阪府,兵庫県,奈良県,和歌山県,'.
-	'鳥取県,島根県,岡山県,広島県,山口県,徳島県,香川県,愛媛県,高知県,'.
-	'福岡県,佐賀県,長崎県,熊本県,大分県,宮崎県,鹿児島県,沖縄県');
-define('_MD_BMCART_REGISTER','登録する');
-define('_MD_BMCART_ORDER_FIXED','注文を確定する');
-define('_MD_BMCART_ORDER_MAIL','ご注文の確認');
-define('_MD_BMCART_MESSAGE_LESS_STOCK',' %s は只今の在庫数が %d です。ご注文頂くにはこの数量以下にして下さい。');
-define('_MD_BMCART_NO_STOCK','  %s は只今の在庫がありません。この商品をカートから取り除いて下さい。');
-define('_MD_BMCART_PAYMENT_DESC_CARD','クレジットカードによるお支払いを選択されました。
-クレジットカードの決済予約を行いました。実際の決済は商品発送時に行われます。');
-define('_MD_BMCART_PAYMENT_DESC_WIRE','銀行振込によるお支払いを選択されました。
-以下の口座にお振込下さい。入金確認後に発送の手続きを行います。
-振込先口座：あいう銀行　えお支店（普通口座）1234567
-振込先名義：カキク　ケコ');
+define('_MD_BMCART_SHIPPING_TO', 'Shipping to');
+define('_MD_BMCART_FIRSTNAME', 'First name');
+define('_MD_BMCART_LASTNAME', 'Last name');
+define('_MD_BMCART_SHIPPING_ADDRESS', 'Shipping Address');
+define('_MD_BMCART_ZIP_CODE', 'Zip');
+define('_MD_BMCART_STATE', 'State(Pref)');
+define('_MD_BMCART_ADDRESS', 'Adress');
+define('_MD_BMCART_ZIP2ADDRESS', 'Zip to Address(Japan only)');
+define('_MD_BMCART_ADDRESS_ETC', 'Floor');
+define('_MD_BMCART_ADDRESS2', 'Build. etc');
 
-define('_MD_BMCART_THANKS_FOR_ORDER','ご注文ありがとうございます。ご注文の確認メールを送信します。');
+define('_MD_BMCART_REGISTER','Register');
+define('_MD_BMCART_ORDER_FIXED','Order fix');
+define('_MD_BMCART_ORDER_MAIL','Confirm your ouder');
+define('_MD_BMCART_MESSAGE_LESS_STOCK','Stock over than %d on %s');
+define('_MD_BMCART_NO_STOCK','  %s is currently no stock.');
+define('_MD_BMCART_PAYMENT_DESC_CARD','Your card payment will charged after shipping.');
+define('_MD_BMCART_PAYMENT_DESC_WIRE','Your payment is wire transfer.
+Please send by wire below.
+ABC Bank. DEF branch saving 1234567
+Holder Name: Jhon who');
 
-define('_MD_BMCART_ORDER_LIST','ご注文一覧');
-define('_MD_BMCART_ORDER_ID','注文番号');
-define('_MD_BMCART_ORDER_DATE','注文日時');
-define('_MD_BMCART_SUB_TOTAL','商品合計(内消費税)');
-define('_MD_BMCART_QTY_DESC', '個');
-define('_MD_BMCART_PAYMENT_TYPE', 'お支払い方法');
-define('_MD_BMCART_PAYBY_WIRE', '銀行振込');
-define('_MD_BMCART_PAYBY_CREDIT', 'クレジットカード');
-define('_MD_BMCART_ADD_CREDIT', 'クレジットカード追加');
-define('_MD_BMCART_CASHON_DELIVERLY', '代引き');
-define('_MD_BMCART_EDIT', '編集する');
-define('_MD_BMCART_ADD_IMAGE', '画像追加');
-define('_MD_BMCART_ADD_SKU', 'SKU在庫追加');
+define('_MD_BMCART_THANKS_FOR_ORDER','Thank you for your order');
 
-define('_MD_BMCART_ORDER_DETAIL','ご注文商品の一覧');
-define('_MD_BMCART_CUSTOMER_REVIEW','カスタマーレビュー');
+define('_MD_BMCART_ORDER_LIST','Order list');
+define('_MD_BMCART_ORDER_ID','Order ID');
+define('_MD_BMCART_ORDER_DATE','Order Date');
+define('_MD_BMCART_SUB_TOTAL','Sub total(include tax)');
+define('_MD_BMCART_QTY_DESC', ' Qty');
+define('_MD_BMCART_PAYMENT_TYPE', 'Payment type');
+define('_MD_BMCART_PAYBY_WIRE', 'Pay by wire');
+define('_MD_BMCART_PAYBY_CREDIT', 'Pay by Credit card');
+define('_MD_BMCART_ADD_CREDIT', 'Add Card number');
+define('_MD_BMCART_CASHON_DELIVERY', 'Cash on delivery');
+define('_MD_BMCART_EDIT', 'Edit');
+define('_MD_BMCART_ADD_IMAGE', 'Add image');
+define('_MD_BMCART_ADD_SKU', 'Add SKU');
+
+define('_MD_BMCART_ORDER_DETAIL','Order detail');
+define('_MD_BMCART_CUSTOMER_REVIEW','Customer review');
 
 // For Dependency Injection Component
-define('_MD_BMCART_NEED_SKUID','この商品は、色やサイズ等の指定が必要です。');
-define('_MD_BMCART_NO_STOCKSKU','  %s は只今在庫がありません。');
+define('_MD_BMCART_NEED_SKUID','You need color or size.');
+define('_MD_BMCART_NO_STOCKSKU','  %s is no stock now.');
+define('_MD_BMCART_FROM_PAYPAL', 'Pay By PayPal');

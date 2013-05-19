@@ -68,7 +68,9 @@ class Model_Order extends AbstractModel {
 			if ($this->optionHandler){
 				$criteria = new Criteria('item_id',$itemId);
 				$optionObjects = $this->optionHandler->getObjects($criteria);
-				$image_filename = $optionObjects[0]->getVar('image_filename');
+				if($optionObjects){
+					$image_filename = $optionObjects[0]->getVar('image_filename');
+				}
 			}
 			if ($itemObject){
 				$item['item_name'] = $itemObject->getVar('item_name');

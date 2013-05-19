@@ -48,7 +48,7 @@ class Model_Mail
 				$this->mMailer->assign("PAYMENT_DESC", _MD_BMCART_PAYMENT_DESC_CARD);
 				break;
 			case 3: // Cash on delivery
-				$this->mMailer->assign("PAYMENT_DESC", _MD_BMCART_CASHON_DELIVERLY);
+				$this->mMailer->assign("PAYMENT_DESC", _MD_BMCART_CASHON_DELIVERY);
 				break;
 		}
 		$this->mMailer->assign('SHIPPING_DATE',date("Y-m-d",$orderObject->getVar('shipping_date')));

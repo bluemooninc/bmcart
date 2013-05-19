@@ -14,6 +14,11 @@ class bmcart_ItemAdminEditForm extends XCube_ActionForm
 	var $mOldFileName = null;
 	var $_mIsNew = false;
 	var $mFormFile = null;
+	protected $root;
+
+	function __construct(){
+		$this->root = XCube_Root::getSingleton();
+	}
 
 	function getTokenName()
 	{
@@ -33,6 +38,8 @@ class bmcart_ItemAdminEditForm extends XCube_ActionForm
 		$this->mFormProperties['price'] =new XCube_IntProperty('price');
 		$this->mFormProperties['shipping_fee'] =new XCube_IntProperty('shipping_fee');
 		$this->mFormProperties['stock_qty'] =new XCube_IntProperty('stock_qty');
+		// for display only
+		$this->mFormProperties['currency'] =new XCube_StringProperty('currency');
 
 		//
 		// Set field properties
@@ -60,6 +67,8 @@ class bmcart_ItemAdminEditForm extends XCube_ActionForm
 		$this->set('price', $obj->get('price'));
 		$this->set('shipping_fee', $obj->get('shipping_fee'));
 		$this->set('stock_qty', $obj->get('stock_qty'));
+		// from module config
+		$this->set('currency', $this->root->mContext->mModuleConfig['currency']);
 	}
 
 	function update(&$obj)

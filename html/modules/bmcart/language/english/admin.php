@@ -24,6 +24,7 @@ define('_AD_BMCART_ADD_IMAGE', 'Add image');
 define('_AD_BMCART_SHOW_ITEM', 'Goto Product view');
 define('_AD_BMCART_BARCODE', 'Barcode');
 
+
 define('_AD_BMCART_IMAGE_LIST', 'product image list');
 define('_AD_BMCART_TIPS_IMAGE_EDIT', 'Set product images. You can add no limitation for image number');
 define('_AD_BMCART_IMAGE_EDIT', 'Set image');

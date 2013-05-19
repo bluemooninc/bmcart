@@ -33,6 +33,8 @@ define('_MI_BMCART_FREE_SHIPPING', '送料無料設定(円)');
 define('_MI_BMCART_FREE_SHIPPING_DESC', '0:設定無し,1以上で商品合計比較により送料無料となります。');
 define('_MI_BMCART_CASHON_DELIVERY', '代引き手数料(円)');
 define('_MI_BMCART_CASHON_DELIVERY_DESC', '商品価格>手数料,（カンマ区切）');
+define('_MI_BMCART_CURRENCY', '価格表示に使用する通貨');
+define('_MI_BMCART_CURRENCY_DESC', 'ex) JPY,USD,EUR');
 
 // Text for notifications
 define('_MI_BMCART_GLOBAL_NOTIFY', 'モジュール全体');

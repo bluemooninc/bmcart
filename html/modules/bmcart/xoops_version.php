@@ -122,6 +122,14 @@ $modversion['blocks'][5] = array(
 // Module Config
 $modversion['hasconfig'] = 1;
 $modversion['config'][] = array(
+	'name' => 'currency',
+	'title' => _MI_BMCART_CURRENCY,
+	'description' => '_MI_BMCART_CURRENCY_DESC',
+	'formtype' => 'text',
+	'valuetype' => 'string',
+	'default' => 'JPY'
+);
+$modversion['config'][] = array(
 	'name' => 'sales_tax',
 	'title' => _MI_BMCART_SALES_TAX,
 	'description' => '_MI_BMCART_SALES_TAX_DESC',

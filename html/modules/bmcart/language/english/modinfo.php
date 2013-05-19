@@ -29,6 +29,8 @@ define('_MI_BMCART_FREE_SHIPPING', 'Set free shipping');
 define('_MI_BMCART_FREE_SHIPPING_DESC', 'It will be free shipping by comparing products total more than here.');
 define('_MI_BMCART_CASHON_DELIVERY', 'COD fee');
 define('_MI_BMCART_CASHON_DELIVERY_DESC', 'price>fee,(divide comma)');
+define('_MI_BMCART_CURRENCY', 'Currency for display');
+define('_MI_BMCART_CURRENCY_DESC', 'ex) JPY,USD,EUR');
 
 // Text for notifications
 define('_MI_BMCART_GLOBAL_NOTIFY', 'The entire module');
