@@ -160,10 +160,9 @@ class Model_Checkout
 		}
 	}
 
-	public function setOrderStatus($order_id,$payment_type, $cardOrderId = null,$subTotal,$tax,$shipping_fee,$amount)
+	public function &setOrderStatus($order_id,$payment_type, $cardOrderId = null,$subTotal,$tax,$shipping_fee,$amount,$rate=0,$amount_usd=0)
 	{
 		$this->_getMyOrder($order_id);
-		$ret = false;
 		if ($this->myObjects) {
 			$object = $this->myObjects[0];
 			$object->set('payment_type', $payment_type);
@@ -172,11 +171,12 @@ class Model_Checkout
 			$object->set('tax', $tax);
 			$object->set('shipping_fee', $shipping_fee);
 			$object->set('amount', $amount);
+			$object->set('rate', $rate);
+			$object->set('amount_usd', $amount_usd);
 			$object->set('order_date', time());
 			$this->myHandler->insert($object);
-			$ret = true;
 		}
-		return $ret;
+		return $object;
 	}
 	public function &myObject(){
 		return $this->myObjects[0];

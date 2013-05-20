@@ -17,21 +17,22 @@ class Controller_OrderList extends AbstractAction {
 	protected $itemImages;
 	public function __construct(){
 		parent::__construct();
-		$this->mHandler = Model_Order::forge();
+		$this->mModel = Model_Order::forge();
 	}
 	public function action_index(){
-		$this->mListData = $this->mHandler->getOrderList();
-		$this->mHandler->HandlerInjection('itemImages');
+		$order_id = intval($this->mParams[0]);
+		$this->mListData = $this->mModel->getOrderList($order_id);
+		$this->mModel->HandlerInjection('itemImages');
 
 		foreach($this->mListData as $object){
 			$order_id = $object->getVar('order_id');
-			$this->mListItems[$order_id] = $this->mHandler->getOrderItems($order_id);
+			$this->mListItems[$order_id] = $this->mModel->getOrderItems($order_id);
 		}
 		$this->template = 'orderList.html';
 	}
 	public function action_orderDetail(){
 		if (isset($this->mParams[0])) $order_id = intval($this->mParams[0]);
-		$this->mListData = $this->mHandler->getOrderItems($order_id);
+		$this->mListData = $this->mModel->getOrderItems($order_id);
 		$this->template = 'orderItems.html';
 	}
 	public function action_view(){
@@ -41,8 +42,8 @@ class Controller_OrderList extends AbstractAction {
 		$view->set('ListData', $this->mListData);
 		$view->set('ListItems', $this->mListItems);
 		$view->set('itemNames', $this->itemNames);
-		$view->set('shipping_fee', $this->mHandler->isShippingFee() );
-		$view->set('total_amount', $this->mHandler->isTotalAmount() );
+		$view->set('shipping_fee', $this->mModel->isShippingFee() );
+		$view->set('total_amount', $this->mModel->isTotalAmount() );
 		if (is_object($this->mPagenavi)) {
 			$view->set('pageNavi', $this->mPagenavi->getNavi());
 		}

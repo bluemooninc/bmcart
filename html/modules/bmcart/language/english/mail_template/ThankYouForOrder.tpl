@@ -1,4 +1,4 @@
-{X_SITENAME} ({X_SITEURL}) Thank you for shipping on this site.
+{X_SITENAME} ({X_SITEURL}) Thank you for shopping on this site.
 Inform you this mail to we recieved your order.
 
 If you want to make sure your order, please following order history.

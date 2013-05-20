@@ -78,6 +78,13 @@ function bmcart_onupdate_base($module, $myDirName)
 		$sql = "ALTER TABLE " . $tblName . " ADD `youtube_id` VARCHAR(11) NULL DEFAULT NULL AFTER `image_filename`";
 		$db->queryF($sql);
 	}
+	// 0.24 -> 0.25
+	$tblName = $db->prefix($myDirName . "_order");
+	$check_sql = "SELECT rate FROM " . $tblName;
+	if (!$db->query($check_sql)) {
+		$sql = "ALTER TABLE " . $tblName . " ADD `rate` decimal(9,2) unsigned AFTER `amount`, ADD `amount_usd` decimal(9,2) unsigned AFTER `rate`";
+		$db->queryF($sql);
+	}
 	return TRUE;
 }
 

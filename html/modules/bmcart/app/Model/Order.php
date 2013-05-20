@@ -84,11 +84,13 @@ class Model_Order extends AbstractModel {
 		return $mListData;
 	}
 
-
-	public function &getOrderList()
+	public function &getOrderList($order_id=null)
 	{
 		$criteria = new CriteriaCompo();
 		$criteria->add(new Criteria('uid', Legacy_Utils::getUid()));
+		if($order_id){
+			$criteria->add(new Criteria('order_id', $order_id));
+		}
 		$criteria->addSort('order_date', 'DESC');
 		$this->myHandler = xoops_getModuleHandler('order');
 		$this->myObjects = $this->myHandler->getObjects($criteria);

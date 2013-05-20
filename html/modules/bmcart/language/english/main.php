@@ -62,6 +62,7 @@ define('_MD_BMCART_CART_QTY', 'Qty');
 
 define('_MD_BMCART_PAYMENT_TYPE_WIRE', 'Pay by Wire : ABC Bank <br />&nbsp;&nbsp;&nbsp;Saving Acc.1234567');
 define('_MD_BMCART_PAYMENT_TYPE_CREDIT_CARD', 'Credit Card');
+define('_MD_BMCART_PAYMENT_TYPE_CREDIT_CARD', 'Credit Card');
 define('_MD_BMCART_FROM_BMCART ', 'from PayPal');
 
 define('_MD_BMCART_SHIPPING_TO', 'Shipping to');
@@ -85,6 +86,7 @@ define('_MD_BMCART_PAYMENT_DESC_WIRE','Your payment is wire transfer.
 Please send by wire below.
 ABC Bank. DEF branch saving 1234567
 Holder Name: Jhon who');
+define('_MD_BMCART_PAYMENT_DESC_PAYPAL','You choose a Pay by PayPal account. Please accept a PayPal payment. It will be charged when your items are shipping.');
 
 define('_MD_BMCART_THANKS_FOR_ORDER','Thank you for your order');
 

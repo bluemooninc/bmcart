@@ -21,10 +21,11 @@ class Controller_Checkout extends AbstractAction {
 	protected $stateOptions;
 	protected $cashOnDeliveryFee;
 	protected $myConfig;
+	protected $rate;
 
 	public function __construct(){
 		parent::__construct();
-		$this->mHandler = Model_Checkout::forge();
+		$this->mModel = Model_Checkout::forge();
 		$this->cartHandler = Model_Cart::forge();
 		$this->myConfig = $this->root->mContext->mModuleConfig;
 	}
@@ -34,10 +35,20 @@ class Controller_Checkout extends AbstractAction {
 			$keyVal = explode(">",$cod);
 			if ($total<$keyVal[0]) return $keyVal[1];
 		}
-		return null;
+		return NULL;
 	}
+
+	/**
+	 * PayPal On/Off
+	 *
+	 * @return bool
+	 */
 	private function fromPayPal(){
-		return true;
+		$filename = XOOPS_MODULE_PATH . '/bmpaypal/xoops_version.php';
+		if (file_exists($filename)) {
+			return TRUE;
+		}
+		return FALSE;
 	}
 
 	public function action_index(){
@@ -50,29 +61,29 @@ class Controller_Checkout extends AbstractAction {
 		if (!$itemHandler->checkStock($this->mListData)){
 			$this->message = $itemHandler->getMessage() . _MD_BMCART_NO_STOCK;
 		}
-		$this->myObject = $this->mHandler->getCurrentOrder();
+		$this->myObject = $this->mModel->getCurrentOrder();
 		$creditService = $this->root->mServiceManager->getService('gmoPayment');
-		if ($creditService != null) {
+		if ($creditService != NULL) {
 			$client = $this->root->mServiceManager->createClient($creditService);
-			$this->cardList = $client->call('getRegisteredCardList',null);
+			$this->cardList = $client->call('getRegisteredCardList',NULL);
 		}
 		$this->template = 'checkout.html';
 	}
 	public function action_editAddress(){
-		$this->myObject = $this->mHandler->getCurrentOrder();
+		$this->myObject = $this->mModel->getCurrentOrder();
 		$this->template = 'editAddress.html';
-		$this->stateOptions = $this->mHandler->getStateOptions();
+		$this->stateOptions = $this->mModel->getStateOptions();
 	}
 	public function action_addNewAddress(){
-		$this->mHandler->addNewAddress();
+		$this->mModel->addNewAddress();
 		$this->action_editAddress();
 	}
 	public function action_updateAddress(){
-		$this->mHandler->update();
+		$this->mModel->update();
 		$this->action_index();
 	}
 	public function action_selectPayment(){
-		$this->myObject = $this->mHandler->getCurrentOrder();
+		$this->myObject = $this->mModel->getCurrentOrder();
 		$this->template = 'selectPayment.html';
 	}
 
@@ -87,10 +98,10 @@ class Controller_Checkout extends AbstractAction {
 	 * @return bool
 	 */
 	private function _payByCreditCard ($cardOrderId,$amount,$tax,$cardSeq){
-		$ret = false;
+		$ret = FALSE;
 		$params = array('order_id' => $cardOrderId,'cardSeq'=>$cardSeq,'amount'=>$amount,'tax'=>$tax);
 		$creditService = $this->root->mServiceManager->getService('gmoPayment');
-		if ($creditService != null) {
+		if ($creditService != NULL) {
 			$client = $this->root->mServiceManager->createClient($creditService);
 			$ret = $client->call('entryTransit',$params);
 		}
@@ -110,17 +121,26 @@ class Controller_Checkout extends AbstractAction {
 			return $data['rate'];
 		}
 	}
+	private function exchangeToUSD($amount,$currency="USD"){
+		if ($currency!="USD"){
+			$this->rate = $this->getRatefromGoogle($currency,"USD");
+			$amount_usd = round($amount / $this->rate, 2);
+		}else{
+			$amount_usd = $amount;
+		}
+		return $amount_usd;
+	}
 	/**
 	 * Check out method
 	 */
 	public function action_orderFixed(){
 		global $xoopsModuleConfig;
-		$this->myObject = $this->mHandler->getCurrentOrder();
-		if (!$this->mHandler->checkCurrentOrder($this->myObject)){
-			redirect_header( "index", 3, $this->mHandler->getMessage());
+		$this->myObject = $this->mModel->getCurrentOrder();
+		if (!$this->mModel->checkCurrentOrder($this->myObject)){
+			redirect_header( "index", 3, $this->mModel->getMessage());
 		}
 		$order_id = intval(xoops_getrequest("order_id"));
-		$cardOrderId = null;
+		$cardOrderId = NULL;
 		$payment_type = intval(xoops_getrequest("payment_type"));
 		$cardSeq = intval(xoops_getrequest("CardSeq"));
 		$this->mListData = $this->cartHandler->getCartList();
@@ -129,14 +149,14 @@ class Controller_Checkout extends AbstractAction {
 		$sub_total = $this->cartHandler->isSubTotal();
 		$tax  = intval($sub_total * ($xoopsModuleConfig['sales_tax']/100));
 
-		$ret = false;
+		$ret = FALSE;
 		$itemHandler = Model_Item::forge();
 		if (!$itemHandler->checkStock($this->mListData)){
-			redirect_header( XOOPS_URL."/modules/bmcart/cartList", 3, $this->mHandler->getMessage()._MD_BMCART_NO_STOCK);
+			redirect_header( XOOPS_URL."/modules/bmcart/cartList", 3, $this->mModel->getMessage()._MD_BMCART_NO_STOCK);
 		}
 		switch($payment_type){
 			case 1: // Wire transfer
-                $ret = true;
+                $ret = TRUE;
 				break;
 			case 2: // Pay by Card
 				$cardOrderId = $order_id;
@@ -146,38 +166,43 @@ class Controller_Checkout extends AbstractAction {
 				$codFee = $this->_getCashOnDeliveryFee($sub_total);
 				$shipping_fee += $codFee;
 				$amount += $codFee;
-				$ret = true;
+				$ret = TRUE;
 				break;
 			case 4: // From PayPal
-				$ret = true;
+				$ret = TRUE;
 				break;
 		}
-		if( $ret==true ){
-			$this->mHandler->moveCartToOrder($this->mListData,$order_id);
+		if( $ret==TRUE ){
+			$this->mModel->moveCartToOrder($this->mListData,$order_id);
 			$this->cartHandler->clearMyCart();
-			$this->mHandler->setOrderStatus($order_id,$payment_type,$cardOrderId,$sub_total,$tax,$shipping_fee,$amount);
-			$orderObject = $this->mHandler->myObject();
-			//$mail = new Model_Mail();
-			//$mail->sendMail("ThankYouForOrder.tpl",$orderObject,$this->mListData,_MD_BMCART_ORDER_MAIL);
-			$this->_order_notifications($order_id);
 			if($payment_type==4){
-				// Move to PayPal module
-				// Cuurntly USD only on PayPal REST api
+				// Move to PayPal module currently USD only on PayPal REST api
+				$title = 'To Paypal';
+				$sec = 1;
 				$currency = $this->root->mContext->mModuleConfig['currency'];
-				if ($currency!="USD"){
-					$rate = $this->getRatefromGoogle($currency,"USD");
-					$amount_usd = round($amount / $rate, 2);
-				}else{
-					$amount_usd = $amount;
-				}
-				$param = sprintf("order_id=%d&amount=%f&currency=%s",$order_id,$amount_usd,"USD");
-				$this->executeRedirect(XOOPS_URL."/modules/bmpaypal/bmpaypal/index?".$param, 1, 'To Paypal');
+				$amount_usd = $this->exchangeToUSD($amount,$currency);
+				$rate = $this->rate;
+				$param = "/modules/bmpaypal/bmpaypal/index?" . sprintf("order_id=%d&amount=%f&currency=%s",$order_id,$amount_usd,"USD");
 			}else{
-				$this->executeRedirect(XOOPS_URL."/modules/bmcart/orderList/index", 5, 'Done');
+				$title = 'Done';
+				$sec = 5;
+				$rate = $amount_usd = 0;
+				$param = "/modules/bmcart/orderList/index";
 			}
+			$mail = new Model_Mail();
+			$orderObject = $this->mModel->setOrderStatus($order_id,$payment_type,$cardOrderId,$sub_total,$tax,$shipping_fee,$amount,$rate,$amount_usd);
+			$mail->sendMail("ThankYouForOrder.tpl",$orderObject,$this->mListData,_MD_BMCART_ORDER_MAIL);
+			$this->_order_notifications($order_id);
+			$this->executeRedirect(XOOPS_URL.$param, $sec, $title);
 		}
 	}
 	public function action_view(){
+		// Get data
+		$shipping_fee =$this->cartHandler->isShippingFee();
+		$amount = $this->cartHandler->isTotalAmount();
+		$currency = $this->myConfig['currency'];
+		$amount_usd = $this->exchangeToUSD($amount,$currency);
+		// set to template
 		$view = new View($this->root);
 		if(isset($this->myObject)){
 			$view->set('CurrentOrder', $this->myObject);
@@ -186,13 +211,13 @@ class Controller_Checkout extends AbstractAction {
 		$view->set('Message', $this->message);
 		$view->set('CardList', $this->cardList);
 		$view->set('ListData', $this->mListData);
-		$view->set('shipping_fee', $this->cartHandler->isShippingFee() );
-		$view->set('total_amount', $this->cartHandler->isTotalAmount() );
+		$view->set('shipping_fee', $shipping_fee);
+		$view->set('total_amount', $amount );
 		$view->set('cashOnDeliveryFee', $this->cashOnDeliveryFee);
 		$view->set('fromPayPal', $this->fromPayPal());
 		$view->set('ticket_hidden',$this->mTicketHidden);
-		$view->set('currency',$this->myConfig['currency']);
-
+		$view->set('currency',$currency);
+		$view->set('amount_usd',$amount_usd);
 		if (is_object($this->mPagenavi)) {
 			$view->set('pageNavi', $this->mPagenavi->getNavi());
 		}

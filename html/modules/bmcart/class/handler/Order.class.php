@@ -22,6 +22,8 @@ class bmcart_orderObject extends XoopsSimpleObject
 	    $this->initVar('tax', XOBJ_DTYPE_INT, 0, true);
 	    $this->initVar('shipping_fee', XOBJ_DTYPE_INT, 0, true);
 	    $this->initVar('amount', XOBJ_DTYPE_INT, 0, true);
+	    $this->initVar('rate', XOBJ_DTYPE_INT, 0, true);
+	    $this->initVar('amount_usd', XOBJ_DTYPE_FLOAT, 0, true);
 	    $this->initVar('order_date', XOBJ_DTYPE_INT, null);
 	    $this->initVar('paid_date', XOBJ_DTYPE_INT, null);
 	    $this->initVar('shipping_date', XOBJ_DTYPE_INT, null);

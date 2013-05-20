@@ -93,7 +93,6 @@ class bmcart_ActionFrame
 			//
 			// error
 			//
-
 			$controller->executeForward(XOOPS_URL . '/');
 		}
 
@@ -103,14 +102,11 @@ class bmcart_ActionFrame
 			//
 			// error
 			//
-
 			$controller->executeForward(XOOPS_URL . '/');
 		}
-
 		if (xoops_getenv("REQUEST_METHOD") == "POST") {
 			$viewStatus = $this->mAction->execute($controller, $controller->mRoot->mContext->mXoopsUser);
-		}
-		else {
+		} else {
 			$viewStatus = $this->mAction->getDefaultView($controller, $controller->mRoot->mContext->mXoopsUser);
 		}
 		$render = $controller->mRoot->mContext->mModule->getRenderTarget();

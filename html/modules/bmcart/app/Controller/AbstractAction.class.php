@@ -29,6 +29,7 @@ abstract class AbstractAction {
 	protected $isError = false;
 	protected $mErrMsg = "";
 	protected $mTicketHidden = '';
+	protected $mMessage = '';
 
 	// constant
 	protected $PAGENUM = 20;

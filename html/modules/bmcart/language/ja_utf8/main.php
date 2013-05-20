@@ -99,6 +99,7 @@ define('_MD_BMCART_PAYMENT_DESC_WIRE','銀行振込によるお支払いを選�
 以下の口座にお振込下さい。入金確認後に発送の手続きを行います。
 振込先口座：あいう銀行　えお支店（普通口座）1234567
 振込先名義：カキク　ケコ');
+define('_MD_BMCART_PAYMENT_DESC_PAYPAL','PayPalアカウントによる決済を選択されました。PayPalにて決済の承認を行って下さい。発送の際に課金が実行されます。');
 
 define('_MD_BMCART_THANKS_FOR_ORDER','ご注文ありがとうございます。ご注文の確認メールを送信します。');
 

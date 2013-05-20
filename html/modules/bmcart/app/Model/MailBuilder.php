@@ -50,6 +50,9 @@ class Model_Mail
 			case 3: // Cash on delivery
 				$this->mMailer->assign("PAYMENT_DESC", _MD_BMCART_CASHON_DELIVERY);
 				break;
+			case 4: // by PayPal account
+				$this->mMailer->assign("PAYMENT_DESC", _MD_BMCART_PAYMENT_DESC_PAYPAL);
+				break;
 		}
 		$this->mMailer->assign('SHIPPING_DATE',date("Y-m-d",$orderObject->getVar('shipping_date')));
 		$this->mMailer->assign('SHIPPING_CARRIER',$orderObject->getVar('shipping_carrier'));
@@ -72,8 +75,8 @@ class Model_Mail
 		$this->mMailer->setFromName($this->mXoopsConfig['sitename']);
 		$this->mMailer->setSubject($subject);
 		$this->_setBody($orderObject,$listData);
-		$this->mMailer->usePM();    // send private message
-		$this->mMailer->useMail();  // send email
+		$this->mMailer->usePM();    // set private message
+		$this->mMailer->useMail();  // set email
 		if ($this->mMailer->send()) {
 			//echo $this->mMailer->getSuccess();
 			return true;

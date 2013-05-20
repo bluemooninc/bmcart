@@ -86,6 +86,8 @@ CREATE TABLE {prefix}_{dirname}_order (
   `tax` decimal(13,2),
   `shipping_fee` decimal(13,2),
   `amount` decimal(13,2),
+  `rate` decimal(9,2),
+  `amount_usd` decimal(9,2),
   `order_date` int(10) unsigned,
   `paid_date` int(10) unsigned,
   `shipping_date` int(10) unsigned,

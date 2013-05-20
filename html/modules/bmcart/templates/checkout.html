@@ -68,9 +68,9 @@
 				<{if $fromPayPal}>
 				<p>
 					<input type="radio" name="payment_type" value="4"/><{$smarty.const._MD_BMCART_FROM_PAYPAL}>
+					($<{$amount_usd}>-)
 				</p>
 				<{/if}>
-
 				<input type="radio" name="payment_type" value="2" <{if $CardList}>checked<{/if}>/><{$smarty.const._MD_BMCART_PAYMENT_TYPE_CREDIT_CARD}>
 				<{if $CardList}>
 				<blockquote>

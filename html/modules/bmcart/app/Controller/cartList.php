@@ -44,7 +44,7 @@ class Controller_CartList extends AbstractAction {
 	public function action_view(){
 		$view = new View($this->root);
 		$view->setTemplate($this->template);
-		$view->set('Message', $this->message);
+		$view->set('Message', $this->mMessage);
 		$view->set('ticket_hidden',$this->mTicketHidden);
 		$view->set('ListData', $this->mListData);
 		$view->set('shipping_fee', $this->mHandler->isShippingFee() );
